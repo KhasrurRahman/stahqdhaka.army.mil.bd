@@ -1,0 +1,43 @@
+.p-body{
+    max-width: 960px;
+    margin:0 auto;
+}
+.p-heading{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+.p-heading>div{
+    width:auto;
+}
+.p-heading .logo,
+.p-heading .qrcode{
+    width:75px; 
+}
+
+.p-heading .logo img{
+    width:100%; 
+    height: auto;
+}
+.p-heading .ptitle{
+    text-align:center;
+}
+.p-heading .ptitle h3,.p-heading .ptitle h4{
+    margin-top: 5px;
+    font-size:18px;
+    font-weight: 600;
+}
+.p-heading .ptitle h4{
+    margin-top: 15px;
+    font-size:16px;
+}
+.p-heading .ptitle p{
+    margin:0 0 5px;
+}
+table.print-table th.action,
+table.print-table td.action{
+    display:none;
+    background: #ddd;
+}
+
+@media print{div{page-break-inside:avoid}}

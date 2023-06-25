@@ -1,0 +1,1301 @@
+/********************************
+*	Author: S. M. Amirul Islam	*
+*	Ennvisio Digital			*
+*								*
+********************************/
+table thead tr{
+	background: #33880A;
+}
+
+@font-face {
+    font-family: 'Verdana';
+    src: url('../../../fonts/Verdana-Bold.woff2') format('woff2'),
+        url('../../../fonts/Verdana-Bold.woff') format('woff');
+    font-weight: bold;
+    font-style: normal;
+}
+
+@font-face {
+  font-family: 'Verdana';
+  src: url('../fonts/Verdana.eot?#iefix') format('embedded-opentype'),  
+  url('../fonts/Verdana.woff') format('woff'), 
+  url('../fonts/Verdana.ttf')  format('truetype'), 
+  url('../fonts/Verdana.svg#Verdana') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+	padding: 0;
+	margin: 0;
+}
+
+body {
+	font-family: 'Noto Sans', sans-serif;
+	text-rendering: optimizeLegibility !important;
+	-webkit-font-smoothing: antialiased !important;
+	min-height: 100vh;
+	/*transition: 2s;*/
+}
+/*
+body.modal-open,
+body.swal2-shown {
+padding-right: 0px !important;
+overflow-y: auto;
+}
+.swal2-container.swal2-center.swal2-fade.swal2-shown {
+    overflow-y: scroll!important;
+}*/
+
+
+li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+	transition: all 300ms ease-in-out;
+}
+
+a:hover,
+a:active {
+	text-decoration: none;
+}
+
+.my-container {
+	width: 100%;
+	height: auto;
+	margin: 0 0;
+	padding: 0 0;
+}
+
+.my-row {
+	margin: 0 !important;
+}
+
+@media print {
+    table.print-table, table.print-table td,table.print-table th {
+        border: 1px solid #333!important;
+    }
+} 
+/****************************************************/
+
+.wrapper {
+	box-sizing: border-box;
+	/*width: 96%;
+	margin: 0 2%;
+	/*margin-top: 2px;*/
+}
+
+.header-bar {
+	/*height: 60px;*/
+	background-color: #025007;
+	/*margin-bottom: 50px;*/
+}
+
+#home-header-bar ul {
+	margin: 0;
+	text-align: right;
+	padding: 1px 0;
+}
+
+#home-header-bar ul li {
+	display: inline-block;
+	padding: 5px 10px;
+}
+
+#home-header-bar ul li a {
+	color: #fff;
+}
+
+#home-header-bar ul li a:hover {
+	color: #2f2f2f;
+}
+
+#home-header-bar ul li:first-child {
+	border-right: 1px solid #e3e3e3;
+}
+
+#header {
+	background-color: #d9e2e1;
+}
+
+#logo > a > img {
+	width: 200px;
+	vertical-align: middle;
+	margin: 10px 25px;
+	text-align: center;
+}
+
+#header-img > a > img {
+	width: 80%;
+	/*transform: scale(1, 0.75);*/
+	margin: 20px 20% 0 0;
+}
+
+.header-info > ul {
+	margin: 35px 0 0 0;
+}
+
+.header-info > ul > li {
+	font-size: 15px;
+	padding-bottom: 10px;
+
+}
+
+.header-info > ul > li > i {
+	margin-right: 5px;
+}
+
+#main-nav {
+	background-color: #009fdd;
+}
+
+#nav-wrapper nav {
+	padding: 2px 0;
+}
+
+#navbarNav ul {
+	display: inline-block;
+	width: 100%;
+}
+
+#navbarNav li {
+	display: inline-block;
+	width: 19%;
+	text-align: center;
+}
+
+#navbarNav li a {
+	border-radius: 5px;
+	color: #fff;
+	font-weight: 700;
+	text-transform: uppercase;
+}
+
+#navbarNav li a:hover {
+	color: #3e3e3e;
+}
+
+/* Notification CSS Start */
+ul.dropdown-menu.show {
+    margin: 0px;
+    padding: 0;
+    max-height: 286px;
+    overflow-y: auto;
+    background-color: #ffffff;
+}
+ul.dropdown-menu.show li {
+    border-bottom: 1px solid rgba(171, 167, 167, 0.5);
+    padding: 10px 15px;
+}
+ul.dropdown-menu.show li a{
+    cursor: pointer;
+}
+
+ul.dropdown-menu.show li:last-child {
+    border-bottom: none;
+}
+.show .dropdown-item:hover, .show .dropdown-item:focus {
+    background-color: #eeeeee;
+    color:#000;
+}
+
+/* Homepage CSS Start */
+
+#slider-area {
+	background-color: #f8f8f8;
+}
+
+#slider {
+	background-color: #fff;
+	margin: 20px 0;
+	border-radius: 5px;
+	-webkit-box-shadow: 1px 1px 20px 0px rgba(0,0,0,0.75);
+	-moz-box-shadow: 1px 1px 20px 0px rgba(0,0,0,0.75);
+	box-shadow: 1px 1px 20px 0px rgba(0,0,0,0.75);
+	text-align: center;
+	width: 100%;
+	padding: 10px;
+}
+
+.carousel-item > img {
+	max-height: 500px;
+}
+
+#ch-greetings {
+	padding: 30px 0 10px;
+}
+
+#greetings-text > h4 {
+	margin-bottom: 25px;
+}
+
+#greetings-text > p {
+	text-align: justify;
+	padding-right: 40px;
+}
+
+#ch-info {
+	text-align: center;
+}
+
+#ch-info > img {
+	width: 220px;
+}
+
+#ch-info > h6 {
+	margin-top: 20px;
+}
+
+#ch-info > p {
+	margin-bottom: 5px;
+}
+
+#info-sec {
+	background-color: #f8f8f8;
+	padding: 20px 0 10px;
+}
+
+.info-card {
+	background-color: #fff;
+	border-radius: 5px;
+	min-height: 300px;
+}
+
+.info-card:hover {
+	transform: scale(1, 1.02);
+}
+
+.info-card > h5 {
+	background-color: #6B328D;
+	color: #fff;
+	text-align: center;
+	padding: 10px 0;
+}
+
+#map {
+	margin-bottom: -7px;
+}
+
+/* Homepage CSS End */
+
+
+/* Terms Page CSS Start */
+#terms-main-content {
+	padding-bottom: 35px;
+}
+
+#terms-details {
+	padding-top: 20px;
+}
+
+#terms-details > p:last-child {
+	margin-bottom: 30px;
+}
+/* Terms Page CSS End */
+
+/*Apply Page CSS Start*/
+
+#user-account {
+	width: 60%;
+    margin: 0 0 0 29%;
+    padding: 5px 0;
+}
+
+#userButton {
+	background-color: transparent;
+	color: #fff;
+	border: 1px solid #eee;
+}
+
+.main-content {
+	background-color: #eeeeee;
+	box-sizing: border-box;
+	min-height: 400px;
+	padding: 5px 0;
+}
+
+#content-heading {
+	background-color: #f5f5f5;
+}
+#content-heading > h4 {
+	padding: 10px 0;
+	text-align: center;
+}
+
+.sidebar {
+	margin: 10px 0 10px -10px;
+	background-color: #fff;
+}
+
+.sidebar > a {
+	color: #fff;
+	/*background-color: rgba(0, 117, 123, 0.5);*/
+	background-color: rgb(7, 143, 195);
+	display: block;
+	padding: 15px 0 15px 20px;
+	border-bottom: 0.5px solid #eee;
+}
+
+.sidebar > a:last-child {
+	border-bottom: none;
+}
+
+.sidebar > a:hover {
+	/*background-color: rgba(0, 117, 123, 1);*/
+	    background-color: rgb(5, 110, 150);
+}
+
+#app-sidebar > img {
+	padding-top: 5px;
+	display: block;
+	margin: 0 auto;
+	border-radius: 50%;
+}
+
+#app-sidebar > h5 {
+	color: #313131;
+	text-align: center;
+	padding-top: 10px;
+}
+
+.content-area {
+	min-height: 550px;
+	background-color: #fff;
+	margin: 10px -10px;
+	padding: 10px 15px;
+
+}
+
+.content-area {
+	min-height: 550px;
+	background-color: #fff;
+	margin: 10px -15px;
+	/*padding: 5px 0 5px 10px;*/
+
+}
+
+.content-area ul > li > a {
+	color: #00bcb5;
+	font-size: 18px;
+}
+
+#app-content-area ul > li > a.active {
+	color: #000;
+	background-color: #dedede;
+}
+
+/*.content-area > ul > li > a {
+	color: #00bcb5;
+}
+
+#app-content-area > ul > li > a.active {
+	color: #000;
+	background-color: #dedede;
+}*/
+
+#myTabContent {
+	padding: 15px 0 0 10px;
+}
+#app-info {
+	padding-top: 15px;
+}
+
+#app-info p, #app-info input {
+	/*padding-top: 25px;*/
+}
+
+.label-form {
+	margin-bottom: 0;
+	margin-top: 10px;
+}
+
+.in-form {
+	width: 70%;
+	margin-bottom: 0;
+	margin-top: 10px;
+}
+
+.custm-btn {
+	min-width: 100px;
+	margin: 20px 0px;
+	/*position: absolute;
+	bottom: 5px;*/
+}
+
+#submit-btn {
+	margin: 20px;
+	min-width: 100px;
+}
+
+/* category A */
+
+#driver-details > h5 {
+	padding: 10px 15px;
+}
+
+
+
+/*Apply Page CSS End*/
+
+
+/* Admin Page CSS Start */
+
+#adm-header-bar {
+	height: 55px;
+}
+
+#adm-header-bar nav {
+	padding: 0;
+}
+
+#adm-logo{
+	text-align: center;
+}
+
+#adm-logo img{
+	width: 80px;
+	padding: 3px 0;
+}
+
+#adm-navbar > ul {
+	width: 100%;
+}
+#adm-navbar > ul > li {
+	width: 19%;
+	text-align: center;
+	text-transform: uppercase;
+	padding: 7px 0 0 0;
+}
+
+#adm-navbar > ul > li > a {
+	color: #fff;
+	font-weight: bold;
+}
+
+#adm-navbar > ul > li > a:hover {
+	color: #ffeb3b;
+}
+
+
+#adm-account {
+	width: 90%;
+	margin: 0 10% 0 0;
+	padding: 10px 0;
+}
+
+#notificationButton {
+	background-color: transparent;
+	color: #fff;
+    padding: 14px 22px;
+    height: auto;
+    text-align: right!important;
+}
+#notificationButton:hover,#notificationButton:focus{	
+	color: #ffeb3b;
+    box-shadow: none;
+}
+#notificationButton:after {
+	border: 0;
+}
+
+#adminMenuButton {
+	background-color: transparent;
+	color: #fff;
+	border: 1px solid #eee;
+}
+
+#adm-main-content {
+	padding-top: 30px;
+}
+
+/*#adm-sidebar > a {
+	display: block;
+	/*background-color: #009fdd;*/
+	/*text-align: center;
+}
+
+#adm-sidebar > a:hover {
+	color: #4318e2;
+}
+*/
+
+li ul.sub-menu li:before {
+    margin-top: 13px;
+}
+
+
+a.active-menu {
+	background-color: #007fb1;
+}
+
+a#temp-pass {
+	cursor: pointer;
+	transition: 0.4s;
+}
+
+a.noborder {
+	border-bottom: 0;
+}
+
+.temp-menu {
+	background-color: rgba(0, 159, 221, 0.8);
+	margin-bottom: 0;
+	border-bottom: 0.5px solid #eee;
+	padding: 0;
+	max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.2s ease-out;
+}
+
+.temp-menu li {
+	padding-left: 25px;
+}
+
+.temp-menu li:hover {
+	background-color: rgba(0, 159, 221, 1);
+}
+
+.temp-menu a {
+	color: #fff;
+	display: block;
+	padding: 5px 0px 5px 25px;
+}
+
+ul.expand {
+	display: block;
+}
+
+/*===============================
+* search-form
+================================*/
+
+#search-form {
+	padding-top: 10px;
+}
+
+#search-form .field-wrap label:last-of-type {
+    width: 128px;
+    margin: 10px 0;
+    padding-left: 10px;
+    font-weight: 500;
+}
+
+#search-form input, #search-form select {
+    display: inline-block;
+    width: calc( 100% - 160px );
+    margin: 10px 0;
+}
+
+#search-form select {
+	border-color: transparent;
+	background: #e9ecef;
+	padding: 7px 10px;
+	height: auto;
+}
+
+#search-form input[type=checkbox] {
+	width: auto;
+}
+
+#search-btn {
+	margin: 20px 0 0;
+	text-align: center;
+}
+
+#search-btn:focus, #search-btn.focus {
+    box-shadow: 0 0 0 0.2rem rgba(0, 152, 221, 0.15);
+}
+
+#search-btn {
+    border-color: #028ece;
+}
+
+#search-btn:hover {
+    color: #fff;
+    background-color: #218838;
+    border-color: #0180b9;
+}
+
+/*===============================
+* Custom Checkbox 
+================================*/
+/* Customize the label (the container) */
+.checkbox-container {
+  display: inline-block;
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Hide the browser's default checkbox */
+.checkbox-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+
+/* Create a custom checkbox */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 20px;
+  width: 20px;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* On mouse-over, add a grey background color */
+.checkbox-container:hover input ~ .checkmark {
+  background-color: #ccc;
+}
+
+/* When the checkbox is checked, add a blue background */
+.checkbox-container input:checked ~ .checkmark {
+  background-color: #2196F3;
+  border-color: #2196F3;
+}
+
+/* Create the checkmark/indicator (hidden when not checked) */
+.checkmark:after {
+  content: "";
+  position: absolute;
+  display: none;
+}
+
+/* Show the checkmark when checked */
+.checkbox-container input:checked ~ .checkmark:after {
+  display: block;
+}
+
+/* Style the checkmark/indicator */
+.checkbox-container .checkmark:after {
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 3px 3px 0;
+  -webkit-transform: rotate(45deg);
+  -ms-transform: rotate(45deg);
+  transform: rotate(45deg);
+}
+
+/*===============================
+* app-section 
+================================*/
+
+.app-section {
+	border: 1px solid #e3e3e3;
+	border-radius: 5px;
+	padding: 10px 15px;
+}
+
+.app-section div.col-md-4,
+.app-section div.col-md-2,
+.app-section div.col-md-1 {
+	margin-bottom: 10px;
+	border: 1px solid #f6f6f6;
+}
+
+/*.doc-section .col-md-1 {
+    padding: 5px 0;
+}*/
+
+/* Action Bar CSS */
+
+#action-bar {
+    background-color: #e6e6e6;
+    margin-bottom: 5px;
+    border-radius: 5px;
+    z-index: 3;
+    padding: 3px;
+}
+
+#action-bar > ul {
+	width: 100%;
+	margin: 0 auto;
+	text-align: center;
+}
+
+#action-bar > ul > li {
+	display: inline-block;
+	width: auto;
+	margin: 0 15px;
+}
+
+#action-bar > ul > li > a {
+	min-width: 100px;
+}
+
+input[type=checkbox] {
+  transform: scale(1.2);
+}
+
+/* Datatable CSS*/
+.dataTables_wrapper {
+    margin-top: 3px;
+}
+.page-item .page-link:focus {
+    box-shadow: none;
+    border-color: #007bff;
+}
+
+table.dataTable tbody tr.even {
+    background: #607d8b1c;
+}
+table.dataTable.no-footer {
+    border-bottom-color: #dee2e6;
+}
+
+
+
+
+
+/* End Admin Page CSS */
+
+
+
+
+/* Login & Registration Page CSS */
+#footer {
+	min-height: 200px;
+	background-color: #636363;
+}
+
+#footer-bar {
+    background-color: #d4d4d4;
+    padding-bottom: 1px;
+}
+
+#footer-bar > p {
+	text-align: center;
+	padding: 10px 0;
+	margin: 0;
+}
+div#footer {
+    padding:  50px 0;
+    color:  #fff;
+    font-size: 15px;
+    background: #17586d;
+}
+.single-widget h3 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+.single-widget ul {
+    display: flex;
+    flex-flow: row wrap;
+    margin-left: 22px;
+    justify-content: space-between;
+}
+
+.single-widget ul li {
+    width:  35%;
+}
+
+.single-widget ul li a,.single-widget a {
+    color: #fff;
+}
+.single-widget ul li a:hover,.single-widget a:hover {
+    color: #ddd;
+}
+
+.last p {
+    margin-left: 15px;
+}
+.single-widget {
+    position: relative;
+}
+
+.single-widget:after {
+    position: absolute;
+    content: "";
+    height: 140px;
+    width: 1px;
+    right: -15px;
+    top: 30px;
+    background: #ddd;
+}
+.last.single-widget:after {
+	display:none;
+}
+.single-widget p {
+    margin-left: 15px;
+}
+.single-widget p i {
+    font-size: 12px;
+    float: left;
+    margin-right: 10px;
+    margin-bottom: -5px;
+    margin-left: 5px;
+    line-height: 25px;
+}
+
+#login-area {
+	background-color: #eeeeee;
+	padding: 125px 0;
+}
+
+#signup-area {
+	background-color: #eeeeee;
+	padding: 80px 0;
+}
+
+.bar {
+	border-radius: 3px;
+	background-color: black;
+	color: white;
+	font-size: 20px;
+	text-align: center;
+	padding: 3px 0 3px 0;
+	margin-bottom: 10px;
+}
+.login-div {
+	display: block;
+	margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+}
+.signup-div {
+	display: block;
+	margin-left: auto;
+    margin-right: auto;
+    width: 45%;
+}
+#forgot-pw {
+	float: right;
+	color: white;
+}
+
+
+/* Approved Application Table CSS */
+
+.panel {
+	background-color: #eee;
+	border-radius: 5px;
+	padding: 10px;
+}
+
+.panel-body {
+	background-color: #fff;
+}
+#app-content-area img{
+	height: 200px;
+	width:70%;
+}
+/* Error msg For Form  */
+div.err_msg span {
+	color: red;
+}
+input[type=date]::-webkit-inner-spin-button,
+input[type=date]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+/* Start Temporay Pass View CSS */
+   #invoice .card {
+        min-height: 211px;
+      }
+      .divider {
+        content: "";
+        border-top: 1px dashed #000;
+        margin: 10px 0;
+      }
+      @media print {
+        #print-btn {
+            display :  none;
+        }
+      }
+
+
+.logo img {
+  width: 100px;
+  padding-top: 15px;
+}
+
+.heading {
+  color: #009DD8;
+  text-align: center;
+  padding-top: 5px;
+}
+
+.heading h2 {
+  text-transform: uppercase;
+}
+
+.heading p {
+
+}
+
+.warning {
+  text-align: center;
+  text-transform: uppercase;
+  color: red;
+}
+
+.infoLeft {
+  padding-top: 20px;
+  color: #009DD8;
+}
+
+.infoLeft p {
+  font-weight: bold;
+}
+
+.infoLeft span {
+  font-weight: normal;
+}
+
+.infoRight {
+  padding-top: 20px;
+  color: #009DD8;
+}
+
+.infoRight p {
+  font-weight: bold;
+}
+
+.infoRight table {
+  color: #000;
+  margin-top: 25px;
+  text-align: center;
+}
+
+  #myApproveModal .modal-body{
+   	margin-bottom: 10px;
+   	}
+  #myApproveModal .modal-footer{
+   	padding: 0 1rem;
+   	}
+
+
+#mis_matched legend {
+    background-color: #000;
+    color: #fff;
+    padding: 3px 6px;
+}
+
+#mis_matched .output {
+    font: 1rem 'Fira Sans', sans-serif;
+}
+
+#mis_matched input {
+    margin: .4rem;
+}
+#myRejectModal .close span:focus {
+outline: 0px;
+}
+#myRejectModal .close:focus {
+outline: 0px;
+}
+.div.err_msg {
+	color: #ff4000;
+}
+#myTabContent input[type="file"] {
+    display: inline-block;
+}
+.change-btn {
+    position: relative;
+    left: -89px;
+    height: 42px;
+    top: -2px;
+}
+ .cancel-btn {
+    position: relative;
+    left: -76px;
+    height: 41px;
+    top: -1px;
+    color: #fff;
+    
+}
+.err_msg i {
+    color: #ff0052;
+}
+
+#app-review h5 {
+	background-color: #e4e4e4;
+	font-size: 20px;
+	font-weight: bold;
+	border-radius: 8px;
+}
+
+#app-review span,
+#app-review p {
+	font-size: 16px;
+	padding-bottom: 10px;
+	display: inline-block;
+    font-family: tahoma,helvetica,arial;
+}
+
+#app-review span b{
+    font-weight: 400;
+}
+
+
+#app-review p {
+	margin-bottom: 0;
+}
+/* Custom date input */
+input[type="date"] {
+    position: relative;
+  }
+
+  /* create a new arrow, because we are going to mess up the native one
+  see "List of symbols" below if you want another, you could also try to add a font-awesome icon.. */
+  input[type="date"]:after {
+      content: "\25BC";
+      color: #555;
+      padding: 0 5px;
+  }
+
+  /* change color of symbol on hover */
+  input[type="date"]:hover:after {
+      color: #bf1400;
+  }
+
+  /* make the native arrow invisible and stretch it over the whole field so you can click anywhere in the input field to trigger the native datepicker*/
+  input[type="date"]::-webkit-calendar-picker-indicator {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      width: auto;
+      height: auto;
+      color: transparent;
+      background: transparent;
+  }
+
+  /* adjust increase/decrease button */
+  input[type="date"]::-webkit-inner-spin-button {
+      z-index: 1;
+  }
+
+   /* adjust clear button */
+   input[type="date"]::-webkit-clear-button {
+       z-index: 1;
+   }
+   #notificationButton > .badge{
+   background-color: #fff;
+   padding: 2px 4px;
+}
+
+
+
+
+/**********************************
+* sms panel
+**********************************/
+.content-area .panel-heading,
+.sms-panel .panel-heading {
+    display:  flex;
+    justify-content: flex-start;
+    align-items:  center;
+    padding-bottom: 5px;
+}
+
+.content-area .panel-heading h3,
+.sms-panel .panel-heading h3 {
+    margin: 0;
+}
+
+button#add_new_Sms {
+    margin: 0 0 0 15px;
+}
+
+.sms-panel .dt-buttons.btn-group, .dt-buttons.btn-group {
+    display: none;
+    margin: 0 0 0 auto;
+}
+.sms-panel table.dataTable tr th:nth-child(7),
+.sms-panel table.dataTable tr td:nth-child(7) {
+    min-width: 133px;
+    text-align: center;
+}
+
+.kjkjk .dt-buttons.btn-group{
+    margin: 0 0 0 12px;
+}
+
+
+
+#ajax-loader {
+    justify-content: center;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    display: flex;
+    background: #e9eceff2;
+    position: fixed;
+    z-index: 9999;
+    top: 0;
+    left: 0;
+    text-align: center;
+    font-family: 'Pacifico', cursive;
+    font-size: 25px;
+    color: #04527d;
+}
+#ajax-loader img {
+	width:  100px;
+	height:  auto;
+	margin-bottom: 15px;
+}
+.red-border{
+	border: 1px solid #f10707;
+}
+body {
+    overflow: auto!important;
+    padding-right: 0px !important;
+}
+.funkyradio div {
+  clear: both;
+  overflow: hidden;
+}
+
+.funkyradio label {
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #D1D3D4;
+  font-weight: normal;
+}
+
+.funkyradio input[type="radio"]:empty,
+.funkyradio input[type="checkbox"]:empty {
+  display: none;
+}
+
+.funkyradio input[type="radio"]:empty ~ label,
+.funkyradio input[type="checkbox"]:empty ~ label {
+  position: relative;
+  line-height: 2.1em;
+  text-indent: 3.25em;
+  margin-top: 1em;
+  cursor: pointer;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.funkyradio input[type="radio"]:empty ~ label:before,
+.funkyradio input[type="checkbox"]:empty ~ label:before {
+  position: absolute;
+  display: block;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  content: '';
+  width: 2.5em;
+  background: #D1D3D4;
+  border-radius: 3px 0 0 3px;
+}
+
+.funkyradio input[type="radio"]:hover:not(:checked) ~ label,
+.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label {
+  color: #888;
+}
+
+.funkyradio input[type="radio"]:hover:not(:checked) ~ label:before,
+.funkyradio input[type="checkbox"]:hover:not(:checked) ~ label:before {
+  content: '\2714';
+  text-indent: .9em;
+  color: #C2C2C2;
+}
+
+.funkyradio input[type="radio"]:checked ~ label,
+.funkyradio input[type="checkbox"]:checked ~ label {
+  color: #777;
+}
+
+.funkyradio input[type="radio"]:checked ~ label:before,
+.funkyradio input[type="checkbox"]:checked ~ label:before {
+  content: '\2714';
+  text-indent: .9em;
+  color: #333;
+  background-color: #ccc;
+}
+
+.funkyradio input[type="radio"]:focus ~ label:before,
+.funkyradio input[type="checkbox"]:focus ~ label:before {
+  box-shadow: 0 0 0 3px #999;
+}
+
+.funkyradio-default input[type="radio"]:checked ~ label:before,
+.funkyradio-default input[type="checkbox"]:checked ~ label:before {
+  color: #333;
+  background-color: #ccc;
+}
+
+.funkyradio-primary input[type="radio"]:checked ~ label:before,
+.funkyradio-primary input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #337ab7;
+}
+
+.funkyradio-success input[type="radio"]:checked ~ label:before,
+.funkyradio-success input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #5cb85c;
+}
+
+.funkyradio-danger input[type="radio"]:checked ~ label:before,
+.funkyradio-danger input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #d9534f;
+}
+
+.funkyradio-warning input[type="radio"]:checked ~ label:before,
+.funkyradio-warning input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #f0ad4e;
+}
+
+.funkyradio-info input[type="radio"]:checked ~ label:before,
+.funkyradio-info input[type="checkbox"]:checked ~ label:before {
+  color: #fff;
+  background-color: #5bc0de;
+}
+
+#datatable_processing {
+    margin-left: -75px;
+    width: 150px;
+    z-index: 999;
+    margin-top: -20px;
+}
+#datatable_processing {
+    background: blanchedalmond;
+    padding: 8px;
+}
+
+ul[aria-labelledby="notificationButton"] {
+    width: 300px;
+    overflow-x: hidden;
+}
+
+ul[aria-labelledby="notificationButton"] li a {
+    font-size: 14px!important;
+    white-space: normal;
+    text-align: justify!important;
+}
+.dataTables_wrapper .dataTables_paginate .paginate_button {
+    padding: 0;
+    background-color: transparent;
+    border-color: transparent;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    background: transparent;
+    border: 1px solid transparent!important;
+}

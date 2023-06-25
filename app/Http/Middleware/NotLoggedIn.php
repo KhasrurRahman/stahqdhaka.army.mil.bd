@@ -1,0 +1,26 @@
+<?php
+
+namespace App\Http\Middleware;
+
+use Closure;
+
+class NotLoggedIn
+{
+    /**
+     * Handle an incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
+     * @return mixed
+     */
+    public function handle($request, Closure $next)
+    {
+        if(auth()->guard('applicant')->check()) {
+            return redirect('/customer/home');
+        }
+        elseif(auth()->check()){
+            return redirect('/home');
+        }
+        return $next($request);
+    }
+}
