@@ -6,7 +6,7 @@
                         <h2 style="font-weight: 700;text-transform: capitalize;margin: 9px 0;color: #000">Please read the terms and conditions before applying...</h2>
                       </div>
                     </div>
-                      <iframe src="{{ secure_asset('assets/images/fixed_files/'.$all_fixed_file->sticker_policy) }}" height="600px" class="ml-4 col-md-11" style="padding: 0;margin-bottom:10px;">
+                      <iframe src="{{ asset('assets/images/fixed_files/'.$all_fixed_file->sticker_policy) }}" height="600px" class="ml-4 col-md-11" style="padding: 0;margin-bottom:10px;">
                       </iframe>
                     <div class="row mt-2">
                       <div class="col-md-6" >
