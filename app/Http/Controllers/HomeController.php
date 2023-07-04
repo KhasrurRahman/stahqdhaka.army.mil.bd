@@ -3106,25 +3106,19 @@ class HomeController extends Controller
         curl_close($ch);
 
 
-return 1;
+// return 1;
 
-
-
-//
-//        if($response["response_code"]==202){
-//            return 1;
-//        }else{
-//            return 0;
-//        }
-        // return $response["response_code"];
-
+       if(json_decode($response)->response_code==202){
+           return 1;
+       }else{
+           return 0;
+       }
+        return json_decode($response)->response_code;
 
     }
     
     public function rhythm(){
 
-        HomeController::callSmsApi('01814826919', 'SMS is Working');
-
-
+        HomeController::callSmsApi('01761955765', 'SMS is Working');
     }
 }
