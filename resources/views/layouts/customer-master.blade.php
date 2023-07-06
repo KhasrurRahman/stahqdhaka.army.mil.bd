@@ -145,7 +145,7 @@
      @include('layouts.footer')
  </div>
 
-  <script src="{{url('/assets/cdn')}}/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <script src="{{url('/assets/cdn')}}/jquery-3.6.0.min.js" ></script>
 <script src="{{ asset('/assets/js/jquery.progresstimer.js') }}" ></script>
   <script src="{{url('/assets/cdn')}}/popper.min.js"></script>
 <script src="{{ asset('/assets/sweetalert2/dist/sweetalert2.min.js') }}" ></script>

@@ -31,6 +31,6 @@
                   @endif
 @endsection
 @section('script')
-<script type="text/javascript" src="{{secure_asset('assets/js/applyform.js') }}"></script>
+<script type="text/javascript" src="{{asset('assets/js/applyform.js') }}"></script>
 
 @endsection

@@ -15,6 +15,7 @@ use Carbon\Carbon;
 class ApplicantDetailController extends Controller
 {
 	public function storeApplicantDetails(FormValidate $request){
+		// dd('asdasd');
 		$this->validate($request, [
 			'applicant_photo' => 'image|mimes:jpg,jpeg,png',
 			'applicant_nid_photo' => 'image|mimes:jpg,jpeg,png',
