@@ -1703,7 +1703,7 @@ $('#applicant_detail_form-DEF').on('submit',function(e){
              $('#ajax-loader').attr('hidden',false);
              var form=$('#applicant_detail_form-DEF');
              var formData=form.serialize();
-             var url='/stahqdhaka.army.mil.bd/public/applicant-details/store';
+             var url='/applicant-details/store';
              var type='post';
              $.ajax({
               type:type,
@@ -1887,7 +1887,7 @@ function vehicleDetailAjaxSubmit(){
  $('#ajax-loader').attr('hidden',false);
  var form=$('#vehicle_detail_form');
  var formData=form.serialize();
- var url='/stahqdhaka.army.mil.bd/public/vehicle-detail/store';
+ var url='/vehicle-detail/store';
  var type='post';
  $.ajax({
   type:type,
@@ -1945,7 +1945,7 @@ function driverFormAjaxReq(){
  $('#ajax-loader').attr('hidden',false);
  var form=$('#driver_detail_form');
  var formData=form.serialize();
- var url='/stahqdhaka.army.mil.bd/public/driver-details/store';
+ var url='/driver-details/store';
  var type='post';
  $.ajax({
   type:type,
@@ -1978,7 +1978,7 @@ $('#document_form').on('submit',function(e){
   $('#ajax-loader').attr('hidden',false);
   var form=$('#document_form');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/document/store';
+  var url='/document/store';
   var type='post';
   $.ajax({
     type:type,
@@ -1995,7 +1995,7 @@ $('#document_form').on('submit',function(e){
          $.ajax({
           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           type:"post",
-          url:"/stahqdhaka.army.mil.bd/public/send-submission-sms/success/"+response[2],
+          url:"/send-submission-sms/success/"+response[2],
           data:'',
           dataType:'json',
           success:function(res){
@@ -2015,14 +2015,14 @@ $('#document_form').on('submit',function(e){
          $.ajax({
           headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
           type:"post",
-          url:"/stahqdhaka.army.mil.bd/public/send-submission-renew-sms/success/"+response[2],
+          url:"/send-submission-renew-sms/success/"+response[2],
           data:'',
           dataType:'json',
           success:function(res){
-            window.location.href = '/alocated-stickers';
+            window.location.href = '/applied-applications';
           }
         });
-         window.location.href = '/alocated-stickers';
+         window.location.href = '/applied-applications';
        });
      }  
    },
@@ -2048,7 +2048,7 @@ $('#vehicle_detail_form_Edit').on('submit',function(e){
   var app_id = $(this).data('id');
   var form=$('#vehicle_detail_form_Edit');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/vehicle-detail/update/'+app_id;
+  var url='/vehicle-detail/update/'+app_id;
   var type='post';
   $.ajax({
     type:type,
@@ -2088,7 +2088,7 @@ $('#driver_detail_form_Edit').on('submit',function(e){
   var app_id = $(this).data('id');
   var form=$('#driver_detail_form_Edit');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/driver-detail/update/'+app_id;
+  var url='/driver-detail/update/'+app_id;
   var type='post';
   $.ajax({
     type:type,
@@ -2131,7 +2131,7 @@ $('#document_form_Edit').on('submit',function(e){
   var app_id = $(this).data('id');
   var form=$('#document_form_Edit');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/document/update/'+app_id;
+  var url='/document/update/'+app_id;
   var type='post';
   $.ajax({
     type:type,

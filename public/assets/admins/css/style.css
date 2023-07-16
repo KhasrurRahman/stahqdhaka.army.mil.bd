@@ -3,6 +3,26 @@
 *	Ennvisio Digital			*
 *								*
 ********************************/
+
+
+/* Start:: New customization july2023  */
+.reject-update-dropdown {
+  padding: 5px;
+  background: #E9ECEF;
+  margin: 10px;
+  border-radius: 4px;
+  border: 1px solid #80808057;
+}
+.reject-update-dropdown a {
+  color: black;
+}
+.reject-update-dropdown-options {
+  padding-left: 10px;
+}
+/* End:: New customization july2023  */
+
+
+
 table thead tr{
 	background: #33880A;
 }

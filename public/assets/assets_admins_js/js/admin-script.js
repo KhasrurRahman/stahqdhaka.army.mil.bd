@@ -106,7 +106,7 @@ $(document).ready(function() {
        preConfirm: function() {
          return new Promise(function() {
            $.ajax({
-             url: '/stahqdhaka.army.mil.bd/public/application/approve',
+             url:'/application/approve',
              type: 'get',
              data: {
                'app_num':app_num,
@@ -119,7 +119,7 @@ $(document).ready(function() {
            .done(function(response){
             if(response[1]=="success"){ 
               $.ajax({
-               url: '/stahqdhaka.army.mil.bd/public/send-queued-sms/'+response[3],
+               url:'/send-queued-sms/'+response[3],
                type: 'get',
                data: {
                },
@@ -203,7 +203,7 @@ $('#reject_App').on('click',function(){
      preConfirm: function() {
        return new Promise(function(resolve) {
          $.ajax({
-           url: '/stahqdhaka.army.mil.bd/public/application/reject',
+           url: 'application/reject',
            type: 'get',
            data: {
             'app_num':app_num,
@@ -217,7 +217,7 @@ $('#reject_App').on('click',function(){
           console.log(response);
           if(response[1]=="success"){
            $.ajax({
-            url: '/stahqdhaka.army.mil.bd/public/send-queued-sms/'+response[3],
+            url: '/send-queued-sms/'+response[3],
             type: 'get',
             data: {
             },
@@ -273,7 +273,7 @@ $('#delete_App').on('click',function(){
    preConfirm: function() {
      return new Promise(function(resolve) {
        $.ajax({
-         url: '/stahqdhaka.army.mil.bd/public/application/delete',
+         url: '/application/delete',
          type: 'get',
          data: {
           'app_num':app_num,
@@ -329,7 +329,7 @@ $('#undo_app').on('click',function(){
    preConfirm: function() {
      return new Promise(function(resolve) {
        $.ajax({
-         url: '/stahqdhaka.army.mil.bd/public/application/undo',
+         url: '/application/undo',
          type: 'get',
          data: {
           'app_id':app_id,
@@ -373,7 +373,7 @@ $('#forward_ps').on('click',function(){
    preConfirm: function() {
      return new Promise(function(resolve) {
        $.ajax({
-         url: '/stahqdhaka.army.mil.bd/public/application/forward',
+         url: '/application/forward',
          type: 'get',
          data: {
           'app_num':app_num,
@@ -413,7 +413,7 @@ $('#issueSticker_Form').on('submit',function(e){
   e.preventDefault();
   var form=$('#issueSticker_Form');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/sticker/issue';
+  var url='/sticker/issue';
   var type='post';
   swal({
    title: 'Are you sure?',
@@ -478,7 +478,7 @@ $(document).on('click','.resendSms',function(){
    preConfirm: function() {
      return new Promise(function(resolve) {
        $.ajax({
-         url: '/stahqdhaka.army.mil.bd/public/send-sms/retry/'+followUpId,
+         url: '/send-sms/retry/'+followUpId,
          type: 'get',
          data: {
           'followUpId':followUpId,
@@ -557,7 +557,7 @@ $(document).on('change','select.sms_template',function(){
   e.preventDefault();
   var form=$('#sendSms_Form');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/send/sms';
+  var url='/send/sms';
   var type='post';
   swal({
    title: 'Are you sure?',
@@ -582,7 +582,7 @@ $(document).on('change','select.sms_template',function(){
          swal('Not Sent!',response[0],'warning');
        }else if(response[1]=="success"){
          $.ajax({
-          url: '/stahqdhaka.army.mil.bd/public/send-queued-sms/'+response[2],
+          url: '/send-queued-sms/'+response[2],
           type: 'get',
           data: {
           },
@@ -609,7 +609,7 @@ $('#AddSms_Form').on('submit',function(e){
   e.preventDefault();
   var form=$('#AddSms_Form');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/add/sms';
+  var url='/add/sms';
   var type='post';
   $.ajax({
     type:type,
@@ -668,7 +668,7 @@ $('#UpdateSms_Form').on('submit', function(e){
   var form=$('#UpdateSms_Form');
   var formData=form.serialize();
   var table = $('#example').DataTable();
-  var url='/stahqdhaka.army.mil.bd/public/update/sms/'+id;
+  var url='/update/sms/'+id;
   var type='post';
   $.ajax({
     type:type,
@@ -733,7 +733,7 @@ $(document).on('click', '.delete-sms', function(){
          preConfirm: function() {
            return new Promise(function(resolve) {
              $.ajax({
-               url: '/stahqdhaka.army.mil.bd/public/delete/sms',
+               url: '/delete/sms',
                type: 'post',
                data: {
                 _token: CSRF_TOKEN,
@@ -765,7 +765,7 @@ $('#add_bank_deposit_Form').on('submit',function(e){
   e.preventDefault();
   var form=$('#add_bank_deposit_Form');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/add/bank/deposit';
+  var url='/add/bank/deposit';
   var type='post';
   $.ajax({
     type:type,
@@ -803,7 +803,7 @@ $('#change_password_form').on('submit',function(e){
   e.preventDefault();
   var form=$('#change_password_form');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/change/password';
+  var url='/change/password';
   var type='post';
   $.ajax({
     type:type,
@@ -833,7 +833,7 @@ $('#AddAdmin_Form').on('submit',function(e){
   e.preventDefault();
   var form=$('#AddAdmin_Form');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/add/admin';
+  var url='/add/admin';
   var type='post';
   $.ajax({
     type:type,
@@ -885,7 +885,7 @@ $('#UpdateAdmin_Form').on('submit', function(e){
   var form=$('#UpdateAdmin_Form');
   var formData=form.serialize();
   var table = $('#example').DataTable();
-  var url='/stahqdhaka.army.mil.bd/public/update/admin/'+id;
+  var url='/update/admin/'+id;
   var type='post';
   $.ajax({
     type:type,
@@ -936,7 +936,7 @@ $(document).on('click', '.delete-admin', function(){
          preConfirm: function() {
            return new Promise(function(resolve) {
              $.ajax({
-               url: '/stahqdhaka.army.mil.bd/public/delete/admin',
+               url: '/delete/admin',
                type: 'post',
                data: {
                 _token: CSRF_TOKEN,
@@ -990,7 +990,7 @@ $('#UpdateClient_Form').on('submit', function(e){
   e.preventDefault();
   var form=$('#UpdateClient_Form');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/update/client/'+id;
+  var url='/update/client/'+id;
   var type='post';
   $.ajax({
     type:type,
@@ -1022,7 +1022,7 @@ $('#AddSticker_Form').on('submit',function(e){
   e.preventDefault();
   var form=$('#AddSticker_Form');
   var formData=form.serialize();
-  var url='/stahqdhaka.army.mil.bd/public/add/sticker';
+  var url='/add/sticker';
   var type='post';
   $.ajax({
     type:type,
@@ -1080,7 +1080,7 @@ $('#UpdateSticker_Form').on('submit', function(e){
   var form=$('#UpdateSticker_Form');
   var formData=form.serialize();
   var table = $('#example').DataTable();
-  var url='/stahqdhaka.army.mil.bd/public/update/sticker/'+id;
+  var url='/update/sticker/'+id;
   var type='post';
   $.ajax({
     type:type,
@@ -1133,7 +1133,7 @@ $(document).on('click', '.delete-sticker', function(){
          preConfirm: function() {
            return new Promise(function(resolve) {
              $.ajax({
-               url: '/stahqdhaka.army.mil.bd/public/delete/sticker',
+               url: '/delete/sticker',
                type: 'post',
                data: {
                 _token: CSRF_TOKEN,

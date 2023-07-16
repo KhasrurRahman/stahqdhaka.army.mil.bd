@@ -1359,125 +1359,550 @@
             <form id="reject_file_sms_form">
              <fieldset class="xfieldset">
               <div class="row justify-content-center">
-                <div class="col-xs-5">
-                 <div>
-                  <input type="checkbox" class="attach_file" id="Applicant_Photo" name="Applicant_Photo"
-                  value="আবেদনকারীর ছবি" />
-                  <label for="Applicant_Photo">Applicant Photo</label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Applicant_NID" name="Applicant_NID"
-                  value="আবেদনকারীর জাতীয় পরিচয়পত্রের কপি" />
-                  <label for="Applicant_NID">Applicant NID</label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="def_id" name="def_id"
-                  value="আবেদনকারীর সামরিক পরিচয়পত্রের কপি" />
-                  <label for="def_id">Applicant Def ID</label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Driver_Photo" name="Driver_Photo"
-                  value="গাড়ি চালকের ছবি" />
-                  <label for="Driver_Photo">Driver Photo</label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Driver_NID" name="Driver_NID"
-                  value="গাড়ি চালকের জাতীয় পরিচয়পত্রের কপি" />
-                  <label for="Driver_NID">Driver NID</label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Driver_License_Copy" name="Driver_License_Copy"
-                  value="ড্রাইভিং লাইসেন্সের কপি" />
-                  <label for="Driver_License_Copy">Driver License </label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Father_Testimonial" name="Father_Testimonial"
-                  value="পিতার প্রত্যয়নপত্র" />
-                  <label for="Father_Testimonial">Father Testimonial </label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Mother_Testimonial" name="Mother_Testimonial"
-                  value="মাতার প্রত্যয়নপত্র" />
-                  <label for="Mother_Testimonial">Mother Testimonial </label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Autorised_Certificate" name="Autorised_Certificate"
-                  value="কোম্পানীর অনুমোদিত প্রত্যয়নপত্র" />
-                  <label for="Autorised_Certificate">Authorised Certificate </label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Marriage_Certificate_Copy" name="Marriage_Certificate_Copy"
-                  value="বিবাহিত সনদপত্র / সন্তানের জন্ম সনদ / কোরো সনদ"/>
-                  <label for="Marriage_Certificate_Copy">Marriage Certificate </label>
-                </div>
-                  <div>
-                    <input type="checkbox" class="attach_file" id="Owner_NID" name="Owner_NID"
-                           value="গাড়ির মালিকের জাতীয় পরিচয়পত্র"  />
-                    <label for="Owner_NID">Owner NID</label>
+                <div class="col-xs-6">
+                    <div class="reject-update-dropdown">
+                        <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Applicant Photo
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                            <div  class="reject-update-dropdown-options">
+                            <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                            value="আবেদনকারীর ছবি" />
+                            <label for="Applicant_Photo">আপলোড</label>
+                            </div>
+                            <div  class="reject-update-dropdown-options">
+                            <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                            value="আবেদনকারীর ছবি" />
+                            <label for="Applicant_Photo">অস্পষ্টতা</label>
+                            </div>
+                        </div>
+                    </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Applicant_Photo" name="Applicant_Photo"
+                    value="আবেদনকারীর ছবি" />
+                    <label for="Applicant_Photo">Applicant Photo</label>
+                  </div> --}}
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Applicant Photo
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Applicant_NID" name="Applicant_NID"
+                    value="আবেদনকারীর জাতীয় পরিচয়পত্রের কপি" />
+                    <label for="Applicant_NID">Applicant NID</label>
+                  </div> --}}
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Applicant Def ID
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="def_id" name="def_id"
+                    value="আবেদনকারীর সামরিক পরিচয়পত্রের কপি" />
+                    <label for="def_id">Applicant Def ID</label>
+                  </div> --}}
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Driver Photo
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Driver_Photo" name="Driver_Photo"
+                    value="গাড়ি চালকের ছবি" />
+                    <label for="Driver_Photo">Driver Photo</label>
+                  </div> --}}
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Driver NID
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
                   </div>
 
-              </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Driver_NID" name="Driver_NID"
+                    value="গাড়ি চালকের জাতীয় পরিচয়পত্রের কপি" />
+                    <label for="Driver_NID">Driver NID</label>
+                  </div> --}}
 
-              <div class="col-xs-5">
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Driver License
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Driver_License_Copy" name="Driver_License_Copy"
+                    value="ড্রাইভিং লাইসেন্সের কপি" />
+                    <label for="Driver_License_Copy">Driver License </label>
+                  </div> --}}
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Father Testimonial
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Father_Testimonial" name="Father_Testimonial"
+                    value="পিতার প্রত্যয়নপত্র" />
+                    <label for="Father_Testimonial">Father Testimonial </label>
+                  </div> --}}
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Mother Testimonial
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
+                  </div>
+                    {{-- 
+                  <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Mother_Testimonial" name="Mother_Testimonial"
+                    value="মাতার প্রত্যয়নপত্র" />
+                    <label for="Mother_Testimonial">Mother Testimonial </label>
+                  </div> --}}
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Authorised Certificate
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Autorised_Certificate" name="Autorised_Certificate"
+                    value="কোম্পানীর অনুমোদিত প্রত্যয়নপত্র" />
+                    <label for="Autorised_Certificate">Authorised Certificate </label>
+                  </div> --}}
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Marriage Certificate
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Marriage_Certificate_Copy" name="Marriage_Certificate_Copy"
+                    value="বিবাহিত সনদপত্র / সন্তানের জন্ম সনদ / কোরো সনদ"/>
+                    <label for="Marriage_Certificate_Copy">Marriage Certificate </label>
+                  </div> --}}
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Owner NID
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
+                  </div>
+                    {{-- <div  class="reject-update-dropdown-options">
+                      <input type="checkbox" class="attach_file" id="Owner_NID" name="Owner_NID"
+                            value="গাড়ির মালিকের জাতীয় পরিচয়পত্র"  />
+                      <label for="Owner_NID">Owner NID</label>
+                    </div> --}}
+
+                </div>
+
+                <div class="col-xs-6">
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Vehicle Reg
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
+                  </div>
+
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Vehicle_Reg_Copy" name="Vehicle_Reg_Copy"
+                    value="গাড়ির রেজিষ্ট্রেশন" />
+                    <label for="Vehicle_Reg_Copy">Vehicle Reg </label>
+                  </div> --}}
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Tax Token
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Tax_Token_Copy" name="Tax_Token_Copy"
+                    value="গাড়ির ট্যাক্স টোকেন" />
+                    <label for="Tax_Token_Copy">Tax Token </label>
+                  </div> --}}
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Fitness Certificate
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Fitness_Certificate_Copy" name="Fitness_Certificate_Copy"
+                    value="গাড়ির ফিটনেস সনদপত্র" />
+                    <label for="Fitness_Certificate_Copy">Fitness Certificate </label>
+                  </div> --}}
+
+                  {{-- ///insurance --}}
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Insurance_Certificate_Copy" name="Insurance_Certificate_Copy"
+                    value="ইন্সুরেন্স সনদপত্র" />
+                    <label for="Insurance_Certificate_Copy">Insurance Certificate</label>
+                  </div> --}}
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Ward Commissioner Cert.
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Ward_Commissioner_Certificate" name="Ward_Commissioner_Certificate"
+                    value="ওয়ার্ড কমিশনারের সনদপত্র" />
+                    <label for="Ward_Commissioner_Certificate">Ward Commissioner Cert.</label>
+                  </div> --}}
 
 
-                <div>
-                  <input type="checkbox" class="attach_file" id="Vehicle_Reg_Copy" name="Vehicle_Reg_Copy"
-                  value="গাড়ির রেজিষ্ট্রেশন" />
-                  <label for="Vehicle_Reg_Copy">Vehicle Reg </label>
-                </div>
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      House Owner/CEO Cert.
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="House_Owner_CEO_Certificate" name="House_Owner_CEO_Certificate"
+                    value="বাড়ির মালিক / ক্যান্টনমেন্ট বোর্ড  এর সনদপত্র" />
+                    <label for="House_Owner_CEO_Certificate">House Owner/CEO Cert.</label>
+                  </div> --}}
 
-                <div>
-                  <input type="checkbox" class="attach_file" id="Tax_Token_Copy" name="Tax_Token_Copy"
-                  value="গাড়ির ট্যাক্স টোকেন" />
-                  <label for="Tax_Token_Copy">Tax Token </label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Fitness_Certificate_Copy" name="Fitness_Certificate_Copy"
-                  value="গাড়ির ফিটনেস সনদপত্র" />
-                  <label for="Fitness_Certificate_Copy">Fitness Certificate </label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Insurance_Certificate_Copy" name="Insurance_Certificate_Copy"
-                  value="ইন্সুরেন্স সনদপত্র" />
-                  <label for="Insurance_Certificate_Copy">Insurance Certificate</label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Ward_Commissioner_Certificate" name="Ward_Commissioner_Certificate"
-                  value="ওয়ার্ড কমিশনারের সনদপত্র" />
-                  <label for="Ward_Commissioner_Certificate">Ward Commissioner Cert.</label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="House_Owner_CEO_Certificate" name="House_Owner_CEO_Certificate"
-                  value="বাড়ির মালিক / ক্যান্টনমেন্ট বোর্ড  এর সনদপত্র" />
-                  <label for="House_Owner_CEO_Certificate">House Owner/CEO Cert.</label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Job_Certificate" name="Job_Certificate"
-                  value="চাকুরী সনদপত্র" />
-                  <label for="Job_Certificate">Job Certificate </label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="Civil_Service_ID" name="Civil_Service_ID"
-                  value="বেসামরিক সার্ভিস আইডি কার্ডের কপি" />
-                  <label for="Civil_Service_ID">Civil Service ID </label>
-                </div>
-                <div>
-                  <input type="checkbox" class="attach_file" id="School_Certificate" name="School_Certificate"
-                  value="স্কুল সার্টিফিকেটের কপি" />
-                  <label for="School_Certificate">School Certificate </label>
-                </div>
-                <div>
-                  <input type="checkbox" class="other_sms" id="road-permit" name="other_sms"
-                         value="road-permit" />
-                  <label for="road-permit">Road Permit</label>
-                </div>
-                <div>
-                  <input type="checkbox" class="other_sms" id="police-verification" name="other_sms"
-                         value="police-verification" />
-                  <label for="police_verification">Police Verification </label>
-                </div>
-                <div>
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Job Certificate 
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Job_Certificate" name="Job_Certificate"
+                    value="চাকুরী সনদপত্র" />
+                    <label for="Job_Certificate">Job Certificate </label>
+                  </div> --}}
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Civil Service ID
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="Civil_Service_ID" name="Civil_Service_ID"
+                    value="বেসামরিক সার্ভিস আইডি কার্ডের কপি" />
+                    <label for="Civil_Service_ID">Civil Service ID </label>
+                  </div> --}}
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      School Certificate 
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="attach_file" id="School_Certificate" name="School_Certificate"
+                    value="স্কুল সার্টিফিকেটের কপি" />
+                    <label for="School_Certificate">School Certificate </label>
+                  </div> --}}
+
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Road Permit
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="other_sms" id="road-permit" name="other_sms"
+                          value="road-permit" />
+                    <label for="road-permit">Road Permit</label>
+                  </div> --}}
+                  <div class="reject-update-dropdown">
+                    <a class="dropdown-toggle btn-sm" href="#" role="button" id="dropdownApplicant_Photo" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      Police Verification
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                      <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_one" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">আপলোড</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                        <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                        value="আবেদনকারীর ছবি" />
+                        <label for="Applicant_Photo">অস্পষ্টতা</label>
+                        </div>
+                        <div  class="reject-update-dropdown-options">
+                          <input type="checkbox" class="attach_file" id="Applicant_Photo_two" name="Applicant_Photo"
+                          value="আবেদনকারীর ছবি" />
+                          <label for="Applicant_Photo">মেয়াদউত্তীর্ণ</label>
+                          </div>
+                    </div>
+                  </div>
+                  {{-- <div  class="reject-update-dropdown-options">
+                    <input type="checkbox" class="other_sms" id="police-verification" name="other_sms"
+                          value="police-verification" />
+                    <label for="police_verification">Police Verification </label>
+                  </div> --}}
                 </div>
               </div>
             </fieldset>

@@ -32,5 +32,4 @@
 @endsection
 @section('script')
 <script type="text/javascript" src="{{asset('assets/js/applyform.js') }}"></script>
-
 @endsection
