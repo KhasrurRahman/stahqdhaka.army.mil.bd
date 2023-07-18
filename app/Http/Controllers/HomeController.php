@@ -1522,6 +1522,14 @@ class HomeController extends Controller
             return array($flag,$data);
         }
     }
+
+      //Start_New Modification
+      public function replace_key($key)
+      {
+          $banglaKey = strtr($key, [1 => '১', 2 => '২', 3 => '৩', 4 => '৪', 5 => '৫', 6 => '৬', 7 => '৭', 8 => '৮', 9 => '৯', 0 => '০']);
+          return $banglaKey;
+      }
+      //End_New Modification
     public function applicationReject(Request $request){
 
         $final_rejectSms="";
@@ -1596,8 +1604,19 @@ class HomeController extends Controller
                     $ApplicationNotify->applicant_phone     = $app->applicant->phone;
                     $ApplicationNotify->app_status          = $app->app_status;
 
+                     //Start_New Modification
 
-                    $ApplicationNotify->mis_matched         = json_encode($request->missMatch);
+                    // dd($missFileSize);
+                    $missMatchArray = array();
+                    foreach ($request->missMatch as $key => $value) {
+                        $replace_key = $this->replace_key($key + 1);
+                        $concat_massage = $replace_key . '.' . $value;
+                        array_push($missMatchArray, $concat_massage);
+                    }
+                    //End_New Modification
+
+
+                    $ApplicationNotify->mis_matched         = json_encode($missMatchArray);
 
                     $reject_sms_template                    = Sms::where('type','=','rejected')->first();
 

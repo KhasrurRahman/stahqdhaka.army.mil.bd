@@ -19,6 +19,22 @@
 .reject-update-dropdown-options {
   padding-left: 10px;
 }
+#reject_file_sms_form .card {
+  margin: 5px;
+}
+#reject_file_sms_form .card .card-header {
+  padding: 2px 1.25rem;
+}
+#reject_file_sms_form .card .card-header button {
+  color: black;
+}
+#reject_file_sms_form .card .card-header button:hover {
+  text-decoration: none;
+}
+#reject_file_sms_form .card .card-header button:focus {
+  outline: 0;
+  box-shadow: none;
+}
 /* End:: New customization july2023  */
 
 
