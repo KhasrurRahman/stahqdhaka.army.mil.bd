@@ -1482,7 +1482,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingApplicantPhoto">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                                 data-target="#ApplicantPhoto" aria-expanded="false"
                                                                 aria-controls="ApplicantPhoto">
                                                                 Applicant Photo
@@ -1517,7 +1517,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingApplicantNID">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                                 data-target="#ApplicantNID" aria-expanded="false"
                                                                 aria-controls="ApplicantNID">
                                                                 Applicant NID
@@ -1551,7 +1551,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingApplicantDefID">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                                 data-target="#ApplicantDefID" aria-expanded="false"
                                                                 aria-controls="ApplicantDefID">
                                                                 Applicant Def ID
@@ -1588,7 +1588,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingDriverPhoto">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                                 data-target="#DriverPhoto" aria-expanded="false"
                                                                 aria-controls="DriverPhoto">
                                                                 Driver Photo
@@ -1622,7 +1622,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingDriverNID">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" data-toggle="collapse"
+                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
                                                                 data-target="#DriverNID" aria-expanded="false"
                                                                 aria-controls="DriverNID">
                                                                 Driver NID
@@ -1659,7 +1659,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingDriverLicense">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#DriverLicense"
                                                                 aria-expanded="false" aria-controls="DriverLicense">
                                                                 Driver License
@@ -1699,7 +1699,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingFatherTestimonial">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#FatherTestimonial"
                                                                 aria-expanded="false" aria-controls="FatherTestimonial">
                                                                 Father Testimonial
@@ -1735,7 +1735,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingMotherTestimonial">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#MotherTestimonial"
                                                                 aria-expanded="false" aria-controls="MotherTestimonial">
                                                                 Mother Testimonial
@@ -1770,7 +1770,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingAuthorisedCertificate">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse"
                                                                 data-target="#AuthorisedCertificate"
                                                                 aria-expanded="false"
@@ -1814,7 +1814,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingMarriageCertificate">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse"
                                                                 data-target="#MarriageCertificate" aria-expanded="false"
                                                                 aria-controls="MarriageCertificate">
@@ -1851,7 +1851,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingOwnerNID">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#OwnerNID"
                                                                 aria-expanded="false" aria-controls="OwnerNID">
                                                                 Owner NID
@@ -1886,7 +1886,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingVehicleReg">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#VehicleReg"
                                                                 aria-expanded="false" aria-controls="VehicleReg">
                                                                 Vehicle Reg
@@ -1921,7 +1921,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingTaxToken">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#TaxToken"
                                                                 aria-expanded="false" aria-controls="TaxToken">
                                                                 Tax Token
@@ -1962,7 +1962,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingFitnessCertificate">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#FitnessCertificate"
                                                                 aria-expanded="false"
                                                                 aria-controls="FitnessCertificate">
@@ -2011,7 +2011,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingWardCommissionerCert">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse"
                                                                 data-target="#WardCommissionerCert"
                                                                 aria-expanded="false"
@@ -2056,7 +2056,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingHouseOwnerCert">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#HouseOwnerCert"
                                                                 aria-expanded="false" aria-controls="HouseOwnerCert">
                                                                 House Owner/CEO Cert.
@@ -2099,7 +2099,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingJobCertificate">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#JobCertificate"
                                                                 aria-expanded="false" aria-controls="JobCertificate">
                                                                 Job Certificate
@@ -2140,7 +2140,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingCivilServiceID">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#CivilServiceID"
                                                                 aria-expanded="false" aria-controls="CivilServiceID">
                                                                 Civil Service ID
@@ -2175,7 +2175,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingSchoolCertificate">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#SchoolCertificate"
                                                                 aria-expanded="false" aria-controls="SchoolCertificate">
                                                                 School Certificate
@@ -2217,7 +2217,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingRoadPermit">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#RoadPermit"
                                                                 aria-expanded="false" aria-controls="RoadPermit">
                                                                 Road Permit
@@ -2257,7 +2257,7 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingPoliceVerification">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed"
+                                                            <button class="btn btn-link collapsed" type="button"
                                                                 data-toggle="collapse" data-target="#PoliceVerification"
                                                                 aria-expanded="false"
                                                                 aria-controls="PoliceVerification">
