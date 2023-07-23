@@ -1,9 +1,7 @@
 /*reset css*/
 a#navbarDropdown:hover + .dropdown-menu {
-
     top: -10px;
-
-    display: block !important;
+    /* display: block !important; */
 
 }
 body{

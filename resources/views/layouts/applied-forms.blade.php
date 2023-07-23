@@ -48,6 +48,8 @@
                       <td> 
                         <a class="btn btn-info" href="{{url('/application/edit/applicant')}}/{{$app->app_number}}"> Edit </a>  
                         <a class="btn btn-success" href="{{url('/application/view/applicant')}}/{{$app->app_number}}"> View </a> 
+
+                        <a class="btn btn-warning" href="#">Pay now</a> 
                       </td>
                     </tr>
                     @endforeach
