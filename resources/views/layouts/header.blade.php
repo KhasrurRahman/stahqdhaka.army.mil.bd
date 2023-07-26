@@ -73,10 +73,10 @@
         </div>
         <div class="col-6 col-sm-6 htop-right text-right">                               
           <ul class="htop-menu">
-            @if(!auth()->guard('applicant')->check())
+            {{-- @if(!auth()->guard('applicant')->check())
             <li><a href="{{route('customer.login')}}"><i class="fa fa-user"></i> Login</a></li>
-            <li><a href="{{route('customer.register')}}"><i class="fa fa-user-plus"></i> Register</a></li>
-            @else
+            <li><a href="{{route('customer.register')}}"><i class="fa fa-user-plus"></i> Register</a></li> --}}
+            @if(auth()->guard('applicant')->check())
             <li class="nav-item dropdown" style="padding: 0; border-right: 0;">
               <a id="navbarDropdown" style="padding:5px; " class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                 {{ Auth::guard('applicant')->user()->name }} <span class="caret"></span>
@@ -202,6 +202,17 @@
             </li>
             <li><a href="#contact-us">Contact</a></li>
             {{--<li><a href="{{asset('assets/pdf/Notice_update.pdf')}}" target="_blank"><img src="{{ url('assets/images/imp_notice_red.gif') }}" alt="Notice" width="120px"></a></li>--}}
+
+            <li>
+              <a href="#" style="text-transform:capitalize;">Apply Now </a>
+              @if(!auth()->guard('applicant')->check())
+              <ul class="submenu">
+                <li><a href="{{route('customer.login')}}">Login</a></li>
+                <li><a href="{{route('customer.register')}}">Register</a></li>
+              
+              </ul>
+              @endif
+            </li>
           </ul>
         </nav>
       </div>
