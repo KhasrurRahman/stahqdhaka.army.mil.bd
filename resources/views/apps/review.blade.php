@@ -26,7 +26,7 @@
                 </li>
                 <li>
                     <button data-number="{{ $app->app_number }}" id='forward_ps' class="btn btn-info"><i
-                            class="fas fa-forward"></i> Forward To PS</button>
+                            class="fas fa-forward"></i> Forward To MP DTE</button>
 
                 </li>
                 <li>
@@ -75,6 +75,8 @@
                         <span style="color: red;" id="app_status">
                             @if ($app->retake == 2 && $app->app_status == 'updated')
                                 Re-take
+                            @elseif( $app->app_status == 'forwarded to PS')
+                                Forwarded  To MP DTE
                             @else
                                 {{ $app->app_status != 'updated' ? $app->app_status : 'updated' }}
                             @endif
@@ -1307,6 +1309,8 @@
                                     <td>{{ \Carbon\Carbon::parse($follow_up->created_at)->toDayDateTimeString() }}</td>
                                     <td>
                                         {{ $follow_up->status }}
+                                        
+                                        {{ $follow_up->app_status == "forwarded to PS" ? "Application forwarded  To MP DTE" : $follow_up->status }}
                                     </td>
                                     <td>{{ !empty($follow_up->comment) ? $follow_up->comment : '' }}</td>
                                     <td>

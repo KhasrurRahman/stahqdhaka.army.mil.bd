@@ -60,9 +60,9 @@
                                 
                             </li> 
                              <li>
-                                <a href="#" class="mtitle">PS Directorate</a>
+                                <a href="#" class="mtitle">MP DTE Directorate</a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{url('/application/forwarded-list')}}">List for PS Approval</a></li>
+                                    <li><a href="{{url('/application/forwarded-list')}}">List for MP DTE Approval</a></li>
                                 </ul>
                             </li>
                             <li>

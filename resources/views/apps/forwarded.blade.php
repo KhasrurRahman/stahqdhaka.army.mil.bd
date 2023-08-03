@@ -61,7 +61,7 @@
                       <label style="font-weight:bold;">From Date: </label> 
                       <input placeholder="dd-mm-yy" class="from_date" autocomplete="off" type="text" style="border: none; padding: 2px 5px;" name="forwarded_from_date" value="{{isset($forwarded_from_date) ? $forwarded_from_date: ''}}"> &nbsp;&nbsp;
                       <label style="font-weight:bold;">To Date: </label> <input placeholder="dd-mm-yy" class="to_date" autocomplete="off" type="text" style="border: none; padding: 2px 5px;" name="forwarded_to_date" value="{{isset($forwarded_to_date) ? $forwarded_to_date: ''}}">
-                      <button type="submit" style="border: none; padding: 2px 5px; font-size: 14px;" class="btn btn-info">Show forwarded to PS List</button>
+                      <button type="submit" style="border: none; padding: 2px 5px; font-size: 14px;" class="btn btn-info">Show forwarded to MP DTE List</button>
                         </form>
                     </div> 
             </div>

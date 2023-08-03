@@ -472,7 +472,7 @@ $('#forward_ps').on('click',function(){
 
  swal({
    title: 'Are you sure?',
-   text: "Forward this application to PS",
+   text: "Forward this application to MP DTE",
    type: 'warning',
    showCancelButton: true,
    confirmButtonColor: '#3085d6',
