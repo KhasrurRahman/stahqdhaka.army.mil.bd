@@ -44,12 +44,15 @@
                       <td>{{!empty($app->app_date)?$app->app_date:""}}</td>
                       <td>{{!empty($app->vehicleinfo->vehicleType->name)?$app->vehicleinfo->vehicleType->name:''}}</td>
                       <td>{{ isset($app->applicant->applicantDetail->nid_number) ? $app->applicant->applicantDetail->nid_number : '-' }}</td>
-                      <td>{{!empty($app->app_status)?$app->app_status:''}} </td>
+                      <td>
+                        {{!empty($app->app_status)?$app->app_status:''}}&nbsp;@if($app->payment_status == '0' && $app->app_status == "approved") PaymentPending @endif </td> 
                       <td> 
                         <a class="btn btn-info" href="{{url('/application/edit/applicant')}}/{{$app->app_number}}"> Edit </a>  
                         <a class="btn btn-success" href="{{url('/application/view/applicant')}}/{{$app->app_number}}"> View </a> 
 
-                        <a class="btn btn-warning" href="#">Pay now</a> 
+                        @if($app->payment_status == '0' && $app->app_status == "approved")
+                        <a class="btn btn-warning" href="#">Pay now</a>
+                        @endif
                       </td>
                     </tr>
                     @endforeach

@@ -1613,7 +1613,7 @@ class HomeController extends Controller
                     $missMatchArray = array();
                     foreach ($request->missMatch as $key => $value) {
                         $replace_key = $this->replace_key($key + 1);
-                        $concat_massage = $replace_key . '.' . $value;
+                        $concat_massage = $replace_key .'.'. $value;
                         array_push($missMatchArray, $concat_massage);
                     }
                     //End_New Modification

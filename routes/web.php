@@ -215,6 +215,9 @@ Route::group(['middleware' => 'prevent_back_history'],function(){
 	// Slogan Routes
 	Route::get('slogan/add', 'SloganController@add')->name('slogan.add')->middleware('super-admin');
 	Route::post('slogan/add', 'SloganController@store')->name('slogan.store')->middleware('super-admin');
+
+	//payment gateway
+	
 	
 });
 
