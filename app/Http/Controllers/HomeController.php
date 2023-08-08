@@ -234,6 +234,10 @@ class HomeController extends Controller
                 }
 
             })
+            ->addColumn('app_status', function (Application $application) {
+                $app_status = ($application->app_status == 'forwarded to PS') ? "Forwarded  To MP DTE" : $application->app_status;
+                return $app_status;
+            })
             ->rawColumns(['applicant_name', 'BA_no', 'Rank_id', 'phone_number', 'sticker_number', 'vehicleType', 'address'])
             ->toJson();
     }
@@ -1606,11 +1610,10 @@ class HomeController extends Controller
 
                      //Start_New Modification
 
-                    // dd($missFileSize);
                     $missMatchArray = array();
                     foreach ($request->missMatch as $key => $value) {
                         $replace_key = $this->replace_key($key + 1);
-                        $concat_massage = $replace_key . '.' . $value;
+                        $concat_massage = $replace_key .'.'. $value;
                         array_push($missMatchArray, $concat_massage);
                     }
                     //End_New Modification
