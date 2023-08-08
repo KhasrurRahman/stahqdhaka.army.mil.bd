@@ -9,7 +9,7 @@ npm-debug.log
 yarn-error.log
 /.idea
 .env
-.composer.json
+//.composer.json
 /vendor
 /public/assets/pdf
 /public/assets/pdf_files

@@ -2073,22 +2073,19 @@
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
                                                                     id="House_Owner_CEO_Certificate_one" name="House_Owner_CEO_Certificate_one"
-                                                                    value="বাড়ির মালিক/ক্যান্টনমেন্ট বোর্ড এর
-                                                                    সনদপত্র আপলোড করতে হবে" />
+                                                        value="বাড়ির মালিক/ক্যান্টনমেন্ট বোর্ড এর সনদপত্র আপলোড করতে হবে" />
                                                                 <label for="House_Owner_CEO_Certificate_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
                                                                     id="House_Owner_CEO_Certificate_two" name="House_Owner_CEO_Certificate_two"
-                                                                    value=" বাড়ির মালিক/ক্যান্টনমেন্ট বোর্ড এর
-                                                                    সনদপত্র অস্পষ্ট" />
+                                            value=" বাড়ির মালিক/ক্যান্টনমেন্ট বোর্ড এর সনদপত্র অস্পষ্ট" />
                                                                 <label for="House_Owner_CEO_Certificate_two">অস্পষ্টতা</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
                                                                     id="House_Owner_CEO_Certificate_three" name="House_Owner_CEO_Certificate_three"
-                                                                    value="প্রতি বছরের ক্যান্টনমেন্ট বোর্ড এর
-                                                                    সনদপত্রের কপি দিতে হবে" />
+                                                    value="প্রতি বছরের ক্যান্টনমেন্ট বোর্ড এর সনদপত্রের কপি দিতে হবে" />
                                                                 <label for="House_Owner_CEO_Certificate_three">মেয়াদউত্তীর্ণ</label>
                                                             </div>
                                                         </div>
