@@ -6,12 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Customer Home | Station Headquarters Dhaka Cantonment, Dhaka</title>
-
+    
     <!-- favicon -->
-    <link rel="shortcut icon" href="{{asset('assets/images/LogoS1.png')}}" />
-
-
-
+    <link rel="shortcut icon" href="{{asset('assets/images/LogoS1.png')}}"/>
+    
     <link href="{{url('/assets/cdn')}}/all.css" rel="stylesheet">
     <link rel="stylesheet" href="{{url('/assets/cdn')}}/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/app.css')}}">
@@ -19,12 +17,13 @@
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/responsive-style.css')}}">
     <link rel="stylesheet" type="text/css" href="{{asset('/assets/css/customer-css.css')}}">
     <link rel="stylesheet" href="{{asset('/assets/css/front-style.css')}}">
-
+    
     <link rel="stylesheet" type="text/css" href="{{url('/assets/cdn')}}/toastr.css">
     <style>
-       span.mrq-text a {
+        span.mrq-text a {
             color: #fff;
         }
+
         span.mrq-text a {
             color: #fff;
         }
@@ -33,44 +32,13 @@
             color: #a22f18;
             border-bottom: 1px solid #A22F18;
         }
+
         .notice-description {
             text-align: justify;
             padding: 14px 0;
             font-size: 15px;
         }
-        /*span.mrq-text {*/
-        /*    text-shadow: 1px 4px 2px black;*/
-        /*}*/
 
-        /*.elementToFadeInAndOut {*/
-        /*    color: #fff;*/
-        /*    -webkit-animation: fadeinoutkhan 1s linear infinite;*/
-        /*    animation: fadeinoutkhan 3s linear infinite;*/
-        /*}*/
-
-        /*@-webkit-keyframes fadeinoutkhan {*/
-        /*    0%,100% {*/
-        /*        opacity: 0.9;*/
-        /*        color: #fff;*/
-        /*    }*/
-        /*    50% {*/
-        /*        opacity: 1;*/
-        /*        color: #A22F18;*/
-        /*    }*/
-        /*}*/
-
-        /*@keyframes fadeinoutkhan {*/
-        /*    0%,100% {*/
-        /*        opacity: 0.9;*/
-        /*        color: #fff;*/
-        /*    }*/
-        /*    50% {*/
-        /*        opacity: 1;*/
-        /*        color: #A22F18;*/
-        /*    }*/
-        /*}*/
-
-        /*first animation start*/
         a.notice-alert {
             background: #A22F18;
             display: block;
@@ -94,7 +62,6 @@
             }
         }
 
-
         .notice-area {
             position: relative;
         }
@@ -106,88 +73,85 @@
             z-index: 99;
             padding: 8px 4px;
         }
+
         span.notice-text {
             font-size: 15px;
         }
+
         /*first animation start*/
     </style>
 </head>
 <body>
-  <div>
-
+<div>
+    
     <!-- header starts -->
-    @include('layouts.header')
-    <!-- header closed -->   
+@include('layouts.header')
+<!-- header closed -->
+@include('layouts.newsticker')
+    
+    <div class="wrapper main-content" id="app-main-content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="sidebar" id="app-sidebar" style="background-color: #1B9C4E;">
+                        <img src="{{isset(auth()->guard('applicant')->user()->applicantDetail->applicant_photo) ? auth()->guard('applicant')->user()->applicantDetail->applicant_photo : ''}}"
+                             class="img-fluid" height="150" width="150" alt="">
+                        <h5>{{isset(auth()->guard('applicant')->user()->name) ? auth()->guard('applicant')->user()->name : ''}}</h5>
+                        <a href="{{url('/about/customer')}}">Dashboard</a>
+                        <a href="{{url('/customer/home')}}">Apply for Another Sticker</a>
+                        <a href="{{url('/applied-applications')}}">Applied Applications</a>
+                        <a href="{{url('/alocated-stickers')}}">Allocated Stickers</a>
+                    </div>
+                </div>
+                @yield('content')
+            </div>
+        </div>
+    </div>
+    @include('layouts.footer')
+</div>
 
-    <!-- newsticker starts -->
-    @include('layouts.newsticker')
-    <!-- newsticker closed -->
-     
-     <div class="wrapper main-content" id="app-main-content">
-         <div class="container-fluid">
-             <div class="row">
-                 <div class="col-md-2">
-                     <div class="sidebar" id="app-sidebar" style="background-color: #1B9C4E;">
-                         <img src="{{isset(auth()->guard('applicant')->user()->applicantDetail->applicant_photo) ? auth()->guard('applicant')->user()->applicantDetail->applicant_photo : ''}}" class="img-fluid" height="150" width="150" alt="">
-                         <h5>{{isset(auth()->guard('applicant')->user()->name) ? auth()->guard('applicant')->user()->name : ''}}</h5>
-                         <a href="{{url('/about/customer')}}">About Me</a>
-                         <a href="{{url('/customer/home')}}">Apply for Another Sticker</a>
-                         <a href="{{url('/applied-applications')}}">Applied Applications</a>
-                         <a href="{{url('/alocated-stickers')}}">Allocated Stickers</a>
-                        <!--  <a href="">Renew Sticker</a>
-                         <a href="">Sticker Details</a> -->
-                     </div>
-                 </div>
-                 @yield('content')
-             </div>
-         </div>
-     </div>
-     @include('layouts.footer')
- </div>
-
-  <script src="{{url('/assets/cdn')}}/jquery-3.6.0.min.js" ></script>
-<script src="{{ asset('/assets/js/jquery.progresstimer.js') }}" ></script>
-  <script src="{{url('/assets/cdn')}}/popper.min.js"></script>
-<script src="{{ asset('/assets/sweetalert2/dist/sweetalert2.min.js') }}" ></script>
-  <script src="{{url('/assets/cdn')}}/toastr.min.js"></script>
-  <script src="{{url('/assets/cdn')}}/bootstrap.min.js"></script>
+<script src="{{url('/assets/cdn')}}/jquery-3.6.0.min.js"></script>
+<script src="{{ asset('/assets/js/jquery.progresstimer.js') }}"></script>
+<script src="{{url('/assets/cdn')}}/popper.min.js"></script>
+<script src="{{ asset('/assets/sweetalert2/dist/sweetalert2.min.js') }}"></script>
+<script src="{{url('/assets/cdn')}}/toastr.min.js"></script>
+<script src="{{url('/assets/cdn')}}/bootstrap.min.js"></script>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function () {
 
         // $('#example').DataTable();
-        
-        $(document).on("click", "#scrollToTop", function(e){  
-            e.preventDefault();          
+
+        $(document).on("click", "#scrollToTop", function (e) {
+            e.preventDefault();
             $('html, body').animate({
-                  scrollTop: $("header").offset().top
-              }, 500);
+                scrollTop: $("header").offset().top
+            }, 500);
             $(this).hide();
             $("#scrollToBottom").show();
         });
 
-        $(document).on("click", "#scrollToBottom", function(e){  
-            e.preventDefault();          
+        $(document).on("click", "#scrollToBottom", function (e) {
+            e.preventDefault();
             $('html, body').animate({
-                  scrollTop: $("#footer-bar").offset().top
-              }, 500);
+                scrollTop: $("#footer-bar").offset().top
+            }, 500);
             $(this).hide();
             $("#scrollToTop").show();
         });
 
 
-        $(window).scroll( function() {
+        $(window).scroll(function () {
             var windowpos = $(window).scrollTop();
-            if( windowpos >= 50 ) {
+            if (windowpos >= 50) {
                 $("#scrollToTop").fadeIn();
-            }
-            else {
-                $("#scrollToTop").fadeOut();   
+            } else {
+                $("#scrollToTop").fadeOut();
             }
         });
-        
+
     })
-    
+
 </script>
-    @yield('script')
+@yield('script')
 </body>
 </html>
