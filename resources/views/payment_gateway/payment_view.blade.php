@@ -54,65 +54,70 @@
                         </div>
 
                         <div class="persional-details">
-                            <table class="table">
-                                <tr>
-                                    <td>
-                                        <h5>Name:</h5>
-                                    </td>
-                                    <td>
-                                        AAAAAAAAA
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Reg No:</h5>
-                                    </td>
-                                    <td>
-                                        AAAAAAAAA
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Phone No:</h5>
+                            @if(isset(auth()->guard('applicant')->user()->applications))
+                            <?php $sl=1; ?>
+                            @foreach(auth()->guard('applicant')->user()->applications->sortByDesc('created_at') as $key => $app)
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <h5>Name:</h5>
+                                        </td>
+                                        <td>
+                                            {{!empty($app->applicant->name)?$app->applicant->name:''}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>Reg No:</h5>
+                                        </td>
+                                        <td>
+                                            {{!empty($app->vehicleinfo->reg_number)?$app->vehicleinfo->reg_number:''}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>Phone No:</h5>
 
-                                    </td>
-                                    <td>
-                                        016324******
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Apply Date:</h5>
+                                        </td>
+                                        <td>
+                                            {{!empty($app->applicant->phone)?$app->applicant->phone:""}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>Apply Date:</h5>
 
-                                    </td>
-                                    <td>
-                                        abc@gmail.com
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>Vehicle Type:</h5>
+                                        </td>
+                                        <td>
+                                            {{!empty($app->app_date)?$app->app_date:""}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>Vehicle Type:</h5>
 
-                                    </td>
-                                    <td>
-                                        abc@gmail.com
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h5>National Id:</h5>
+                                        </td>
+                                        <td>
+                                            {{!empty($app->vehicleinfo->vehicleType->name)?$app->vehicleinfo->vehicleType->name:''}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <h5>National Id:</h5>
 
-                                    </td>
-                                    <td>
-                                        abc@gmail.com
-                                    </td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            {{ isset($app->applicant->applicantDetail->nid_number) ? $app->applicant->applicantDetail->nid_number : '-' }}
+                                        </td>
+                                    </tr>
 
-                                
+                                    
 
 
-                            </table>
+                                </table>
 
+                            @endforeach
+                            @endif
                         </div>
 
                     </div>
