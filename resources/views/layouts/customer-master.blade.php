@@ -93,8 +93,10 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-2">
+                    
                     <div class="sidebar" id="app-sidebar" style="background-color: #1B9C4E;">
-                        <img src="{{isset(auth()->guard('applicant')->user()->applicantDetail->applicant_photo) ? auth()->guard('applicant')->user()->applicantDetail->applicant_photo : ''}}"
+                      
+                    <img src="{{isset(auth()->guard('applicant')->user()->applicantDetail->applicant_photo) ? auth()->guard('applicant')->user()->applicantDetail->applicant_photo : ''}}"
                              class="img-fluid" height="150" width="150" alt="">
                         <h5>{{isset(auth()->guard('applicant')->user()->name) ? auth()->guard('applicant')->user()->name : ''}}</h5>
                         <a href="{{url('/about/customer')}}">Dashboard</a>
