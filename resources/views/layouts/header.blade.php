@@ -82,7 +82,7 @@
                 {{ Auth::guard('applicant')->user()->name }} <span class="caret"></span>
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="z-index: 9999999;">
-                <a class="dropdown-item" style="color: #000;" href="{{ url('/customer/home') }}">My Account</a>
+                <a class="dropdown-item" style="color: #000;" href="{{ url('/about/customer') }}">My Account</a>
                 <a id="logout" class="dropdown-item" style="color: #000;" href="{{ route('customer.logout') }}"
                 onclick="event.preventDefault();
                 document.getElementById('logout-form').submit();">
