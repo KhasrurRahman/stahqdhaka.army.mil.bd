@@ -45,7 +45,16 @@
                       <td>{{!empty($app->vehicleinfo->vehicleType->name)?$app->vehicleinfo->vehicleType->name:''}}</td>
                       <td>{{ isset($app->applicant->applicantDetail->nid_number) ? $app->applicant->applicantDetail->nid_number : '-' }}</td>
                       <td>
-                        {{!empty($app->app_status)?$app->app_status:''}}&nbsp;@if($app->payment_status == '0' && $app->app_status == "approved") PaymentPending @endif </td> 
+                        @if(!empty($app->app_status))
+                          @if($app->app_status == "forwarded to PS")
+                          Forwarded To MP DTE
+                          @else
+                          {{$app->app_status}}
+                          @endif
+                        @endif
+                        &nbsp;
+                        @if($app->payment_status == '0' && $app->app_status == "approved") PaymentPending @endif 
+                      </td>
                       <td> 
                         <a class="btn btn-info" href="{{url('/application/edit/applicant')}}/{{$app->app_number}}"> Edit </a>  
                         <a class="btn btn-success" href="{{url('/application/view/applicant')}}/{{$app->app_number}}"> View </a> 
