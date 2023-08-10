@@ -216,8 +216,6 @@ Route::group(['middleware' => 'prevent_back_history'],function(){
 	Route::get('slogan/add', 'SloganController@add')->name('slogan.add')->middleware('super-admin');
 	Route::post('slogan/add', 'SloganController@store')->name('slogan.store')->middleware('super-admin');
 
-	//payment gateway
-	
 	
 });
 
@@ -242,6 +240,8 @@ Route::group(['prefix'=>'customer'],function (){
     Route::post('password/reset/sms/reset', 'CustomerAuth\ForgotPasswordSMSController@resetPost')->name('customer.password.sms.reset.post')->middleware('not-auth');
     Route::get('password/reset/sms/success', 'CustomerAuth\ForgotPasswordSMSController@success')->name('customer.password.sms.success')->middleware('not-auth');
 
+
+
 // Password Reset Routes...
 	//Route::get('password/reset', 'CustomerAuth\ForgotPasswordController@showLinkRequestForm')->name('customer.password.request')->middleware('not-auth');
 	//Route::post('password/email', 'CustomerAuth\ForgotPasswordController@sendResetLinkEmail')->name('customer.password.email')->middleware('not-auth');
@@ -265,6 +265,10 @@ Route::get('renew/sms', 'VehicleStickerController@renewSMS');
 Route::post('renew/sms', 'VehicleStickerController@sendRenewSMS');
 
 Route::get('previous-remark-update', 'FrontController@previousRemarkUpdate');
+
+
+//payment gateway
+Route::get('payment/view/{id}', 'PaymentController@paymentView')->name('payment.view');
 
 
 

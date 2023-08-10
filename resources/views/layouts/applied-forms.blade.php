@@ -51,8 +51,9 @@
                         <a class="btn btn-success" href="{{url('/application/view/applicant')}}/{{$app->app_number}}"> View </a> 
 
                         @if($app->payment_status == '0' && $app->app_status == "approved")
-                        <a class="btn btn-warning" href="#">Pay now</a>
+                        <a class="btn btn-warning" href="{{route('payment.view', $app->id)}}">Pay now</a>
                         @endif
+
                       </td>
                     </tr>
                     @endforeach
