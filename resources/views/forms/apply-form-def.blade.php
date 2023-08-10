@@ -983,525 +983,585 @@
                         {{ csrf_field() }}
                         <input type="hidden" name="old_application_id" value="@isset($old_application_id) {{ $old_application_id }} @endisset">
                         <div class="row">
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Vehicle type</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-
-                            @if (!empty($allocated_sticker))
-                            <div class="col-md-8">
-                                <select name="vehicle_type" id="vehicle_type" class="form-control-sm mandatory" required>
-                                    <option selected value="{{ $allocated_sticker->application->vehicleType->id }}">
-                                        {{ $allocated_sticker->application->vehicleType->name }}
-                                    </option>
-                                </select>
-
-                            </div>
-                            @else
-                            <div class="col-md-8">
-
-                                <select name="vehicle_type" id="vehicle_type" class="form-control-sm mandatory" required>
-                                    @if (!empty($runningApp->vehicleType->id))
-                                    <option value="{{ $runningApp->vehicleType->id }}" selected>
-                                        {{ $runningApp->vehicleType->name }}
-                                    </option>
-                                    @else
-                                    <option selected="" disabled> Select A Vehicle</option>
-                                    @endif
-                                    @if (isset($vehicleTypes))
-                                    @foreach ($vehicleTypes as $vehicleType)
-                                    <option value="{{ $vehicleType->id }}">{{ $vehicleType->name }}
-                                    </option>
-                                    @endforeach
-                                    @endif
-                                </select>
-
-                                <div id="err_msg_vehicletype" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i>
-                                    <span id="err_vehicletype"> </span>
+                            <div class="vehicle-details-container">
+                                <div class="col-md-3 offset-md-1">
+                                    <label for="" class="label-form">Vehicle type</label> <span>*</span> <br>
+                                    <small></small>
                                 </div>
-                            </div>
 
-                            @endif
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Vehicle registration number</label>
-                                <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            @if (!empty($allocated_sticker))
-                            <div class="col-md-8">
-                                <input type="text" name="vehicle_reg_no" id="vehicle_reg_no" class="form-control in-form" value="{{ $allocated_sticker->reg_number }}" required>
-                            </div>
-                            @else
-                            <div class="col-md-8">
-                                <input type="text" name="vehicle_reg_no" id="vehicle_reg_no" class="form-control in-form mandatory" placeholder="5654445454" required value="{{ !empty($runningApp->vehicleinfo->reg_number) ? $runningApp->vehicleinfo->reg_number : '' }}">
-                                <div id="err_msg_vehiclereg" class="err_msg" hidden><i class="fas fa-exclamation-triangle"></i>
-                                    <span id="err_vehiclereg"> </span>
-                                </div>
-                            </div>
-                            @endif
-
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Registration certificate copy</label>
-                                <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8">
                                 @if (!empty($allocated_sticker))
+                                <div class="col-md-8">
+                                    <select name="vehicle_type" id="vehicle_type" class="form-control-sm mandatory" required>
+                                        <option selected value="{{ $allocated_sticker->application->vehicleType->id }}">
+                                            {{ $allocated_sticker->application->vehicleType->name }}
+                                        </option>
+                                    </select>
 
-                                <div>
-                                    <img src="{{ url('') }}{{ $allocated_sticker->application->vehicleinfo->reg_cert_photo }}" id="prev_image2_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
                                 </div>
-                                <input type="file" id="image2_b_exist" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" name="vehicle_reg_photo" required disabled="">
-                                <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ url('') }}{{ $allocated_sticker->application->vehicleinfo->reg_cert_photo }}">Change</button>
-                                <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
                                 @else
-                                @if (!empty($runningApp->vehicleinfo->reg_cert_photo))
-                                <div>
-                                    <img src="{{ url('') }}{{ $runningApp->vehicleinfo->reg_cert_photo }}" id="prev_image2_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                <div class="col-md-8">
+
+                                    <select name="vehicle_type" id="vehicle_type" class="form-control-sm mandatory" required>
+                                        @if (!empty($runningApp->vehicleType->id))
+                                        <option value="{{ $runningApp->vehicleType->id }}" selected>
+                                            {{ $runningApp->vehicleType->name }}
+                                        </option>
+                                        @else
+                                        <option selected="" disabled> Select A Vehicle</option>
+                                        @endif
+                                        @if (isset($vehicleTypes))
+                                        @foreach ($vehicleTypes as $vehicleType)
+                                        <option value="{{ $vehicleType->id }}">{{ $vehicleType->name }}
+                                        </option>
+                                        @endforeach
+                                        @endif
+                                    </select>
+
+                                    <div id="err_msg_vehicletype" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i>
+                                        <span id="err_vehicletype"> </span>
+                                    </div>
                                 </div>
-                                <input type="file" id="image2_b_exist" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" name="vehicle_reg_photo" required disabled="">
-                                <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ url('') }}{{ $runningApp->vehicleinfo->reg_cert_photo }}">Change</button>
-                                <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
+
+                                @endif
+                                <div class="row">
+                                <div class="col-md-3 offset-md-1">
+                                    <label for="" class="label-form">Vehicle registration number</label>
+                                    <span>*</span> <br>
+                                    <small></small>
+                                </div>
+                                @if (!empty($allocated_sticker))
+                                <div class="col-md-8">
+                                    <input type="text" name="vehicle_reg_no" id="vehicle_reg_no" class="form-control in-form" value="{{ $allocated_sticker->reg_number }}" required>
+                                </div>
+                                </div>
                                 @else
-                                <div>
-                                    <img src="" id="prev_image2_b" alt="preview application" hidden style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
-                                </div>
-                                <input type="file" id="image2_b" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" name="vehicle_reg_photo" required>
-                                <div id="err_msg_vehicleregphoto" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_vehicleregphoto"> </span>
+                                <div class="col-md-8">
+                                    <input type="text" name="vehicle_reg_no" id="vehicle_reg_no" class="form-control in-form mandatory" placeholder="5654445454" required value="{{ !empty($runningApp->vehicleinfo->reg_number) ? $runningApp->vehicleinfo->reg_number : '' }}">
+                                    <div id="err_msg_vehiclereg" class="err_msg" hidden><i class="fas fa-exclamation-triangle"></i>
+                                        <span id="err_vehiclereg"> </span>
+                                    </div>
                                 </div>
                                 @endif
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Registration certificate copy</label>
+                                        <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @if (!empty($allocated_sticker))
+
+                                        <div>
+                                            <img src="{{ url('') }}{{ $allocated_sticker->application->vehicleinfo->reg_cert_photo }}" id="prev_image2_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                        </div>
+                                        <input type="file" id="image2_b_exist" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" name="vehicle_reg_photo" required disabled="">
+                                        <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ url('') }}{{ $allocated_sticker->application->vehicleinfo->reg_cert_photo }}">Change</button>
+                                        <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
+                                        @else
+                                        @if (!empty($runningApp->vehicleinfo->reg_cert_photo))
+                                        <div>
+                                            <img src="{{ url('') }}{{ $runningApp->vehicleinfo->reg_cert_photo }}" id="prev_image2_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                        </div>
+                                        <input type="file" id="image2_b_exist" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" name="vehicle_reg_photo" required disabled="">
+                                        <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ url('') }}{{ $runningApp->vehicleinfo->reg_cert_photo }}">Change</button>
+                                        <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
+                                        @else
+                                        <div>
+                                            <img src="" id="prev_image2_b" alt="preview application" hidden style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                        </div>
+                                        <input type="file" id="image2_b" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" name="vehicle_reg_photo" required>
+                                        <div id="err_msg_vehicleregphoto" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_vehicleregphoto"> </span>
+                                        </div>
+                                        @endif
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Loan Taken</label> <span></span> <br>
+                                        <small></small>
+                                    </div>
+
+                                    <div class="col-md-8 mt-2">
+                                        @if (!empty($runningApp->vehicleinfo->loan_taken) || !empty($allocated_sticker->application->vehicleinfo->loan_taken))
+                                        <input type="checkbox" checked name="loan_taken" class="loan_taken" value="1" style="margin-top: 3px;">
+                                        @else
+                                        <input type="checkbox" name="loan_taken" class="loan_taken" value="1" style="margin-top: 3px;">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Owner name</label><span>*</span><br>
+                                        <small></small>
+                                    </div>
+                                    @if (!empty($allocated_sticker))
+                                    <div class="col-md-8">
+                                        <input type="text" name="owner_name" id="owner_name" class="form-control in-form mandatory" value="{{ $allocated_sticker->application->vehicleowner->owner_name }}" required>
+                                    </div>
+                                    @else
+                                    <div class="col-md-8">
+
+                                        <input type="text" name="owner_name" id="owner_name" class="form-control in-form mandatory" value="{{ !empty($runningApp->vehicleowner->owner_name) ? $runningApp->vehicleowner->owner_name : '' }}" required>
+                                        <div id="err_msg_ownername" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_ownername"> </span>
+                                        </div>
+                                    </div>
+                                </div>
                                 @endif
-                            </div>
 
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Loan Taken</label> <span></span> <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8 mt-2">
-                                @if (!empty($runningApp->vehicleinfo->loan_taken) || !empty($allocated_sticker->application->vehicleinfo->loan_taken))
-                                <input type="checkbox" checked name="loan_taken" class="loan_taken" value="1" style="margin-top: 3px;">
-                                @else
-                                <input type="checkbox" name="loan_taken" class="loan_taken" value="1" style="margin-top: 3px;">
-                                @endif
-                            </div>
-
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Owner name</label><span>*</span><br>
-                                <small></small>
-                            </div>
-                            @if (!empty($allocated_sticker))
-                            <div class="col-md-8">
-                                <input type="text" name="owner_name" id="owner_name" class="form-control in-form mandatory" value="{{ $allocated_sticker->application->vehicleowner->owner_name }}" required>
-                            </div>
-                            @else
-                            <div class="col-md-8">
-
-                                <input type="text" name="owner_name" id="owner_name" class="form-control in-form mandatory" value="{{ !empty($runningApp->vehicleowner->owner_name) ? $runningApp->vehicleowner->owner_name : '' }}" required>
-                                <div id="err_msg_ownername" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_ownername"> </span>
-                                </div>
-                            </div>
-                            @endif
-
-                            @if (
-                            !empty($allocated_sticker->application->vehicleowner->company_name) ||
-                            !empty($runningApp->vehicleowner->company_name))
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">If owner is a company</label>
-                                <span></span> <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8 mt-2">
-                                <input type="checkbox" name="owner_is_company" checked class="owner_is_company" value="1" style="margin-top: 3px;">
-                            </div>
-
-
-                            <div class="col-md-3 offset-md-1 company_info_field">
-                                <label for="" class="label-form">Name Of Company</label> <span>*</span>
-                                <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field">
-                                <input type="text" name="company_name" id="company_name" class="form-control in-form" value="{{ !empty($allocated_sticker->application->vehicleowner->company_name) ? $allocated_sticker->application->vehicleowner->company_name : $runningApp->vehicleowner->company_name }}">
-                            </div>
-                            <?php $com_address = json_decode(!empty($allocated_sticker->application->vehicleowner->company_address) ? $allocated_sticker->application->vehicleowner->company_address : $runningApp->vehicleowner->company_address, true); ?>
-                            <div class="col-md-3 offset-md-1 company_info_field">
-                                <p style="margin-bottom: 0px; margin-top: 30px;"><b>Company's Address:</b></p> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field">
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field">
-                                <label for="" class="label-form">Flat No.</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field">
-                                <input type="text" name="c_flat" id="c_flat" class="c_flat form-control in-form" value="{{ $com_address['flat'] }}">
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field">
-                                <label for="" class="label-form">House No.</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field">
-                                <input type="text" name="c_house" id="c_house" class="c_house form-control in-form" value="{{ $com_address['house'] }}">
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field">
-                                <label for="" class="label-form">Road No.</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field">
-                                <input type="text" name="c_road" id="c_road" class="c_road form-control in-form" value="{{ $com_address['road'] }}">
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field">
-                                <label for="" class="label-form">Block/Section</label> <span>*</span>
-                                <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field">
-                                <input type="text" name="c_block" id="c_block" class="c_block form-control in-form" value="{{ $com_address['block'] }}">
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field">
-                                <label for="" class="label-form">Area</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field">
-                                <input type="text" name="c_area" id="c_area" class="c_area form-control in-form" value="{{ $com_address['area'] }}">
-                            </div>
-                            @else
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">If owner is a company</label>
-                                <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 mt-2">
-
-                                <input type="checkbox" name="owner_is_company" class="owner_is_company" value="1" style="margin-top: 3px;">
-
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field" hidden>
-                                <label for="" class="label-form">Name Of Company</label> <span>*</span>
-                                <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8 company_info_field" hidden>
-                                <input type="text" name="company_name" id="company_name" class="form-control in-form" value="">
-                                <div id="err_msg_companyname" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyname">
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field" hidden>
-
-                                <p style="margin-bottom: 0px; margin-top: 30px;"><b>Company's Address:</b></p>
-                                <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field" hidden>
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field" hidden>
-                                <label for="" class="label-form">Flat No.</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8 company_info_field" hidden>
-                                <input type="text" name="c_flat" id="c_flat" class="c_flat form-control in-form" placeholder="">
-                                <div id="err_msg_companyflat" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyflat">
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field" hidden>
-                                <label for="" class="label-form">House No.</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field" hidden>
-                                <input type="text" name="c_house" id="c_house" class="c_house form-control in-form" placeholder="">
-
-                                <div id="err_msg_companyhouse" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyhouse">
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field" hidden>
-                                <label for="" class="label-form">Road No.</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field" hidden>
-                                <input type="text" name="c_road" id="c_road" class="c_road form-control in-form" placeholder="">
-
-                                <div id="err_msg_companyroad" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyroad">
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field" hidden>
-                                <label for="" class="label-form">Block/Section</label> <span>*</span>
-                                <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field" hidden>
-                                <input type="text" name="c_block" id="c_block" class="c_block form-control in-form" placeholder="">
-
-                                <div id="err_msg_companyblock" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyblock">
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1 company_info_field" hidden>
-                                <label for="" class="label-form">Area</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 company_info_field" hidden>
-                                <input type="text" name="c_area" id="c_area" class="c_area form-control in-form" placeholder="">
-
-                                <div id="err_msg_companyarea" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyarea">
-                                    </span>
-                                </div>
-                            </div>
-                            @endif
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Tax paid upto</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8">
                                 @if (
-                                !empty($allocated_sticker->application->vehicleinfo->tax_token_validity) ||
-                                !empty($runningApp->vehicleinfo->tax_token_validity))
-                                <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="{{ !empty($allocated_sticker->application->vehicleinfo->tax_token_validity) ? $allocated_sticker->application->vehicleinfo->tax_token_validity : $runningApp->vehicleinfo->tax_token_validity }}" name="tax_paid_upto" id="tax_paid_upto" class="form-control in-form mandatory" required>
-                                <div id="err_msg_taxVal" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_taxVal"> </span>
+                                !empty($allocated_sticker->application->vehicleowner->company_name) ||
+                                !empty($runningApp->vehicleowner->company_name))
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">If owner is a company</label>
+                                        <span></span> <br>
+                                        <small></small>
+                                    </div>
+
+                                    <div class="col-md-8 mt-2">
+                                        <input type="checkbox" name="owner_is_company" checked class="owner_is_company" value="1" style="margin-top: 3px;">
+                                    </div>
+                                </div>
+                                <div class="row">
+
+
+                                    <div class="col-md-3 offset-md-1 company_info_field">
+                                        <label for="" class="label-form">Name Of Company</label> <span>*</span>
+                                        <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field">
+                                        <input type="text" name="company_name" id="company_name" class="form-control in-form" value="{{ !empty($allocated_sticker->application->vehicleowner->company_name) ? $allocated_sticker->application->vehicleowner->company_name : $runningApp->vehicleowner->company_name }}">
+                                    </div>
+                                </div>
+                                <?php $com_address = json_decode(!empty($allocated_sticker->application->vehicleowner->company_address) ? $allocated_sticker->application->vehicleowner->company_address : $runningApp->vehicleowner->company_address, true); ?>
+                                <div class="col-md-3 offset-md-1 company_info_field">
+                                    <p style="margin-bottom: 0px; margin-top: 30px;"><b>Company's Address:</b></p> <br>
+                                    <small></small>
+                                </div>
+                                <div class="col-md-8 company_info_field">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field">
+                                        <label for="" class="label-form">Flat No.</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field">
+                                        <input type="text" name="c_flat" id="c_flat" class="c_flat form-control in-form" value="{{ $com_address['flat'] }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field">
+                                        <label for="" class="label-form">House No.</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field">
+                                        <input type="text" name="c_house" id="c_house" class="c_house form-control in-form" value="{{ $com_address['house'] }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field">
+                                        <label for="" class="label-form">Road No.</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field">
+                                        <input type="text" name="c_road" id="c_road" class="c_road form-control in-form" value="{{ $com_address['road'] }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field">
+                                        <label for="" class="label-form">Block/Section</label> <span>*</span>
+                                        <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field">
+                                        <input type="text" name="c_block" id="c_block" class="c_block form-control in-form" value="{{ $com_address['block'] }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field">
+                                        <label for="" class="label-form">Area</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field">
+                                        <input type="text" name="c_area" id="c_area" class="c_area form-control in-form" value="{{ $com_address['area'] }}">
+                                    </div>
                                 </div>
                                 @else
-                                <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="" name="tax_paid_upto" id="tax_paid_upto" class="form-control in-form mandatory" required>
-                                <div id="err_msg_taxVal" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_taxVal"> </span>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">If owner is a company</label>
+                                        <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 mt-2">
+
+                                        <input type="checkbox" name="owner_is_company" class="owner_is_company" value="1" style="margin-top: 3px;">
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field" hidden>
+                                        <label for="" class="label-form">Name Of Company</label> <span>*</span>
+                                        <br>
+                                        <small></small>
+                                    </div>
+
+                                    <div class="col-md-8 company_info_field" hidden>
+                                        <input type="text" name="company_name" id="company_name" class="form-control in-form" value="">
+                                        <div id="err_msg_companyname" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyname">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field" hidden>
+
+                                        <p style="margin-bottom: 0px; margin-top: 30px;"><b>Company's Address:</b></p>
+                                        <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field" hidden>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field" hidden>
+                                        <label for="" class="label-form">Flat No.</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+
+                                    <div class="col-md-8 company_info_field" hidden>
+                                        <input type="text" name="c_flat" id="c_flat" class="c_flat form-control in-form" placeholder="">
+                                        <div id="err_msg_companyflat" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyflat">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field" hidden>
+                                        <label for="" class="label-form">House No.</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field" hidden>
+                                        <input type="text" name="c_house" id="c_house" class="c_house form-control in-form" placeholder="">
+
+                                        <div id="err_msg_companyhouse" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyhouse">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field" hidden>
+                                        <label for="" class="label-form">Road No.</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field" hidden>
+                                        <input type="text" name="c_road" id="c_road" class="c_road form-control in-form" placeholder="">
+
+                                        <div id="err_msg_companyroad" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyroad">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field" hidden>
+                                        <label for="" class="label-form">Block/Section</label> <span>*</span>
+                                        <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field" hidden>
+                                        <input type="text" name="c_block" id="c_block" class="c_block form-control in-form" placeholder="">
+
+                                        <div id="err_msg_companyblock" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyblock">
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 company_info_field" hidden>
+                                        <label for="" class="label-form">Area</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 company_info_field" hidden>
+                                        <input type="text" name="c_area" id="c_area" class="c_area form-control in-form" placeholder="">
+
+                                        <div id="err_msg_companyarea" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_companyarea">
+                                            </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 @endif
-                            </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Tax paid upto</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
 
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Tax token copy</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
+                                    <div class="col-md-8">
+                                        @if (
+                                        !empty($allocated_sticker->application->vehicleinfo->tax_token_validity) ||
+                                        !empty($runningApp->vehicleinfo->tax_token_validity))
+                                        <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="{{ !empty($allocated_sticker->application->vehicleinfo->tax_token_validity) ? $allocated_sticker->application->vehicleinfo->tax_token_validity : $runningApp->vehicleinfo->tax_token_validity }}" name="tax_paid_upto" id="tax_paid_upto" class="form-control in-form mandatory" required>
+                                        <div id="err_msg_taxVal" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_taxVal"> </span>
+                                        </div>
+                                        @else
+                                        <input type="date" data-date="" data-date-format="DD MMMM YYYY" value="" name="tax_paid_upto" id="tax_paid_upto" class="form-control in-form mandatory" required>
+                                        <div id="err_msg_taxVal" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_taxVal"> </span>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Tax token copy</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
 
-                            <div class="col-md-8">
+                                    <div class="col-md-8">
+                                        @if (
+                                        !empty($allocated_sticker->application->vehicleinfo->tax_token_photo) ||
+                                        !empty($runningApp->vehicleinfo->tax_token_photo))
+                                        <div>
+
+                                            <img src="{{ !empty($allocated_sticker->application->vehicleinfo->tax_token_photo) ? url($allocated_sticker->application->vehicleinfo->tax_token_photo) : url($runningApp->vehicleinfo->tax_token_photo) }}" id="prev_image4_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                        </div>
+
+
+                                        <input type="file" id="image4_b_exist" accept="image/png, image/jpg, image/jpeg" name="tax_token_photo" class="form-control in-form mandatory" disabled>
+                                        <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->vehicleinfo->tax_token_photo) ? url($allocated_sticker->application->vehicleinfo->tax_token_photo) : url($runningApp->vehicleinfo->tax_token_photo) }}">Change</button>
+                                        <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
+                                        <div id="err_msg_taxCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_taxCopy"> </span>
+                                        </div>
+                                        @else
+                                        <div>
+                                            <img src="" id="prev_image4_b" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" id="image4_b" accept="image/png, image/jpg, image/jpeg" name="tax_token_photo" class="form-control in-form mandatory" required>
+                                        <div id="err_msg_taxCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_taxCopy"> </span>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Fitness validity</label> <span>*</span>
+                                        <br>
+                                        <small></small>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        @if (
+                                        !empty($allocated_sticker->application->vehicleinfo->fitness_validity) ||
+                                        !empty($runningApp->vehicleinfo->fitness_validity))
+                                        <input type="date" value="{{ !empty($allocated_sticker->application->vehicleinfo->fitness_validity) ? $allocated_sticker->application->vehicleinfo->fitness_validity : $runningApp->vehicleinfo->fitness_validity }}" name="fitnness_validity" id="fitnness_validity" class="form-control in-form mandatory" required>
+
+                                        <div id="err_msg_fitnessVal" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_fitnessVal">
+                                            </span>
+                                        </div>
+                                        @else
+                                        <input type="date" value="" name="fitnness_validity" id="fitnness_validity" class="form-control in-form mandatory" required>
+                                        <div id="err_msg_fitnessVal" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_fitnessVal">
+                                            </span>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Fitness certificate copy</label>
+                                        <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        @if (
+                                        !empty($allocated_sticker->application->vehicleinfo->fitness_cert_photo) ||
+                                        !empty($runningApp->vehicleinfo->fitness_cert_photo))
+                                        <div>
+                                            <img src="{{ !empty($allocated_sticker->application->vehicleinfo->fitness_cert_photo) ? url($allocated_sticker->application->vehicleinfo->fitness_cert_photo) : url($runningApp->vehicleinfo->fitness_cert_photo) }}" id="prev_image5_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                        </div>
+                                        <input type="file" id="image5_b_exist" name="fitness_cert_photo" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" disabled>
+                                        <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->vehicleinfo->fitness_cert_photo) ? url($allocated_sticker->application->vehicleinfo->fitness_cert_photo) : url($runningApp->vehicleinfo->fitness_cert_photo) }}">Change</button>
+                                        <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
+                                        <div id="err_msg_fitnessCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_fitnessCopy">
+                                            </span>
+                                        </div>
+                                        @else
+                                        <div>
+                                            <img src="" id="prev_image5_b" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" id="image5_b" name="fitness_cert_photo" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" required>
+                                        <div id="err_msg_fitnessCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_fitnessCopy">
+                                            </span>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Insurance validity</label> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8">
+
+                                        <input type="date" value="" name="insurance_validity" id="insurance_validity" class="form-control in-form">
+                                        <div id="err_msg_insuranceValidity" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_insuranceValidity">
+                                            </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Insurance certificate copy</label> <br>
+                                        <small></small>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        @if (
+                                        !empty($allocated_sticker->application->vehicleinfo->insurance_cert_photo) ||
+                                        !empty($runningApp->vehicleinfo->insurance_cert_photo))
+                                        <div>
+                                            <img src="{{ !empty($allocated_sticker->application->vehicleinfo->insurance_cert_photo) ? url($allocated_sticker->application->vehicleinfo->insurance_cert_photo) : url($runningApp->vehicleinfo->insurance_cert_photo) }}" id="prev_image6_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                        </div>
+                                        <input type="file" id="image6_b_exist" name="insurance_cert_photo" accept="image/png, image/jpg, image/jpeg" class="form-control in-form" disabled>
+                                        <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->vehicleinfo->insurance_cert_photo) ? url($allocated_sticker->application->vehicleinfo->insurance_cert_photo) : url($runningApp->vehicleinfo->insurance_cert_photo) }}">Change</button>
+                                        <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
+                                        <div id="err_msg_insuranceCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_insuranceCopy">
+                                            </span>
+                                        </div>
+                                        @else
+                                        <div>
+                                            <img src="" id="prev_image6_b" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" id="image6_b" name="insurance_cert_photo" accept="image/png, image/jpg, image/jpeg" class="form-control in-form">
+                                        <div id="err_msg_insuranceCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_insuranceCopy">
+                                            </span>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1" id="Necessity-div">
+                                        <label for="" class="label-form">Necessity of using Cantonment gate</label>
+                                        <span></span> <br>
+                                        <small></small>
+                                    </div>
+
+                                    <div class="col-md-8">
+                                        @if (
+                                        !empty($allocated_sticker->application->vehicleinfo->necessity_to_use) ||
+                                        !empty($runningApp->vehicleinfo->necessity_to_use))
+                                        <textarea type="text" id="necessity_to_use" name="necessity_to_use" class="form-control in-form">{{ !empty($allocated_sticker->application->vehicleinfo->necessity_to_use) ? $allocated_sticker->application->vehicleinfo->necessity_to_use : $runningApp->vehicleinfo->necessity_to_use }}</textarea>
+
+                                        <div id="err_msg_necessity" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_necessity">
+                                            </span>
+                                        </div>
+                                        @else
+                                        <textarea type="text" id="necessity_to_use" value="" name="necessity_to_use" class="form-control in-form"></textarea>
+                                        <div id="err_msg_necessity" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_necessity">
+                                            </span>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
                                 @if (
-                                !empty($allocated_sticker->application->vehicleinfo->tax_token_photo) ||
-                                !empty($runningApp->vehicleinfo->tax_token_photo))
-                                <div>
-
-                                    <img src="{{ !empty($allocated_sticker->application->vehicleinfo->tax_token_photo) ? url($allocated_sticker->application->vehicleinfo->tax_token_photo) : url($runningApp->vehicleinfo->tax_token_photo) }}" id="prev_image4_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                (!empty($allocated_sticker->application->vehicleinfo->glass_type) &&
+                                $allocated_sticker->application->vehicleinfo->glass_type != 'transparent') ||
+                                (!empty($runningApp->vehicleinfo->glass_type) && $runningApp->vehicleinfo->glass_type != 'transparent'))
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Type of Glass(if not
+                                            transparent)</label> <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="checkbox" checked id="is_transparent" value="0" name="is_not_transparent" class="is_transparent" style="margin-top: 3px;width: 16px; height: 16px;">
+                                    </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 is_transparent_hide">
+                                        <label for="" class="label-form">Glass Type</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 is_transparent_hide">
+                                        <select name="glass_type" id="glass_type" class="form-control in-form mandatory">
 
+                                            <option selected value="{{ !empty($allocated_sticker->application->vehicleinfo->glass_type) ? $allocated_sticker->application->vehicleinfo->glass_type : $runningApp->vehicleinfo->glass_type }}">
+                                                {{ !empty($allocated_sticker->application->vehicleinfo->glass_type) ? $allocated_sticker->application->vehicleinfo->glass_type : $runningApp->vehicleinfo->glass_type }}
+                                            </option>
 
-                                <input type="file" id="image4_b_exist" accept="image/png, image/jpg, image/jpeg" name="tax_token_photo" class="form-control in-form mandatory" disabled>
-                                <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->vehicleinfo->tax_token_photo) ? url($allocated_sticker->application->vehicleinfo->tax_token_photo) : url($runningApp->vehicleinfo->tax_token_photo) }}">Change</button>
-                                <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
-                                <div id="err_msg_taxCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_taxCopy"> </span>
+                                            <option value="Normal-Transparent">Transparent Normal Glass </option>
+                                            <option value="Semi-Black"> Semi-Black </option>
+                                            <option value="Black">Black</option>
+                                        </select>
+                                        <div id="err_msg_glasstype" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i>
+                                            <span id="err_glasstype"> </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 @else
-                                <div>
-                                    <img src="" id="prev_image4_b" alt="preview application" hidden>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Type of Glass(if not
+                                            transparent)</label> <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <input type="checkbox" id="is_transparent" value="0" name="is_not_transparent" class="is_transparent" style="margin-top: 3px;width: 16px; height: 16px;">
+                                    </div>
                                 </div>
-                                <input type="file" id="image4_b" accept="image/png, image/jpg, image/jpeg" name="tax_token_photo" class="form-control in-form mandatory" required>
-                                <div id="err_msg_taxCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_taxCopy"> </span>
-                                </div>
-                                @endif
-                            </div>
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Fitness validity</label> <span>*</span>
-                                <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8">
-                                @if (
-                                !empty($allocated_sticker->application->vehicleinfo->fitness_validity) ||
-                                !empty($runningApp->vehicleinfo->fitness_validity))
-                                <input type="date" value="{{ !empty($allocated_sticker->application->vehicleinfo->fitness_validity) ? $allocated_sticker->application->vehicleinfo->fitness_validity : $runningApp->vehicleinfo->fitness_validity }}" name="fitnness_validity" id="fitnness_validity" class="form-control in-form mandatory" required>
-
-                                <div id="err_msg_fitnessVal" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_fitnessVal">
-                                    </span>
-                                </div>
-                                @else
-                                <input type="date" value="" name="fitnness_validity" id="fitnness_validity" class="form-control in-form mandatory" required>
-                                <div id="err_msg_fitnessVal" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_fitnessVal">
-                                    </span>
-                                </div>
-                                @endif
-                            </div>
-
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Fitness certificate copy</label>
-                                <span>*</span> <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8">
-                                @if (
-                                !empty($allocated_sticker->application->vehicleinfo->fitness_cert_photo) ||
-                                !empty($runningApp->vehicleinfo->fitness_cert_photo))
-                                <div>
-                                    <img src="{{ !empty($allocated_sticker->application->vehicleinfo->fitness_cert_photo) ? url($allocated_sticker->application->vehicleinfo->fitness_cert_photo) : url($runningApp->vehicleinfo->fitness_cert_photo) }}" id="prev_image5_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
-                                </div>
-                                <input type="file" id="image5_b_exist" name="fitness_cert_photo" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" disabled>
-                                <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->vehicleinfo->fitness_cert_photo) ? url($allocated_sticker->application->vehicleinfo->fitness_cert_photo) : url($runningApp->vehicleinfo->fitness_cert_photo) }}">Change</button>
-                                <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
-                                <div id="err_msg_fitnessCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_fitnessCopy">
-                                    </span>
-                                </div>
-                                @else
-                                <div>
-                                    <img src="" id="prev_image5_b" alt="preview application" hidden>
-                                </div>
-                                <input type="file" id="image5_b" name="fitness_cert_photo" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" required>
-                                <div id="err_msg_fitnessCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_fitnessCopy">
-                                    </span>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 is_transparent_hide" hidden>
+                                        <label for="" class="label-form">Glass Type</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 is_transparent_hide" hidden>
+                                        <select name="glass_type" id="glass_type" class="form-control in-form mandatory">
+                                            <option selected disabled>Select Glass Type </option>
+                                            <option value="Normal-Transparent">Transparent Normal Glass </option>
+                                            <option value="Semi-Black"> Semi-Black </option>
+                                            <option value="Black">Black</option>
+                                        </select>
+                                        <div id="err_msg_glasstype" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i>
+                                            <span id="err_glasstype"> </span>
+                                        </div>
+                                    </div>
                                 </div>
                                 @endif
-                            </div>
-
-
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Insurance validity</label> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8">
-
-                                <input type="date" value="" name="insurance_validity" id="insurance_validity" class="form-control in-form">
-                                <div id="err_msg_insuranceValidity" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_insuranceValidity">
-                                    </span>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">In/Out Gate</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @if (!empty($allocated_sticker->application->vehicleinfo->in_out_gate) || !empty($runningApp->vehicleinfo->in_out_gate))
+                                        <textarea name="in_out_gate" id="in_out_gate" class="form-control in-form">{{ !empty($allocated_sticker->application->vehicleinfo->in_out_gate) ? $allocated_sticker->application->vehicleinfo->in_out_gate : $runningApp->vehicleinfo->in_out_gate }}</textarea>
+                                        @else
+                                        <textarea name="in_out_gate" id="in_out_gate" class="form-control in-form"></textarea>
+                                        @endif
+                                        <div id="err_msg_inOut_Gate" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_inOut_Gate"> </span>
+                                        </div>
+                                    </div>
                                 </div>
 
-                            </div>
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Insurance certificate copy</label> <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8">
-                                @if (
-                                !empty($allocated_sticker->application->vehicleinfo->insurance_cert_photo) ||
-                                !empty($runningApp->vehicleinfo->insurance_cert_photo))
-                                <div>
-                                    <img src="{{ !empty($allocated_sticker->application->vehicleinfo->insurance_cert_photo) ? url($allocated_sticker->application->vehicleinfo->insurance_cert_photo) : url($runningApp->vehicleinfo->insurance_cert_photo) }}" id="prev_image6_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">In/Out Time</label> <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @if (!empty($allocated_sticker->application->vehicleinfo->in_out_time) || !empty($runningApp->vehicleinfo->in_out_time))
+                                        <input type="time" name="in_out_time" id="in_out_time" class="form-control in-form" value="{{ !empty($allocated_sticker->application->vehicleinfo->in_out_time) ? $allocated_sticker->application->vehicleinfo->in_out_time : $runningApp->vehicleinfo->in_out_time }}">
+                                        @else
+                                        <input type="time" name="in_out_time" id="in_out_time" class="form-control in-form">
+                                        @endif
+                                    </div>
                                 </div>
-                                <input type="file" id="image6_b_exist" name="insurance_cert_photo" accept="image/png, image/jpg, image/jpeg" class="form-control in-form" disabled>
-                                <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->vehicleinfo->insurance_cert_photo) ? url($allocated_sticker->application->vehicleinfo->insurance_cert_photo) : url($runningApp->vehicleinfo->insurance_cert_photo) }}">Change</button>
-                                <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
-                                <div id="err_msg_insuranceCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_insuranceCopy">
-                                    </span>
-                                </div>
-                                @else
-                                <div>
-                                    <img src="" id="prev_image6_b" alt="preview application" hidden>
-                                </div>
-                                <input type="file" id="image6_b" name="insurance_cert_photo" accept="image/png, image/jpg, image/jpeg" class="form-control in-form">
-                                <div id="err_msg_insuranceCopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_insuranceCopy">
-                                    </span>
-                                </div>
-                                @endif
-                            </div>
-                            <div class="col-md-3 offset-md-1" id="Necessity-div">
-                                <label for="" class="label-form">Necessity of using Cantonment gate</label>
-                                <span></span> <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8">
-                                @if (
-                                !empty($allocated_sticker->application->vehicleinfo->necessity_to_use) ||
-                                !empty($runningApp->vehicleinfo->necessity_to_use))
-                                <textarea type="text" id="necessity_to_use" name="necessity_to_use" class="form-control in-form">{{ !empty($allocated_sticker->application->vehicleinfo->necessity_to_use) ? $allocated_sticker->application->vehicleinfo->necessity_to_use : $runningApp->vehicleinfo->necessity_to_use }}</textarea>
-
-                                <div id="err_msg_necessity" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_necessity">
-                                    </span>
-                                </div>
-                                @else
-                                <textarea type="text" id="necessity_to_use" value="" name="necessity_to_use" class="form-control in-form"></textarea>
-                                <div id="err_msg_necessity" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_necessity">
-                                    </span>
-                                </div>
-                                @endif
-                            </div>
-                            @if (
-                            (!empty($allocated_sticker->application->vehicleinfo->glass_type) &&
-                            $allocated_sticker->application->vehicleinfo->glass_type != 'transparent') ||
-                            (!empty($runningApp->vehicleinfo->glass_type) && $runningApp->vehicleinfo->glass_type != 'transparent'))
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Type of Glass(if not
-                                    transparent)</label> <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8">
-                                <input type="checkbox" checked id="is_transparent" value="0" name="is_not_transparent" class="is_transparent" style="margin-top: 3px;width: 16px; height: 16px;">
-                            </div>
-                            <div class="col-md-3 offset-md-1 is_transparent_hide">
-                                <label for="" class="label-form">Glass Type</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 is_transparent_hide">
-                                <select name="glass_type" id="glass_type" class="form-control in-form mandatory">
-
-                                    <option selected value="{{ !empty($allocated_sticker->application->vehicleinfo->glass_type) ? $allocated_sticker->application->vehicleinfo->glass_type : $runningApp->vehicleinfo->glass_type }}">
-                                        {{ !empty($allocated_sticker->application->vehicleinfo->glass_type) ? $allocated_sticker->application->vehicleinfo->glass_type : $runningApp->vehicleinfo->glass_type }}
-                                    </option>
-
-                                    <option value="Normal-Transparent">Transparent Normal Glass </option>
-                                    <option value="Semi-Black"> Semi-Black </option>
-                                    <option value="Black">Black</option>
-                                </select>
-                                <div id="err_msg_glasstype" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i>
-                                    <span id="err_glasstype"> </span>
-                                </div>
-                            </div>
-                            @else
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Type of Glass(if not
-                                    transparent)</label> <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8">
-                                <input type="checkbox" id="is_transparent" value="0" name="is_not_transparent" class="is_transparent" style="margin-top: 3px;width: 16px; height: 16px;">
-                            </div>
-                            <div class="col-md-3 offset-md-1 is_transparent_hide" hidden>
-                                <label for="" class="label-form">Glass Type</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 is_transparent_hide" hidden>
-                                <select name="glass_type" id="glass_type" class="form-control in-form mandatory">
-                                    <option selected disabled>Select Glass Type </option>
-                                    <option value="Normal-Transparent">Transparent Normal Glass </option>
-                                    <option value="Semi-Black"> Semi-Black </option>
-                                    <option value="Black">Black</option>
-                                </select>
-                                <div id="err_msg_glasstype" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i>
-                                    <span id="err_glasstype"> </span>
-                                </div>
-                            </div>
-                            @endif
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">In/Out Gate</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8">
-                                @if (!empty($allocated_sticker->application->vehicleinfo->in_out_gate) || !empty($runningApp->vehicleinfo->in_out_gate))
-                                <textarea name="in_out_gate" id="in_out_gate" class="form-control in-form">{{ !empty($allocated_sticker->application->vehicleinfo->in_out_gate) ? $allocated_sticker->application->vehicleinfo->in_out_gate : $runningApp->vehicleinfo->in_out_gate }}</textarea>
-                                @else
-                                <textarea name="in_out_gate" id="in_out_gate" class="form-control in-form"></textarea>
-                                @endif
-                                <div id="err_msg_inOut_Gate" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_inOut_Gate"> </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">In/Out Time</label> <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8">
-                                @if (!empty($allocated_sticker->application->vehicleinfo->in_out_time) || !empty($runningApp->vehicleinfo->in_out_time))
-                                <input type="time" name="in_out_time" id="in_out_time" class="form-control in-form" value="{{ !empty($allocated_sticker->application->vehicleinfo->in_out_time) ? $allocated_sticker->application->vehicleinfo->in_out_time : $runningApp->vehicleinfo->in_out_time }}">
-                                @else
-                                <input type="time" name="in_out_time" id="in_out_time" class="form-control in-form">
-                                @endif
-                            </div>
 
 
+                            </div>
                             <div class="col-md-1 offset-md-5">
                                 <button type="button" class="btn btn-secondary  custm-btn" id="E-p-btn1">Previous</button>
                             </div>
@@ -1509,17 +1569,18 @@
                                 <button type="submit" class="btn btn-primary next_btn custm-btn" id="E-n-btn2">Save & Continue</button>
                             </div>
 
+
                         </div>
                     </form>
                 </div>
             </div>
             <div class="tab-pane " id="driver" role="tabpanel" aria-labelledby="driver-tab">
-                <div class="container-fluid" >
+                <div class="container-fluid">
                     <form id="driver_detail_form" class="form Applycationform" enctype="multipart/form-data">
                         {{ csrf_field() }}
                         <input type="hidden" name="old_application_id" value="@isset($old_application_id) {{ $old_application_id }} @endisset">
 
-                        <div class="row" >
+                        <div class="row">
 
                             <div class="col-md-3 offset-md-1">
                                 <label for="" class="label-form">Is Vehicle Self Driven?</label>
