@@ -238,7 +238,7 @@ class HomeController extends Controller
                 $app_status = ($application->app_status == 'forwarded to PS') ? "Forwarded  To MP DTE" : $application->app_status;
                 return $app_status;
             })
-            ->rawColumns(['applicant_name', 'BA_no', 'Rank_id', 'phone_number', 'sticker_number', 'vehicleType', 'address'])
+            ->rawColumns(['applicant_name', 'BA_no', 'Rank_id', 'phone_number', 'sticker_number', 'vehicleType', 'address','app_status'])
             ->toJson();
     }
 

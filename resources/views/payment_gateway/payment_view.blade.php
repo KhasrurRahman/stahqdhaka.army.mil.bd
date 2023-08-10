@@ -54,16 +54,16 @@
                         </div>
 
                         <div class="persional-details">
-                            @if(isset(auth()->guard('applicant')->user()->applications))
-                            <?php $sl=1; ?>
-                            @foreach(auth()->guard('applicant')->user()->applications->sortByDesc('created_at') as $key => $app)
+                            {{-- @if(isset(auth()->guard('applicant')->user()->applications))
+                            
+                            @foreach(auth()->guard('applicant')->user()->applications->sortByDesc('created_at') as $key => $app) --}}
                                 <table class="table">
                                     <tr>
                                         <td>
                                             <h5>Name:</h5>
                                         </td>
                                         <td>
-                                            {{!empty($app->applicant->name)?$app->applicant->name:''}}
+                                            {{$application->applicant->name}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -71,7 +71,7 @@
                                             <h5>Reg No:</h5>
                                         </td>
                                         <td>
-                                            {{!empty($app->vehicleinfo->reg_number)?$app->vehicleinfo->reg_number:''}}
+                                            {{$application->vehicleinfo->reg_number}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -80,16 +80,16 @@
 
                                         </td>
                                         <td>
-                                            {{!empty($app->applicant->phone)?$app->applicant->phone:""}}
+                                            {{$application->applicant->phone}}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h5>Apply Date:</h5>
-
+                                            
                                         </td>
                                         <td>
-                                            {{!empty($app->app_date)?$app->app_date:""}}
+                                            {{$application->app_date}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -98,16 +98,16 @@
 
                                         </td>
                                         <td>
-                                            {{!empty($app->vehicleinfo->vehicleType->name)?$app->vehicleinfo->vehicleType->name:''}}
+                                            {{$application->vehicleType->name}}
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <h5>National Id:</h5>
-
+                                            
                                         </td>
                                         <td>
-                                            {{ isset($app->applicant->applicantDetail->nid_number) ? $app->applicant->applicantDetail->nid_number : '-' }}
+                                            {{$application->applicant->applicantDetail->nid_number}}
                                         </td>
                                     </tr>
 
@@ -116,8 +116,8 @@
 
                                 </table>
 
-                            @endforeach
-                            @endif
+                            {{-- @endforeach
+                            @endif --}}
                         </div>
 
                     </div>
@@ -136,7 +136,7 @@
 
                                         </td>
                                         <td>
-                                            $ 100.00
+                                            {{$application->stickerCategory->price}}
                                         </td>
                                     </tr>
 

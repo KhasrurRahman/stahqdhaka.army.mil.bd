@@ -268,7 +268,7 @@ Route::get('previous-remark-update', 'FrontController@previousRemarkUpdate');
 
 
 //payment gateway
-Route::get('payment/view', 'PaymentController@paymentView')->name('payment.view');
+Route::get('payment/view/{id}', 'PaymentController@paymentView')->name('payment.view');
 
 
 
