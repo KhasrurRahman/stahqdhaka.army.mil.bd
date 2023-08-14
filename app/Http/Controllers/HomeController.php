@@ -47,6 +47,8 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
+
     public function DataTableClientFetch(Request $request){
         DB::statement(DB::raw('set @rownum=0'));
         $applicant=Applicant::select([
@@ -3145,7 +3147,9 @@ class HomeController extends Controller
     }
     
     public function rhythm(){
+        // $currentDateTime = Carbon::now();
+        $newDateTime = Carbon::now()->addMonth(3);
 
-        HomeController::callSmsApi('01761955765', 'SMS is Working');
+        // HomeController::callSmsApi('01761955765', 'SMS is Working');
     }
 }

@@ -984,61 +984,63 @@
                         <input type="hidden" name="old_application_id" value="@isset($old_application_id) {{ $old_application_id }} @endisset">
                         <div class="row">
                             <div class="vehicle-details-container">
-                                <div class="col-md-3 offset-md-1">
-                                    <label for="" class="label-form">Vehicle type</label> <span>*</span> <br>
-                                    <small></small>
-                                </div>
-
-                                @if (!empty($allocated_sticker))
-                                <div class="col-md-8">
-                                    <select name="vehicle_type" id="vehicle_type" class="form-control-sm mandatory" required>
-                                        <option selected value="{{ $allocated_sticker->application->vehicleType->id }}">
-                                            {{ $allocated_sticker->application->vehicleType->name }}
-                                        </option>
-                                    </select>
-
-                                </div>
-                                @else
-                                <div class="col-md-8">
-
-                                    <select name="vehicle_type" id="vehicle_type" class="form-control-sm mandatory" required>
-                                        @if (!empty($runningApp->vehicleType->id))
-                                        <option value="{{ $runningApp->vehicleType->id }}" selected>
-                                            {{ $runningApp->vehicleType->name }}
-                                        </option>
-                                        @else
-                                        <option selected="" disabled> Select A Vehicle</option>
-                                        @endif
-                                        @if (isset($vehicleTypes))
-                                        @foreach ($vehicleTypes as $vehicleType)
-                                        <option value="{{ $vehicleType->id }}">{{ $vehicleType->name }}
-                                        </option>
-                                        @endforeach
-                                        @endif
-                                    </select>
-
-                                    <div id="err_msg_vehicletype" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i>
-                                        <span id="err_vehicletype"> </span>
-                                    </div>
-                                </div>
-
-                                @endif
                                 <div class="row">
-                                <div class="col-md-3 offset-md-1">
-                                    <label for="" class="label-form">Vehicle registration number</label>
-                                    <span>*</span> <br>
-                                    <small></small>
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Vehicle type</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+
+                                    @if (!empty($allocated_sticker))
+                                    <div class="col-md-8">
+                                        <select name="vehicle_type" id="vehicle_type" class="form-control-sm mandatory" required>
+                                            <option selected value="{{ $allocated_sticker->application->vehicleType->id }}">
+                                                {{ $allocated_sticker->application->vehicleType->name }}
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                    @else
+                                    <div class="col-md-8">
+
+                                        <select name="vehicle_type" id="vehicle_type" class="form-control-sm mandatory" required>
+                                            @if (!empty($runningApp->vehicleType->id))
+                                            <option value="{{ $runningApp->vehicleType->id }}" selected>
+                                                {{ $runningApp->vehicleType->name }}
+                                            </option>
+                                            @else
+                                            <option selected="" disabled> Select A Vehicle</option>
+                                            @endif
+                                            @if (isset($vehicleTypes))
+                                            @foreach ($vehicleTypes as $vehicleType)
+                                            <option value="{{ $vehicleType->id }}">{{ $vehicleType->name }}
+                                            </option>
+                                            @endforeach
+                                            @endif
+                                        </select>
+
+                                        <div id="err_msg_vehicletype" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i>
+                                            <span id="err_vehicletype"> </span>
+                                        </div>
+                                    </div>
+
+                                    @endif
                                 </div>
-                                @if (!empty($allocated_sticker))
-                                <div class="col-md-8">
-                                    <input type="text" name="vehicle_reg_no" id="vehicle_reg_no" class="form-control in-form" value="{{ $allocated_sticker->reg_number }}" required>
-                                </div>
-                                </div>
-                                @else
-                                <div class="col-md-8">
-                                    <input type="text" name="vehicle_reg_no" id="vehicle_reg_no" class="form-control in-form mandatory" placeholder="5654445454" required value="{{ !empty($runningApp->vehicleinfo->reg_number) ? $runningApp->vehicleinfo->reg_number : '' }}">
-                                    <div id="err_msg_vehiclereg" class="err_msg" hidden><i class="fas fa-exclamation-triangle"></i>
-                                        <span id="err_vehiclereg"> </span>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Vehicle registration number</label>
+                                        <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    @if (!empty($allocated_sticker))
+                                    <div class="col-md-8">
+                                        <input type="text" name="vehicle_reg_no" id="vehicle_reg_no" class="form-control in-form" value="{{ $allocated_sticker->reg_number }}" required>
+                                    </div>
+                                    @else
+                                    <div class="col-md-8">
+                                        <input type="text" name="vehicle_reg_no" id="vehicle_reg_no" class="form-control in-form mandatory" placeholder="5654445454" required value="{{ !empty($runningApp->vehicleinfo->reg_number) ? $runningApp->vehicleinfo->reg_number : '' }}">
+                                        <div id="err_msg_vehiclereg" class="err_msg" hidden><i class="fas fa-exclamation-triangle"></i>
+                                            <span id="err_vehiclereg"> </span>
+                                        </div>
                                     </div>
                                 </div>
                                 @endif
@@ -1072,9 +1074,10 @@
                                         <input type="file" id="image2_b" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" name="vehicle_reg_photo" required>
                                         <div id="err_msg_vehicleregphoto" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_vehicleregphoto"> </span>
                                         </div>
-                                        @endif
-                                        @endif
                                     </div>
+                                    @endif
+                                    @endif
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 offset-md-1">
