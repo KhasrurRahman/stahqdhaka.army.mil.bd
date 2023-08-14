@@ -1,5 +1,17 @@
 <?php
 
+
+Route::get('/clear_cache', function () {
+    Artisan::call('route:clear');
+    Artisan::call('cache:clear');
+    Artisan::call('config:clear');
+    Artisan::call('config:cache');
+    Artisan::call('view:clear');
+    Artisan::call('storage:link');
+return 'Clear Cache';
+});
+
+
 Route::get('/rhythm','HomeController@rhythm');
 // front-pages
 Route::get('/','FrontController@index')->name('index');
@@ -269,10 +281,14 @@ Route::get('previous-remark-update', 'FrontController@previousRemarkUpdate');
 
 //payment gateway
 Route::get('payment/view/{id}', 'PaymentController@paymentView')->name('payment.view');
+Route::get('payment_success/{id}', 'PaymentController@payment_success')->name('payment_success');
 
-
-
- // Route::post('applicationForm/store','ApplicationController@applicationFormStore')->middleware('applicant');
-
+// Route::post('applicationForm/store','ApplicationController@applicationFormStore')->middleware('applicant');
+ 
+Route::post('make_payment', 'SSlComarzController@make_payment')->name('make_payment');
+Route::post('subscriber/sslcommerz/success', 'SSlComarzController@success')->name('success');
+Route::post('subscriber/sslcommerz/fail', 'SSlComarzController@fail')->name('failure');
+Route::post('subscriber/sslcommerz/cancel', 'SSlComarzController@cancel')->name('cancel');
+Route::post('subscriber/sslcommerz/ipn', 'SSlComarzController@ipn')->name('ipn');
 
 

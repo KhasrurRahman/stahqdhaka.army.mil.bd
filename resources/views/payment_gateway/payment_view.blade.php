@@ -1,159 +1,5 @@
 @extends('layouts.customer-master')
 @section('content')
-    {{-- <link rel="stylesheet" href="./style.css"> --}}
-
-
-    <div class="container mt-5 payment_gateway">
-        <div class="page">
-            <div class="col-12  page-title ">
-                <h3>Payment Page</h3>
-            </div>
-            <form action="">
-                <div class=" content">
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-7 contain-l">
-
-                        {{-- <div class="mt-5 mb-5 info-l">
-                        <div>
-                            <label for="name">Name :</label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Enter Name">
-                        </div>
-                        <div>
-                            <label for="mobile">Reg No :</label>
-                            <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile (Ex: 016*******1)">
-                        </div>
-                        <div>
-                            <label for="mobile">Phone No :</label>
-                            <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile (Ex: 016*******1)">
-                        </div>
-
-                        <div>
-                            <label for="mobile">Apply Date :</label>
-                            <input type="text" name="mobile" id="mobile" class="form-control" placeholder="Mobile (Ex: 016*******1)">
-                        </div>
-                        <div>
-                            <label for="">Selection : </label>
-                            <select name="" id="" class="form-control">
-                                <option value="">Select One</option>
-                                <option value="">Select One</option>
-                                <option value="">Select One</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="input-group"> Address :</label>
-                            <div class="input-group">
-
-                                <input type="text" class="form-control" placeholder="City" aria-label="Username">
-
-                                <input type="text" class="form-control" placeholder="Area" aria-label="Server">
-                            </div>
-                        </div>
-                    </div> --}}
-
-                        <div class="plan-1">
-                            <h4>Personal Details</h4>
-                        </div>
-
-                        <div class="persional-details">
-                            {{-- @if(isset(auth()->guard('applicant')->user()->applications))
-                            
-                            @foreach(auth()->guard('applicant')->user()->applications->sortByDesc('created_at') as $key => $app) --}}
-                                <table class="table">
-                                    <tr>
-                                        <td>
-                                            <h5>Name:</h5>
-                                        </td>
-                                        <td>
-                                            {{$application->applicant->name}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h5>Reg No:</h5>
-                                        </td>
-                                        <td>
-                                            {{$application->vehicleinfo->reg_number}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h5>Phone No:</h5>
-
-                                        </td>
-                                        <td>
-                                            {{$application->applicant->phone}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h5>Apply Date:</h5>
-                                            
-                                        </td>
-                                        <td>
-                                            {{$application->app_date}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h5>Vehicle Type:</h5>
-
-                                        </td>
-                                        <td>
-                                            {{$application->vehicleType->name}}
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>
-                                            <h5>National Id:</h5>
-                                            
-                                        </td>
-                                        <td>
-                                            {{$application->applicant->applicantDetail->nid_number}}
-                                        </td>
-                                    </tr>
-
-                                    
-
-
-                                </table>
-
-                            {{-- @endforeach
-                            @endif --}}
-                        </div>
-
-                    </div>
-                    <div class="col-12 col-sm-12 col-md-6  col-lg-5 contain-r">
-                        <div class="m-5 info-r">
-                            <div class="plan">
-                                <h4>Price</h4>
-                            </div>
-
-                            <div>
-                                <table class="table">
-                                    <tr>
-                                        <td>
-                                            <h5>Price</h5>
-                                            <p>Details Of payment</p>
-
-                                        </td>
-                                        <td>
-                                            {{$application->stickerCategory->price}}
-                                        </td>
-                                    </tr>
-
-                                </table>
-
-
-                                <div style="margin: 0 auto;">
-                                    <Button class="btn button p-2">PAY NOW</Button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-
     <style>
         {
             padding: 0;
@@ -249,7 +95,7 @@
             color: #252625;
             padding: 0;
             margin: 0;
-            
+
         }
 
         .persional-details .table tr td {
@@ -279,4 +125,126 @@
             }
         }
     </style>
+
+
+    <div class="container mt-5 payment_gateway">
+        <div class="page">
+            <div class="col-12  page-title">
+                <h3>Payment Page</h3>
+            </div>
+
+            @if (Session::has('alert'))
+                <div class="alert alert-danger text-center" role="alert">
+                    {{ Session::get('alert') }}
+                </div>
+            @endif
+            
+            @if (Session::has('message'))
+                <div class="alert alert-success text-center" role="alert">
+                    {{ Session::get('message') }}
+                </div>
+            @endif
+
+            <form action="{{ route('make_payment') }}" method="post">
+                <div class=" content">
+                    <div class="col-12 col-sm-12 col-md-6 col-lg-7 contain-l">
+                        <div class="plan-1">
+                            <h4>Personal Details</h4>
+                        </div>
+
+                        <input type="hidden" name="name" value="{{ $application->applicant->name }}">
+                        <input type="hidden" name="reg_number" value="{{ $application->vehicleinfo->reg_number }}">
+                        <input type="hidden" name="phone" value="{{ $application->applicant->phone }}">
+                        <input type="hidden" name="amount" value="{{ $application->stickerCategory->price }}">
+                        <input type="hidden" name="application_id" value="{{ $application->id }}">
+
+                        <div class="persional-details">
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <h5>Name:</h5>
+                                    </td>
+                                    <td>
+                                        {{ $application->applicant->name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Reg No:</h5>
+                                    </td>
+                                    <td>
+                                        {{ $application->vehicleinfo->reg_number }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Phone No:</h5>
+
+                                    </td>
+                                    <td>
+                                        {{ $application->applicant->phone }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Apply Date:</h5>
+
+                                    </td>
+                                    <td>
+                                        {{ $application->app_date }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>Vehicle Type:</h5>
+
+                                    </td>
+                                    <td>
+                                        {{ $application->vehicleType->name }}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <h5>National Id:</h5>
+
+                                    </td>
+                                    <td>
+                                        {{ $application->applicant->applicantDetail->nid_number }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-6  col-lg-5 contain-r">
+                        <div class="m-5 info-r">
+                            <div class="plan">
+                                <h4>Price</h4>
+                            </div>
+
+                            <div>
+                                <table class="table">
+                                    <tr>
+                                        <td>
+                                            <h5>Price</h5>
+                                            <p>Details Of payment</p>
+
+                                        </td>
+                                        <td>
+                                            {{ $application->stickerCategory->price }}
+                                        </td>
+                                    </tr>
+
+                                </table>
+                                <div style="margin: 0 auto;">
+                                    <button type="submit" class="btn btn-primary btn-block" id="pay_now_button">Pay
+                                        now</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 @endsection
