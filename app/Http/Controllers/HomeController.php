@@ -1292,14 +1292,15 @@ class HomeController extends Controller
 
 
     public function applicationApprove(Request $request){
-
-
+ 
         $final_approveSms='';
         $mail_status='';
         $sms_sent='';
         $app = Application::where('app_number',$request->app_num)->first();
         $appnotifyexist=ApplicationNotify::where('application_id', $app->id)->first();
-
+        //start_newapproved_msg
+        $sticker_category = StickerCategory::where('name', $request->sticker_type)->first();
+        //end_newapproved_msg
         if($app->app_status == "pending" || $app->app_status == "updated" && $app->retake == 2 || $app->app_status == "forwarded to PS"){
             $approveAppCount =DB::table('applications')
                 ->where(function($query) {
@@ -1384,7 +1385,11 @@ class HomeController extends Controller
             $res = HomeController::callSmsApi($app->applicant->phone, $final_approveSms);
 
             $sms_sent = '';
-
+            //start_newapproved_msg
+            $approveSms2 = str_replace('/sp/', $sticker_category->price, $approveSms1);
+            // dd($approveSms2);
+            $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
+            //end_newapproved_msg
             if ($res == 1 ){
                 /*$sms_applicant = new SmsApplicant;
                 $sms_applicant->application_id = $follow_up->application_id;
