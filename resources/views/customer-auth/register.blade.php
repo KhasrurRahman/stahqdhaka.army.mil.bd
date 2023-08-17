@@ -2,12 +2,43 @@
 @section('content')
 @include('layouts.header')
 @include('layouts.newsticker')
+<style>
+.signup-title-div{
+    max-width: 600px;
+    height: 50px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    border-radius: 0px;
+
+    background-color: rgb(209, 4, 4);
+}
+.signup-title-div h4{
+    padding: 0;
+    margin: 0;
+}
+@media screen and (max-width: 1380px) {
+    .signup-title-div{
+   width: 45%;
+}
+}
+@media screen and (max-width: 767px) {
+    .signup-title-div{
+   width: 400px;
+}
+}
+</style>
 <div class="wrapper" id="signup-area">
     <div class="container-fluid">
         <div class="row">
             <div class="col-md-12" >
                 <div class="bar signup-div">
                     <i class="fa fa-user-plus"></i> Sign Up
+                </div>
+                <div class="bar signup-title-div">
+                   <b>if you have registered already , please don't need to register again</b> 
                 </div>
                 <div class="well signup-div">
 
