@@ -1075,9 +1075,10 @@
                                         <input type="file" id="image2_b" accept="image/png, image/jpg, image/jpeg" class="form-control in-form mandatory" name="vehicle_reg_photo" required>
                                         <div id="err_msg_vehicleregphoto" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_vehicleregphoto"> </span>
                                         </div>
-                                        @endif
-                                        @endif
                                     </div>
+                                    @endif
+                                    @endif
+
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 offset-md-1">

@@ -47,6 +47,8 @@ class HomeController extends Controller
      * @return \Illuminate\Http\Response
      */
 
+
+
     public function DataTableClientFetch(Request $request){
         DB::statement(DB::raw('set @rownum=0'));
         $applicant=Applicant::select([
@@ -1291,92 +1293,95 @@ class HomeController extends Controller
     }
 
 
-    public function applicationApprove(Request $request){
+    public function applicationApprove(Request $request)
+    {
 
-
-        $final_approveSms='';
-        $mail_status='';
-        $sms_sent='';
-        $app = Application::where('app_number',$request->app_num)->first();
-        $appnotifyexist=ApplicationNotify::where('application_id', $app->id)->first();
-
-        if($app->app_status == "pending" || $app->app_status == "updated" && $app->retake == 2 || $app->app_status == "forwarded to PS"){
-            $approveAppCount =DB::table('applications')
-                ->where(function($query) {
+        $final_approveSms = '';
+        $mail_status = '';
+        $sms_sent = '';
+        $app = Application::where('app_number', $request->app_num)->first();
+        $appnotifyexist = ApplicationNotify::where('application_id', $app->id)->first();
+        //start_newapproved_msg
+        $sticker_category = StickerCategory::where('name', $request->sticker_type)->first();
+        //end_newapproved_msg
+        if ($app->app_status == "pending" || $app->app_status == "updated" && $app->retake == 2 || $app->app_status == "forwarded to PS") {
+            $approveAppCount = DB::table('applications')
+                ->where(function ($query) {
                     $query->where('applications.app_status', 'approved')
                         ->orWhere('applications.app_status', 'PS approved');
                 })
-                ->join('application_notifies','application_notifies.application_id', '=', 'applications.id')
-                ->whereDate('application_notifies.sticker_delivery_date' , '=' , $request->sticker_delivery_date)
+                ->join('application_notifies', 'application_notifies.application_id', '=', 'applications.id')
+                ->whereDate('application_notifies.sticker_delivery_date', '=', $request->sticker_delivery_date)
                 ->count();
-            $time='';
-            $app_per_slot=20;
-            $slotFactor=$approveAppCount/$app_per_slot;
-            $no_free_slot='';
-            if($slotFactor <= 1)
-            {$time='10.00 AM';}
-            elseif ( 1 < $slotFactor && $slotFactor <= 2)
-            {$time='10.30 AM';}
-            elseif ( 2 < $slotFactor && $slotFactor <= 3)
-            {$time='11.00 AM';}
-            elseif ( 3 < $slotFactor && $slotFactor <= 4)
-            {$time='11.30 AM';}
-            elseif ( 4 < $slotFactor && $slotFactor <= 5)
-            {$time='12.00 PM';}
-            elseif ( 5 < $slotFactor && $slotFactor <= 6)
-            {$time='12.30 PM';}
-            elseif ( 6 < $slotFactor && $slotFactor <= 7)
-            {$time='01.00 PM';}
-            elseif ( 7 < $slotFactor && $slotFactor <= 8)
-            {$time='01.30 PM';}
-            else{
-                $no_free_slot= "No space available in any delivery time slot on ".$request->sticker_delivery_date;
-                return json_encode(array('no slot available',$no_free_slot));
+            $time = '';
+            $app_per_slot = 20;
+            $slotFactor = $approveAppCount / $app_per_slot;
+            $no_free_slot = '';
+            if ($slotFactor <= 1) {
+                $time = '10.00 AM';
+            } elseif (1 < $slotFactor && $slotFactor <= 2) {
+                $time = '10.30 AM';
+            } elseif (2 < $slotFactor && $slotFactor <= 3) {
+                $time = '11.00 AM';
+            } elseif (3 < $slotFactor && $slotFactor <= 4) {
+                $time = '11.30 AM';
+            } elseif (4 < $slotFactor && $slotFactor <= 5) {
+                $time = '12.00 PM';
+            } elseif (5 < $slotFactor && $slotFactor <= 6) {
+                $time = '12.30 PM';
+            } elseif (6 < $slotFactor && $slotFactor <= 7) {
+                $time = '01.00 PM';
+            } elseif (7 < $slotFactor && $slotFactor <= 8) {
+                $time = '01.30 PM';
+            } else {
+                $no_free_slot = "No space available in any delivery time slot on " . $request->sticker_delivery_date;
+                return json_encode(array('no slot available', $no_free_slot));
             }
             if ($app->app_status == "forwarded to PS")
                 $app->ps_approved = 1;
 
-            $app->app_status = $app->app_status == "forwarded to PS"?"PS approved":"approved";
+            $app->app_status = $app->app_status == "forwarded to PS" ? "PS approved" : "approved";
             $app->sticker_category = $request->sticker_type;
             $app->retake = 1;
             $app->save();
 
-            if(!$appnotifyexist){
+            if (!$appnotifyexist) {
                 $ApplicationNotify = new ApplicationNotify;
                 $ApplicationNotify->application_id = $app->id;
                 $ApplicationNotify->applicant_phone = $app->applicant->phone;
                 $ApplicationNotify->app_status = $app->app_status;
                 $ApplicationNotify->sticker_delivery_date = $request->sticker_delivery_date;
                 $ApplicationNotify->save();
-            }else{
+            } else {
                 $appnotifyexist->app_status = $app->app_status;
                 $appnotifyexist->sticker_delivery_date = $request->sticker_delivery_date;
                 $appnotifyexist->mis_matched = Null;
                 $appnotifyexist->custom_reject_sms = Null;
                 $appnotifyexist->save();
-
             }
-            $sms=Sms::where('type','=','approved')->first();
+            $sms = Sms::where('type', '=', 'approved')->first();
 
-            $bn= array("১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০");
-            $en= array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
+            $bn = array("১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০");
+            $en = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
             $banglaDate = str_replace($en, $bn, $request->sticker_delivery_date);
             $banglaTime = str_replace($en, $bn, $time);
             $banglaRegNumber = str_replace($en, $bn, $app->vehicleinfo->reg_number);
-            $dateApplicationNotify = date('d-m-Y',strtotime($request->sticker_delivery_date));
-            $approveSms= str_replace('//',$dateApplicationNotify, $sms->sms_text);
-            $approveSms1= str_replace('/time/',$time, $approveSms);
-            $final_approveSms= str_replace('/reg/',$app->vehicleinfo->reg_number, $approveSms1);
-            $follow_up=new FollowUp;
-            $follow_up->application_id=$app->id;
-            $follow_up->app_status=$app->app_status;
-            $follow_up->status="Application approved";
-            $follow_up->created_date=Carbon::now();
-            $follow_up->comment=$final_approveSms;
-            $follow_up->updater_role=auth()->user()->role;
-            $follow_up->updated_by=auth()->user()->name;
+            $dateApplicationNotify = date('d-m-Y', strtotime($request->sticker_delivery_date));
+            $approveSms = str_replace('//', $dateApplicationNotify, $sms->sms_text);
+            $approveSms1 = str_replace('/time/', $time, $approveSms);
+            $approveSms2 = str_replace('/sp/', $sticker_category->price, $approveSms1);
+            $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
+
+            $follow_up = new FollowUp;
+            $follow_up->application_id = $app->id;
+            $follow_up->app_status = $app->app_status;
+            $follow_up->status = "Application approved";
+            $follow_up->created_date = Carbon::now();
+            $follow_up->comment = $final_approveSms;
+            $follow_up->updater_role = auth()->user()->role;
+            $follow_up->updated_by = auth()->user()->name;
             $follow_up->save();
-            $queue_status="approve".time();
+            $queue_status = "approve" . time();
             // $ApplicationNotify->applicant_phone;
 
             // Send SMS
@@ -1384,8 +1389,7 @@ class HomeController extends Controller
             $res = HomeController::callSmsApi($app->applicant->phone, $final_approveSms);
 
             $sms_sent = '';
-
-            if ($res == 1 ){
+            if ($res == 1) {
                 /*$sms_applicant = new SmsApplicant;
                 $sms_applicant->application_id = $follow_up->application_id;
                 $sms_applicant->sms_id = $this->sms->id;
@@ -1393,7 +1397,7 @@ class HomeController extends Controller
                 $sms_applicant->api_CamID = $res['CamID'];
                 $sms_applicant->save();*/
                 $sms_sent = 'success';
-            }else{
+            } else {
                 $sms_sent = 'fail';
             }
 
@@ -1405,20 +1409,18 @@ class HomeController extends Controller
             ->onQueue($queue_status)->delay(Carbon::now()->addSeconds(0));
             dispatch($job); */
 
-            $successOrFail="success";
-            $data ="Application approved successfully!!";
-            $changleDate = date('d-m-Y',strtotime($request->sticker_delivery_date));
-            return json_encode(array($data,$successOrFail,$app,$queue_status,$changleDate,$follow_up));
-        }
-        elseif($app->app_status == "approved"){
-            $successOrFail="fail";
-            $data ="This Application already approved";
-            return json_encode(array($data,$successOrFail));
-        }
-        else{
-            $data ="You can approve pending application only.Thank You.";
-            $successOrFail="not-now";
-            return array($data,$successOrFail);
+            $successOrFail = "success";
+            $data = "Application approved successfully!!";
+            $changleDate = date('d-m-Y', strtotime($request->sticker_delivery_date));
+            return json_encode(array($data, $successOrFail, $app, $queue_status, $changleDate, $follow_up));
+        } elseif ($app->app_status == "approved") {
+            $successOrFail = "fail";
+            $data = "This Application already approved";
+            return json_encode(array($data, $successOrFail));
+        } else {
+            $data = "You can approve pending application only.Thank You.";
+            $successOrFail = "not-now";
+            return array($data, $successOrFail);
         }
     }
 
@@ -3140,7 +3142,9 @@ class HomeController extends Controller
     }
     
     public function rhythm(){
+        // $currentDateTime = Carbon::now();
+        $newDateTime = Carbon::now()->addMonth(3);
 
-        HomeController::callSmsApi('01761955765', 'SMS is Working');
+        // HomeController::callSmsApi('01761955765', 'SMS is Working');
     }
 }
