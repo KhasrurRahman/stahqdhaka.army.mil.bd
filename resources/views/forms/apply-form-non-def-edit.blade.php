@@ -1140,7 +1140,7 @@
                                 @endif
                             </div>
                             </div>
-                            <div class="row">
+                            <div class="row"> 
                             <div class="col-md-3 offset-md-1 not_self_driven" hidden>
                                 <label for="" class="label-form">NID copy</label> <span>*</span> <br>
                                 <small></small>
