@@ -1042,8 +1042,9 @@
                                             <span id="err_vehiclereg"> </span>
                                         </div>
                                     </div>
+
+                                    @endif
                                 </div>
-                                @endif
                                 <div class="row">
                                     <div class="col-md-3 offset-md-1">
                                         <label for="" class="label-form">Registration certificate copy</label>
@@ -1584,256 +1585,287 @@
                         <input type="hidden" name="old_application_id" value="@isset($old_application_id) {{ $old_application_id }} @endisset">
 
                         <div class="row">
+                            <div class="driver-details-container">
+                                <div class="row">
 
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Is Vehicle Self Driven?</label>
-                                <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8">
-                                @if (
-                                (!empty($allocated_sticker->application->driverinfo->driver_is_owner) &&
-                                $allocated_sticker->application->driverinfo->driver_is_owner == 1) ||
-                                (!empty($runningApp->driverinfo->driver_is_owner) && $runningApp->driverinfo->driver_is_owner == 1))
-                                <input type="checkbox" id="self_driven_checkbox" value="1" name="self_driven" checked class="self_driven" style="margin-top: 3px;width: 16px; height: 16px;">
-                                @else
-                                <input type="checkbox" id="self_driven_checkbox" value="1" name="self_driven" class="self_driven" style="margin-top: 3px;width: 16px; height: 16px;">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Is Vehicle Self Driven?</label>
+                                        <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @if (
+                                        (!empty($allocated_sticker->application->driverinfo->driver_is_owner) &&
+                                        $allocated_sticker->application->driverinfo->driver_is_owner == 1) ||
+                                        (!empty($runningApp->driverinfo->driver_is_owner) && $runningApp->driverinfo->driver_is_owner == 1))
+                                        <input type="checkbox" id="self_driven_checkbox" value="1" name="self_driven" checked class="self_driven" style="margin-top: 3px;width: 16px; height: 16px;">
+                                        @else
+                                        <input type="checkbox" id="self_driven_checkbox" value="1" name="self_driven" class="self_driven" style="margin-top: 3px;width: 16px; height: 16px;">
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Driver's name</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                        @if (!empty($allocated_sticker->application->driverinfo->name) || !empty($runningApp->driverinfo->name))
+                                        <input type="text" name="name" id="driver_name" class="form-control in-form" required="false" value="{{ !empty($allocated_sticker->application->driverinfo->name) ? $allocated_sticker->application->driverinfo->name : $runningApp->driverinfo->name }}">
+                                        <div id="err_msg_drivername" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_drivername">
+                                            </span>
+                                        </div>
+                                        @else
+                                        <input type="text" name="name" id="driver_name" class="form-control in-form" required="false">
+
+                                        <div id="err_msg_drivername" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_drivername">
+                                            </span>
+                                        </div>
+                                        @endif
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Driver's photo</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                        @if (!empty($allocated_sticker->application->driverinfo->photo) || !empty($runningApp->driverinfo->photo))
+                                        <div>
+                                            <img src="{{ !empty($allocated_sticker->application->driverinfo->photo) ? url($allocated_sticker->application->driverinfo->photo) : url($runningApp->driverinfo->photo) }}" id="prev_image10_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                        </div>
+                                        <input type="file" id="image10_b_exist" accept="image/png, image/jpg, image/jpeg" name="photo" class="form-control in-form" placeholder="" disabled>
+                                        <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->driverinfo->photo) ? url($allocated_sticker->application->driverinfo->photo) : url($runningApp->driverinfo->photo) }}">Change</button>
+                                        <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
+                                        <div id="err_msg_driverphoto" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverphoto">
+                                            </span>
+                                        </div>
+                                        @else
+                                        <div>
+
+                                            <img src="" id="prev_image10_b" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" id="image10_b" accept="image/png, image/jpg, image/jpeg" name="photo" class="form-control in-form" placeholder="" required>
+                                        <div id="err_msg_driverphoto" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverphoto">
+                                            </span>
+                                        </div>
+                                        @endif
+
+                                    </div>
+                                </div>
+                                <?php $driver_address = null; ?>
+                                @if (!empty($allocated_sticker->application->driverinfo->address) || !empty($runningApp->driverinfo->address))
+                                <?php $driver_address = json_decode(!empty($allocated_sticker->application->driverinfo->address) ? $allocated_sticker->application->driverinfo->address : $runningApp->driverinfo->address, true); ?>
                                 @endif
-                            </div>
-
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Driver's name</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-
-                            <div class="col-md-8 not_self_driven" hidden>
-                                @if (!empty($allocated_sticker->application->driverinfo->name) || !empty($runningApp->driverinfo->name))
-                                <input type="text" name="name" id="driver_name" class="form-control in-form" required="false" value="{{ !empty($allocated_sticker->application->driverinfo->name) ? $allocated_sticker->application->driverinfo->name : $runningApp->driverinfo->name }}">
-                                <div id="err_msg_drivername" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_drivername">
-                                    </span>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <p style="margin-bottom: 0px; margin-top: 30px;">Present address</p> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                    </div>
                                 </div>
-                                @else
-                                <input type="text" name="name" id="driver_name" class="form-control in-form" required="false">
-
-                                <div id="err_msg_drivername" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_drivername">
-                                    </span>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Flat No.</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                        <input type="text" name="dri_pre_flat" id="dri_pre_flat" class="driver_pre_flat form-control in-form" required value="{{ !empty($driver_address['present']['flat']) ? $driver_address['present']['flat'] : '' }}">
+                                        <div id="err_msg_driverflat" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverflat"> </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                @endif
-                            </div>
-
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Driver's photo</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
-                                @if (!empty($allocated_sticker->application->driverinfo->photo) || !empty($runningApp->driverinfo->photo))
-                                <div>
-                                    <img src="{{ !empty($allocated_sticker->application->driverinfo->photo) ? url($allocated_sticker->application->driverinfo->photo) : url($runningApp->driverinfo->photo) }}" id="prev_image10_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">House No.</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                        <input type="text" name="dri_pre_house" id="dri_pre_house" class="driver_pre_house form-control in-form" required value="{{ !empty($driver_address['present']['house']) ? $driver_address['present']['house'] : '' }}">
+                                        <div id="err_msg_driverhouse" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverhouse"> </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="file" id="image10_b_exist" accept="image/png, image/jpg, image/jpeg" name="photo" class="form-control in-form" placeholder="" disabled>
-                                <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->driverinfo->photo) ? url($allocated_sticker->application->driverinfo->photo) : url($runningApp->driverinfo->photo) }}">Change</button>
-                                <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
-                                <div id="err_msg_driverphoto" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverphoto">
-                                    </span>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Road No.</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                        <input type="text" name="dri_pre_road" id="dri_pre_road" class="driver_pre_road form-control in-form" placeholder="" required value="{{ !empty($driver_address['present']['road']) ? $driver_address['present']['road'] : '' }}">
+                                        <div id="err_msg_driverroad" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverroad"> </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                @else
-                                <div>
-
-                                    <img src="" id="prev_image10_b" alt="preview application" hidden>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Block/Section</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                        <input type="text" name="dri_pre_block" id="dri_pre_block" class="driver_pre_block form-control in-form" placeholder="" required value="{{ !empty($driver_address['present']['block']) ? $driver_address['present']['block'] : '' }}">
+                                        <div id="err_msg_driverblock" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverblock"> </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                <input type="file" id="image10_b" accept="image/png, image/jpg, image/jpeg" name="photo" class="form-control in-form" placeholder="" required>
-                                <div id="err_msg_driverphoto" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverphoto">
-                                    </span>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Area</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                        <input type="text" name="dri_pre_area" id="dri_pre_area" class="driver_pre_area form-control in-form" placeholder="" required value="{{ !empty($driver_address['present']['area']) ? $driver_address['present']['area'] : '' }}">
+                                        <div id="err_msg_driverarea" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverarea"> </span>
+                                        </div>
+                                    </div>
                                 </div>
-                                @endif
-
-                            </div>
-
-                            <?php $driver_address = null; ?>
-                            @if (!empty($allocated_sticker->application->driverinfo->address) || !empty($runningApp->driverinfo->address))
-                            <?php $driver_address = json_decode(!empty($allocated_sticker->application->driverinfo->address) ? $allocated_sticker->application->driverinfo->address : $runningApp->driverinfo->address, true); ?>
-                            @endif
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <p style="margin-bottom: 0px; margin-top: 30px;">Present address</p> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Flat No.</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
-                                <input type="text" name="dri_pre_flat" id="dri_pre_flat" class="driver_pre_flat form-control in-form" required value="{{ !empty($driver_address['present']['flat']) ? $driver_address['present']['flat'] : '' }}">
-                                <div id="err_msg_driverflat" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverflat"> </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">House No.</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
-                                <input type="text" name="dri_pre_house" id="dri_pre_house" class="driver_pre_house form-control in-form" required value="{{ !empty($driver_address['present']['house']) ? $driver_address['present']['house'] : '' }}">
-                                <div id="err_msg_driverhouse" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverhouse"> </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Road No.</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
-                                <input type="text" name="dri_pre_road" id="dri_pre_road" class="driver_pre_road form-control in-form" placeholder="" required value="{{ !empty($driver_address['present']['road']) ? $driver_address['present']['road'] : '' }}">
-                                <div id="err_msg_driverroad" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverroad"> </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Block/Section</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
-                                <input type="text" name="dri_pre_block" id="dri_pre_block" class="driver_pre_block form-control in-form" placeholder="" required value="{{ !empty($driver_address['present']['block']) ? $driver_address['present']['block'] : '' }}">
-                                <div id="err_msg_driverblock" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverblock"> </span>
-                                </div>
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Area</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
-                                <input type="text" name="dri_pre_area" id="dri_pre_area" class="driver_pre_area form-control in-form" placeholder="" required value="{{ !empty($driver_address['present']['area']) ? $driver_address['present']['area'] : '' }}">
-                                <div id="err_msg_driverarea" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverarea"> </span>
-                                </div>
-                            </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <p style="margin-bottom: 0px; margin-top: 30px;">Permanent address</p> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
 
 
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <p style="margin-bottom: 0px; margin-top: 30px;">Permanent address</p> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
+                                        @if (isset($driver_address['permanent']) != '' &&
+                                        isset($driver_address['present']['flat']) == isset($driver_address['permanent']['p_flat']) &&
+                                        isset($driver_address['present']['house']) == isset($driver_address['permanent']['p_house']) &&
+                                        isset($driver_address['present']['road']) == isset($driver_address['permanent']['p_road']) &&
+                                        isset($driver_address['present']['block']) == isset($driver_address['permanent']['p_block']) &&
+                                        isset($driver_address['present']['area']) == isset($driver_address['permanent']['p_area']))
+                                        <input type="checkbox" name="driver_address_same_as_present" id="driver_address_same_as_present" class="driver_address_same_as_present" checked style="margin-top: 3px;width: 16px; height: 16px;">
+                                        @else
+                                        <input type="checkbox" name="driver_address_same_as_present" id="driver_address_same_as_present" class="driver_address_same_as_present" style="margin-top: 3px;width: 16px; height: 16px;">
+                                        @endif
+                                        <label for="driver_address_same_as_present" style="display: inline-block; margin-bottom: 0px; margin-top: 30px;" title="Use present address">Same as present address</label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Flat No.</label> <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven driver_perm" hidden>
+                                        <input type="text" name="dri_per_flat" id="" class="driver_per_flat form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_flat']) ? $driver_address['permanent']['p_flat'] : '' }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">House No.</label> <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven driver_perm" hidden>
+                                        <input type="text" name="dri_per_house" id="" class="driver_per_house form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_house']) ? $driver_address['permanent']['p_house'] : '' }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Road No.</label> <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven driver_perm" hidden>
+                                        <input type="text" name="dri_per_road" id="" class="driver_per_road form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_road']) ? $driver_address['permanent']['p_road'] : '' }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Block/Section</label> <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven driver_perm" hidden>
+                                        <input type="text" name="dri_per_block" id="" class="driver_per_block form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_block']) ? $driver_address['permanent']['p_block'] : '' }}">
+                                    </div>
 
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">Area</label> <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven driver_perm" hidden>
+                                        <input type="text" name="dri_per_area" id="" class="driver_per_area  form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_area']) ? $driver_address['permanent']['p_area'] : '' }}">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">National ID number</label> <span>*</span>
+                                        <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                        @if (!empty($allocated_sticker->application->driverinfo->nid_number) || !empty($runningApp->driverinfo->nid_number))
+                                        <input type="number" name="nid_number" id="drivernid_number" class="form-control in-form mandatory" placeholder="5654445454" required value="{{ !empty($allocated_sticker->application->driverinfo->nid_number) ? $allocated_sticker->application->driverinfo->nid_number : $runningApp->driverinfo->nid_number }}">
+                                        <div id="err_msg_driverNid" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverNid">
+                                            </span>
+                                        </div>
+                                        @else
+                                        <input type="number" name="nid_number" id="drivernid_number" class="form-control in-form mandatory" placeholder="5654445454" required>
 
-                                @if (isset($driver_address['permanent']) != '' &&
-                                isset($driver_address['present']['flat']) == isset($driver_address['permanent']['p_flat']) &&
-                                isset($driver_address['present']['house']) == isset($driver_address['permanent']['p_house']) &&
-                                isset($driver_address['present']['road']) == isset($driver_address['permanent']['p_road']) &&
-                                isset($driver_address['present']['block']) == isset($driver_address['permanent']['p_block']) &&
-                                isset($driver_address['present']['area']) == isset($driver_address['permanent']['p_area']))
-                                <input type="checkbox" name="driver_address_same_as_present" id="driver_address_same_as_present" class="driver_address_same_as_present" checked style="margin-top: 3px;width: 16px; height: 16px;">
-                                @else
-                                <input type="checkbox" name="driver_address_same_as_present" id="driver_address_same_as_present" class="driver_address_same_as_present" style="margin-top: 3px;width: 16px; height: 16px;">
-                                @endif
-                                <label for="driver_address_same_as_present" style="display: inline-block; margin-bottom: 0px; margin-top: 30px;" title="Use present address">Same as present address</label>
-                            </div>
-
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Flat No.</label> <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven driver_perm" hidden>
-                                <input type="text" name="dri_per_flat" id="" class="driver_per_flat form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_flat']) ? $driver_address['permanent']['p_flat'] : '' }}">
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">House No.</label> <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven driver_perm" hidden>
-                                <input type="text" name="dri_per_house" id="" class="driver_per_house form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_house']) ? $driver_address['permanent']['p_house'] : '' }}">
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Road No.</label> <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven driver_perm" hidden>
-                                <input type="text" name="dri_per_road" id="" class="driver_per_road form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_road']) ? $driver_address['permanent']['p_road'] : '' }}">
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Block/Section</label> <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven driver_perm" hidden>
-                                <input type="text" name="dri_per_block" id="" class="driver_per_block form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_block']) ? $driver_address['permanent']['p_block'] : '' }}">
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">Area</label> <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven driver_perm" hidden>
-                                <input type="text" name="dri_per_area" id="" class="driver_per_area  form-control in-form" placeholder="" value="{{ !empty($driver_address['permanent']['p_area']) ? $driver_address['permanent']['p_area'] : '' }}">
-                            </div>
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">National ID number</label> <span>*</span>
-                                <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
-                                @if (!empty($allocated_sticker->application->driverinfo->nid_number) || !empty($runningApp->driverinfo->nid_number))
-                                <input type="number" name="nid_number" id="drivernid_number" class="form-control in-form mandatory" placeholder="5654445454" required value="{{ !empty($allocated_sticker->application->driverinfo->nid_number) ? $allocated_sticker->application->driverinfo->nid_number : $runningApp->driverinfo->nid_number }}">
-                                <div id="err_msg_driverNid" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverNid">
-                                    </span>
+                                        <div id="err_msg_driverNid" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverNid">
+                                            </span>
+                                        </div>
+                                        @endif
+                                    </div>
                                 </div>
-                                @else
-                                <input type="number" name="nid_number" id="drivernid_number" class="form-control in-form mandatory" placeholder="5654445454" required>
-
-                                <div id="err_msg_driverNid" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverNid">
-                                    </span>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 not_self_driven" hidden>
+                                        <label for="" class="label-form">NID copy</label> <span>*</span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 not_self_driven" hidden>
+                                        @if (!empty($allocated_sticker->application->driverinfo->nid_photo) || !empty($runningApp->driverinfo->nid_photo))
+                                        <div>
+                                            <img src="{{ !empty($allocated_sticker->application->driverinfo->nid_photo) ? url($allocated_sticker->application->driverinfo->nid_photo) : url($runningApp->driverinfo->nid_photo) }}" id="prev_image11_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                        </div>
+                                        <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_exist" name="nid_photo" class="form-control mandatory in-form" required disabled>
+                                        <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->driverinfo->nid_photo) ? url($allocated_sticker->application->driverinfo->nid_photo) : url($runningApp->driverinfo->nid_photo) }}">Change</button>
+                                        <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
+                                        <div id="err_msg_driverNidcopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverNidcopy">
+                                            </span>
+                                        </div>
+                                        @else
+                                        <div>
+                                            <img src="" id="prev_image11_b" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b" name="nid_photo" class="form-control mandatory in-form" required>
+                                        <div id="err_msg_driverNidcopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverNidcopy">
+                                            </span>
+                                        </div>
+                                        @endif
+                                    </div>
                                 </div>
-                                @endif
-                            </div>
-
-                            <div class="col-md-3 offset-md-1 not_self_driven" hidden>
-                                <label for="" class="label-form">NID copy</label> <span>*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 not_self_driven" hidden>
-                                @if (!empty($allocated_sticker->application->driverinfo->nid_photo) || !empty($runningApp->driverinfo->nid_photo))
-                                <div>
-                                    <img src="{{ !empty($allocated_sticker->application->driverinfo->nid_photo) ? url($allocated_sticker->application->driverinfo->nid_photo) : url($runningApp->driverinfo->nid_photo) }}" id="prev_image11_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1">
+                                        <label for="" class="label-form">Driving license copy</label> <span>*</span>
+                                        <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8">
+                                        @if (
+                                        !empty($allocated_sticker->application->driverinfo->licence_photo) ||
+                                        !empty($runningApp->driverinfo->licence_photo))
+                                        <div>
+                                            <img src="{{ !empty($allocated_sticker->application->driverinfo->licence_photo) ? url($allocated_sticker->application->driverinfo->licence_photo) : url($runningApp->driverinfo->licence_photo) }}" id="prev_image12_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
+                                        </div>
+                                        <input type="file" id="image12_b_exist" accept="image/png, image/jpg, image/jpeg" name="licence_photo" class="form-control in-form mandatory" required disabled>
+                                        <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->driverinfo->licence_photo) ? url($allocated_sticker->application->driverinfo->licence_photo) : url($runningApp->driverinfo->licence_photo) }}">Change</button>
+                                        <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
+                                        <div id="err_msg_driverlicence" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverlicence">
+                                            </span>
+                                        </div>
+                                        @else
+                                        <div>
+                                            <img src="" id="prev_image12_b" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" id="image12_b" accept="image/png, image/jpg, image/jpeg" name="licence_photo" class="form-control in-form mandatory" required>
+                                        <div id="err_msg_driverlicence" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverlicence">
+                                            </span>
+                                        </div>
+                                        @endif
+                                    </div>
                                 </div>
-                                <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_exist" name="nid_photo" class="form-control mandatory in-form" required disabled>
-                                <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->driverinfo->nid_photo) ? url($allocated_sticker->application->driverinfo->nid_photo) : url($runningApp->driverinfo->nid_photo) }}">Change</button>
-                                <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
-                                <div id="err_msg_driverNidcopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverNidcopy">
-                                    </span>
-                                </div>
-                                @else
-                                <div>
-                                    <img src="" id="prev_image11_b" alt="preview application" hidden>
-                                </div>
-                                <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b" name="nid_photo" class="form-control mandatory in-form" required>
-                                <div id="err_msg_driverNidcopy" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverNidcopy">
-                                    </span>
-                                </div>
-                                @endif
-                            </div>
-
-                            <div class="col-md-3 offset-md-1">
-                                <label for="" class="label-form">Driving license copy</label> <span>*</span>
-                                <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8">
-                                @if (
-                                !empty($allocated_sticker->application->driverinfo->licence_photo) ||
-                                !empty($runningApp->driverinfo->licence_photo))
-                                <div>
-                                    <img src="{{ !empty($allocated_sticker->application->driverinfo->licence_photo) ? url($allocated_sticker->application->driverinfo->licence_photo) : url($runningApp->driverinfo->licence_photo) }}" id="prev_image12_b_exist" alt="preview application" style="display: inline-block; height: auto; padding: 10px 0px; max-width: 70%; width: auto; max-height: 200px;">
-                                </div>
-                                <input type="file" id="image12_b_exist" accept="image/png, image/jpg, image/jpeg" name="licence_photo" class="form-control in-form mandatory" required disabled>
-                                <button type="button" name="" class="btn btn-info change-btn" data-photo="{{ !empty($allocated_sticker->application->driverinfo->licence_photo) ? url($allocated_sticker->application->driverinfo->licence_photo) : url($runningApp->driverinfo->licence_photo) }}">Change</button>
-                                <button type='button' class='btn btn-warning cancel-btn' hidden="">Cancel</button>
-                                <div id="err_msg_driverlicence" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverlicence">
-                                    </span>
-                                </div>
-                                @else
-                                <div>
-                                    <img src="" id="prev_image12_b" alt="preview application" hidden>
-                                </div>
-                                <input type="file" id="image12_b" accept="image/png, image/jpg, image/jpeg" name="licence_photo" class="form-control in-form mandatory" required>
-                                <div id="err_msg_driverlicence" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id="err_driverlicence">
-                                    </span>
-                                </div>
-                                @endif
                             </div>
                             <div class="col-md-1 offset-md-5">
                                 <button type="button" class="btn btn-secondary custm-btn" id="E-p-btn2">Previous</button>
@@ -1842,6 +1874,7 @@
                                 <button type="submit" class="btn btn-primary  custm-btn" id="E-n-btn3">Save &
                                     Continue</button>
                             </div>
+
                         </div>
                     </form>
                 </div>
@@ -1854,78 +1887,85 @@
                         <input type="hidden" name="old_application_id" value="@isset($old_application_id) {{ $old_application_id }} @endisset">
 
                         <div class="row">
-                            <div class="col-md-3 offset-md-1 ">
-                                <label for="" class="label-form">Father's Testimonial: </label>
-                                <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 ">
+                            <div class="doc-details-container">
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 ">
+                                        <label for="" class="label-form">Father's Testimonial: </label>
+                                        <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 ">
 
-                                <div>
-                                    <img src="" id="prev_image11_b_father_test" alt="preview application" hidden>
+                                        <div>
+                                            <img src="" id="prev_image11_b_father_test" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_father_test" name="father_testm_photo" class="form-control mandatory in-form">
+
+                                        <div id="" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id=""> </span>
+                                        </div>
+
+                                    </div>
                                 </div>
-                                <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_father_test" name="father_testm_photo" class="form-control mandatory in-form">
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 ">
+                                        <label for="" class="label-form">Mother's Testimonial: </label>
+                                        <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 ">
 
-                                <div id="" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id=""> </span>
+                                        <div>
+                                            <img src="" id="prev_image11_b_mother_test" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_mother_test" name="mother_testm_photo" class="form-control mandatory in-form">
+
+                                        <div id="" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id=""> </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 ">
+                                        <label for="" class="label-form"> Authorized Certificate : </label>
+                                        <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 ">
+
+                                        <div>
+                                            <img src="" id="prev_image11_b_auth_cert" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_auth_cert" name="auth_cert_photo" class="form-control in-form">
+
+                                        <div id="" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id=""> </span>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 offset-md-1 ">
+                                        <label for="" class="label-form"> Marriage Certificate Copy: </label>
+                                        <span></span> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-8 ">
+
+                                        <div>
+                                            <img src="" id="prev_image11_b_marriage_cert" alt="preview application" hidden>
+                                        </div>
+                                        <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_marriage_cert" name="marriage_cert_photo" class="form-control in-form">
+
+                                        <div id="" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id=""> </span>
+                                        </div>
+                                        @if (!empty($allocated_sticker))
+                                        <input type="hidden" name="renew_app" class="form-control in-form" value="yes">
+                                        <input type="hidden" name="app_id" class="form-control in-form" value="{{ $allocated_sticker->application->id }}">
+                                        @endif
+
+                                    </div>
                                 </div>
 
                             </div>
-                            <div class="col-md-3 offset-md-1 ">
-                                <label for="" class="label-form">Mother's Testimonial: </label>
-                                <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 ">
-
-                                <div>
-                                    <img src="" id="prev_image11_b_mother_test" alt="preview application" hidden>
-                                </div>
-                                <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_mother_test" name="mother_testm_photo" class="form-control mandatory in-form">
-
-                                <div id="" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id=""> </span>
-                                </div>
-
-                            </div>
-
-
-                            <div class="col-md-3 offset-md-1 ">
-                                <label for="" class="label-form"> Authorised Certificate : </label>
-                                <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 ">
-
-                                <div>
-                                    <img src="" id="prev_image11_b_auth_cert" alt="preview application" hidden>
-                                </div>
-                                <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_auth_cert" name="auth_cert_photo" class="form-control in-form">
-
-                                <div id="" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id=""> </span>
-                                </div>
-
-                            </div>
-                            <div class="col-md-3 offset-md-1 ">
-                                <label for="" class="label-form"> Marriage Certificate Copy: </label>
-                                <span></span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-8 ">
-
-                                <div>
-                                    <img src="" id="prev_image11_b_marriage_cert" alt="preview application" hidden>
-                                </div>
-                                <input type="file" accept="image/png, image/jpg, image/jpeg" id="image11_b_marriage_cert" name="marriage_cert_photo" class="form-control in-form">
-
-                                <div id="" class="err_msg" hidden> <i class="fas fa-exclamation-triangle"></i> <span id=""> </span>
-                                </div>
-                                @if (!empty($allocated_sticker))
-                                <input type="hidden" name="renew_app" class="form-control in-form" value="yes">
-                                <input type="hidden" name="app_id" class="form-control in-form" value="{{ $allocated_sticker->application->id }}">
-                                @endif
-
-                            </div>
-
-
                             <div class="col-md-1 offset-md-5">
                                 <button type="button" class="btn btn-secondary custm-btn" id="E-p-btn3">Previous</button>
                             </div>

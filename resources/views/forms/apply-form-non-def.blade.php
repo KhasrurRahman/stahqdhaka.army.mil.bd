@@ -1558,7 +1558,7 @@
                                 <div class="row">
                                     <div class="col-md-3 offset-md-1 ">
                                         <label for="" class="label-form">School Certificate: (If your Child Studying Proyash
-                                            School/ Collage.)</label> <span></span> <br>
+                                            School/ College.)</label> <span></span> <br>
                                         <small></small>
                                     </div>
                                     <div class="col-md-8 ">
@@ -1650,7 +1650,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-md-3 offset-md-1 ">
-                                        <label for="" class="label-form"> Authorised Certificate : </label> <span></span> <br>
+                                        <label for="" class="label-form"> Authorized Certificate : </label> <span></span> <br>
                                         <small></small>
                                     </div>
                                     <div class="col-md-8 ">
