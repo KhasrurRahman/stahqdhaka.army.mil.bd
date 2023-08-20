@@ -156,6 +156,13 @@
               <a href="#">Sticker</a>
               <ul class="submenu">
                 <li><a href="{{url('/policy')}}">Policy</a></li>
+                @if(!auth()->guard('applicant')->check())
+              
+                  <li><a href="{{route('customer.login')}}">Login</a></li>
+                  <li><a href="{{route('customer.register')}}">Register</a></li>
+                
+              
+                @endif
               </ul>
             </li>
             <li>
@@ -203,7 +210,7 @@
             <li><a href="#contact-us">Contact</a></li>
             {{--<li><a href="{{asset('assets/pdf/Notice_update.pdf')}}" target="_blank"><img src="{{ url('assets/images/imp_notice_red.gif') }}" alt="Notice" width="120px"></a></li>--}}
 
-            <li>
+            {{-- <li>
               <a href="#" style="text-transform:capitalize;">Apply Now </a>
               @if(!auth()->guard('applicant')->check())
               <ul class="submenu">
@@ -212,7 +219,7 @@
               
               </ul>
               @endif
-            </li>
+            </li> --}}
           </ul>
         </nav>
       </div>

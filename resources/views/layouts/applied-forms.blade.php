@@ -28,6 +28,7 @@
                                         <th scope="col">Vehicle Type</th>
                                         <th scope="col">Nat ID</th>
                                         <th scope="col">Status</th>
+                                        <th scope="col">Payment Status</th>
                                         <th scope="col">Action</th>
                                     </tr>
                                 </thead>
@@ -55,9 +56,13 @@
                                                             {{ $app->app_status }}
                                                         @endif
                                                     @endif
-                                                    &nbsp;
-                                                    @if ($app->payment_status == '0' && $app->app_status == 'approved')
-                                                        PaymentPending
+                                                 
+                                                </td>
+                                                <td>
+                                                    @if ($app->payment_status == '0')
+                                                        <button class="btn btn-danger btn-sm">Unpaid</button>
+                                                    @else
+                                                    <button class="btn btn-success btn-sm">Paid</button>
                                                     @endif
                                                 </td>
                                                 <td>

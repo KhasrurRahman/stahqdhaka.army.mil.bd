@@ -84,6 +84,19 @@
                         </span>
                     </div>
                 @endif
+
+                <div class="col-md-3">
+                    <span>Payment Status</span>
+                </div>
+                <div class="col-md-9 app_status_wrapper">
+                    <span>
+                        @if ($app->payment_status == '0')
+                        <button class="btn btn-danger btn-sm">Unpaid</button>
+                    @else
+                        <button class="btn btn-success btn-sm">Paid</button>
+                    @endif
+                    </span>
+                </div>
                 @if (!empty($app->sticker_category))
                     <div class="col-md-3">
                         <span>Sticker Type</span>

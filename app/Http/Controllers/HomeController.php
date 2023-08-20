@@ -1359,8 +1359,9 @@ class HomeController extends Controller
                 $appnotifyexist->custom_reject_sms = Null;
                 $appnotifyexist->save();
             }
+            
             $sms = Sms::where('type', '=', 'approved')->first();
-
+            $url_link = route('payment.view', encrypt($app->id));
             $bn = array("১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০");
             $en = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
             $banglaDate = str_replace($en, $bn, $request->sticker_delivery_date);
@@ -1370,7 +1371,9 @@ class HomeController extends Controller
             $approveSms = str_replace('//', $dateApplicationNotify, $sms->sms_text);
             $approveSms1 = str_replace('/time/', $time, $approveSms);
             $approveSms2 = str_replace('/sp/', $sticker_category->price, $approveSms1);
-            $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
+            $approveSms3 = str_replace('/link/', $url_link, $approveSms2);
+            $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms3);
+            // $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
 
             $follow_up = new FollowUp;
             $follow_up->application_id = $app->id;
