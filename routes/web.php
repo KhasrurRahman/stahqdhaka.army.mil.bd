@@ -228,6 +228,12 @@ Route::group(['middleware' => 'prevent_back_history'],function(){
 	Route::get('slogan/add', 'SloganController@add')->name('slogan.add')->middleware('super-admin');
 	Route::post('slogan/add', 'SloganController@store')->name('slogan.store')->middleware('super-admin');
 
+
+
+	//paymentgateways report
+	Route::get('/all-paid-recollect/application','PaymentController@allPaidRecollect');
+	// Route::post('/search/sticker/report','HomeController@searchStickerReport');
+
 	
 });
 
