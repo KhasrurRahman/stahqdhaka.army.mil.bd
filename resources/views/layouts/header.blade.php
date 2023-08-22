@@ -153,7 +153,7 @@
                @endif 
             </li>
             <li>
-              <a href="#">Sticker</a>
+              <a href="#">Apply For Sticker</a>
               <ul class="submenu">
                 <li><a href="{{url('/policy')}}">Policy</a></li>
                 @if(!auth()->guard('applicant')->check())

@@ -239,8 +239,11 @@ class HomeController extends Controller
             ->addColumn('app_status', function (Application $application) {
                 $app_status = ($application->app_status == 'forwarded to PS') ? "Forwarded  To MP DTE" : $application->app_status;
                 return $app_status;
+            })->addColumn('payment_status', function (Application $application) {
+                $payment_status = ($application->payment_status == '0') ? "Unpaid" : "Paid";
+                return $payment_status;
             })
-            ->rawColumns(['applicant_name', 'BA_no', 'Rank_id', 'phone_number', 'sticker_number', 'vehicleType', 'address','app_status'])
+            ->rawColumns(['applicant_name', 'BA_no', 'Rank_id', 'phone_number', 'sticker_number', 'vehicleType', 'address','app_status','payment_status'])
             ->toJson();
     }
 

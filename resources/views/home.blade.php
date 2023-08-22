@@ -385,6 +385,7 @@
                 <th scope="col">Stkr. No</th>
                 <th scope="col">Reg. No.</th>
                 <th scope="col" class="ata">Status</th>
+                <th scope="col" class="ata">Payment Status</th>
                 </tr>
             </thead>
           </table>
@@ -450,6 +451,7 @@
                     {data: 'sticker_number', name: 'sticker_number'},
                     {data: 'Reg_number', name: 'Reg_number'},
                     {data: 'app_status', name: 'app_status'},
+                    {data: 'payment_status', name: 'payment_status'},
                 ],
                 order:[[5,"desc"]]
             });
