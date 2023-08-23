@@ -65,6 +65,10 @@ class Application extends Model
     {
         return $this->hasOne(ApplicationNotify::class);
     }
+    public function payment()
+    {
+        return $this->belongsTo(Payment::class);
+    }
     
 
 }

@@ -15,6 +15,8 @@ use App\Mail\IssuedMail;
 use App\Mail\NotifyApplicant;
 use App\Mail\notifyApproveMail;
 use App\Mail\notifyRejectMail;
+use App\Payment;
+use App\PaymentReport;
 use App\Rank;
 use App\Sms;
 use App\SmsApplicant;
@@ -3149,5 +3151,114 @@ class HomeController extends Controller
         $newDateTime = Carbon::now()->addMonth(3);
 
         // HomeController::callSmsApi('01761955765', 'SMS is Working');
+    }
+
+    public function paymentReportData(Request $request){
+
+        // $sticker_category = $request->sticker_category??"";
+        // $inspec_from_date = $request->inspec_from_date??"";
+        // $inspec_to_date = $request->inspec_to_date??"";
+
+        // // Search data
+        // $stickerTypes = StickerCategory::all();
+        // $applicant_name = $request->applicant_name ?? "";
+        // $ba = $request->ba ?? "";
+        // $rank = $request->rank ?? "";
+        // $reg_no = $request->reg_no ?? "";
+        // $phone = $request->phone ?? "";
+        // $date = $request->date ?? "";
+        // $Vehicle_Type = $request->Vehicle_Type ?? "";
+        // $glass_type = $request->Vehicle_Type ?? "";
+        // $sticker_type = $request->sticker_type ?? "";
+        // $present_address = $request->present_address ?? "";
+       
+        // $apps = Application::with('applicant', 'vehicleinfo', 'applicationNotify', 'applicant.applicantDetail', 'applicant.applicantDetail.rank')->where('app_status', 'approved')->groupBy('sticker_category')->get();
+         //return view('apps.payment-report-list', compact('sticker_category', 'inspec_from_date', 'inspec_to_date','applicant_name', 'ba', 'rank', 'reg_no', 'phone', 'date', 'Vehicle_Type', 'glass_type', 'present_address','apps'));
+        //  $pay=Payment::all();
+        
+         return view('apps.payment-report-list' );
+    }
+    public function paymentReportDatatable(Request $request)
+    {
+        $query=Payment::with(['application', 'application.applicant'])->get();
+        
+        
+        
+        
+        
+        // $query = Application::with(['applicant', 'vehicleinfo', 'applicationNotify', 'applicant.applicantDetail', 'vehicleinfo.vehicleType','applicant.applicantDetail.rank'])->whereIn('app_status', ['approved', 'PS approved']);
+        $sticker_category = $request->sticker_category;
+        $from_date = request('inspec_from_date')? date('Y-m-d', strtotime(request('inspec_from_date'))):'';
+        $to_date = request('inspec_to_date')? date('Y-m-d', strtotime(request('inspec_to_date'))):'';
+
+        if($sticker_category){
+            $query->where('sticker_category', $sticker_category);
+        }
+
+        if($from_date && $to_date){
+            //$applicaation_ids = ApplicationNotify::whereBetween('sticker_delivery_date', [$from_date, $to_date])->pluck('application_id');
+            //$query->whereIn('id', $applicaation_ids);
+            $query->whereRaw("id IN (SELECT application_id FROM application_notifies where sticker_delivery_date BETWEEN '$from_date' AND ' $to_date' )");
+        }
+
+        // Search Data 
+        if ($request->applicant_name) {
+            $applicant_ids = Applicant::where('name', 'like', '%' . $request->applicant_name . '%')->pluck('id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($request->phone) {
+            $applicant_ids = Applicant::where('phone', 'like', '%' . $request->phone . '%')->pluck('id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($request->ba) {
+            $applicant_ids = ApplicantDetail::where('applicant_BA_no', 'like', '%' . $request->ba . '%')->pluck('applicant_id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($request->rank) {
+            $rank_ids = Rank::where('name', 'like',  '%' . $request->rank . '%')->pluck('id');
+            $applicant_ids = ApplicantDetail::whereIn('rank_id', $rank_ids)->pluck('applicant_id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($request->present_address) {
+            $applicant_ids = ApplicantDetail::where('address', 'like', '%' . $request->present_address . '%')->pluck('applicant_id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($request->reg_no) {
+            $application_ids = vehicleinfo::where('reg_number', 'like', '%' . $request->reg_no . '%')->pluck('application_id');
+            $query->whereIn('id', $application_ids);
+        }
+
+        if ($request->date) {
+            $applicaation_ids = ApplicationNotify::whereDate('sticker_delivery_date', date('Y-m-d', strtotime($request->date)))->pluck('application_id');
+            $query->whereIn('id', $applicaation_ids);
+        }
+
+        if ($request->Vehicle_Type) {
+            $vehicle_type_ids = VehicleType::where('name', 'like', '%' . $request->Vehicle_Type . '%')->pluck('id');
+            $query->whereIn('vehicle_type_id', $vehicle_type_ids);
+        }
+
+        return DataTables::of($query)
+            ->addIndexColumn()
+            ->addColumn('name', function (Payment $payment) {
+                $name = ($payment->application->applicant->name) ? $payment->application->applicant->name : '';
+                return $name;
+            })
+            ->addColumn('type', function (Payment $payment) {
+                $type = ($payment->application->applicant->role) ? $payment->application->applicant->role : '';
+                return $type;
+            })
+            ->addColumn('sticker_category', function (Payment $payment) {
+                $sticker_category = ($payment->application->sticker_category) ? $payment->application->sticker_category : '';
+                return $type;
+            })
+
+            ->rawColumns(['name','type','create_at', 'created_by', 'credit'])
+            ->toJson();
     }
 }
