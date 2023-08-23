@@ -112,7 +112,7 @@
                                 <th scope="col">Non-Deffence</th>
                                 <th scope="col">Transparent</th>
                                 <th scope="col">Not Transparent</th>
-                                <th scope="col">PS Approved</th>
+                                <th scope="col">MP DTE Approved</th>
                             </tr>
                         </thead>
                         <tbody>
