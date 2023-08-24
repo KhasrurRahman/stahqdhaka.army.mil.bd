@@ -2167,8 +2167,7 @@
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
                                                                     id="Civil_Service_ID_one" name="Civil_Service_ID_one"
-                                                                    value="বেসামরিক সার্ভিস আইডি কার্ডের কপি
-                                                                    আপলোড করতে হবে" />
+                                                                    value="বেসামরিক সার্ভিস আইডি কার্ডের উভয় পাশের ছবি একত্রে আপলোড করতে হবে" />
                                                                 <label for="Civil_Service_ID_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">

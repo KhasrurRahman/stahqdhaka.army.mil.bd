@@ -1346,6 +1346,7 @@ class HomeController extends Controller
             $app->app_status = $app->app_status == "forwarded to PS" ? "PS approved" : "approved";
             $app->sticker_category = $request->sticker_type;
             $app->retake = 1;
+            $app->approval = $app->approval == 0 ? 1 : $app->approval + 1;
             $app->save();
 
             if (!$appnotifyexist) {
@@ -1391,17 +1392,17 @@ class HomeController extends Controller
             $banglaTime = str_replace($en, $bn, $time);
             $banglaRegNumber = str_replace($en, $bn, $app->vehicleinfo->reg_number);
             $dateApplicationNotify = date('d-m-Y', strtotime($request->sticker_delivery_date));
-            $approveSms = str_replace('//', $dateApplicationNotify, $sms->sms_text);
+            $approveSms = str_replace('/date/', $dateApplicationNotify, $sms->sms_text);
             $approveSms1 = str_replace('/time/', $time, $approveSms);
-            $approveSms2 = str_replace('/sp/', $sticker_category->price, $approveSms1);
+
             if ($app->payment_status == "0") {
-                $first_approve_add = "অনলাইনে প্রদান করুন। লিংকঃ " . $url_link;
-                $approveSms3 = str_replace('/link/', $first_approve_add, $approveSms2);
-                $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms3);
+                $first_approve_add =  $additional_message = "স্টিকারের নির্দিষ্ট মূল্য " . $sticker_category->price . " টাকা অনলাইনে লিংকঃ (" . $url_link . ") পরিশোধের পর ";
+                $approveSms2 = str_replace('/add_msg/', $first_approve_add, $approveSms1);
+                $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
             } else {
-                $first_approve_add = "প্রদান সম্পন্ন হয়েছে। ";
-                $approveSms3 = str_replace('/link/', $first_approve_add, $approveSms2);
-                $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms3);
+                $first_approve_add = "";
+                $approveSms2 = str_replace('/add_msg/', $first_approve_add, $approveSms1);
+                $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
             }
             // $approveSms3 = str_replace('/link/', $url_link, $approveSms2);
             // $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms3);
