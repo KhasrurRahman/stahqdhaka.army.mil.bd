@@ -1345,6 +1345,7 @@ class HomeController extends Controller
             $app->app_status = $app->app_status == "forwarded to PS" ? "PS approved" : "approved";
             $app->sticker_category = $request->sticker_type;
             $app->retake = 1;
+            $app->approval = $app->approval == 0 ? 1 : $app->approval + 1;
             $app->save();
 
             if (!$appnotifyexist) {
