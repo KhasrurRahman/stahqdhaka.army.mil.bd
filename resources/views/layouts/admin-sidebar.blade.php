@@ -56,6 +56,10 @@
                                 
                             </li> 
                             <li>
+                                <a href="{{url('all-paid-recollect/application')}}" class="mtitle">Paid Recollected</a>
+                                
+                            </li> 
+                            <li>
                                 <a href="{{url('all-issued/application')}}" class="mtitle">Sticker Issued List</a>
                                 
                             </li> 

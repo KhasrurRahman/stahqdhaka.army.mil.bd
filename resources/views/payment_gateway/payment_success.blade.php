@@ -8,7 +8,7 @@
         }
 
         .page {
-            width: 50%;
+            min-width: 35%;
             margin: 0 auto;
             border: 1px solid rgb(215, 215, 215);
             box-shadow: 0 0 10px 0px rgba(0, 0, 0, .2);
@@ -53,10 +53,16 @@
 
             z-index: 10;
         }
+        @media (max-width: 768px) {
+            .page{
+                width: 90%;
+            }
+        }
+        
     </style>
 
 
-    <div class="container mt-5 ">
+    
 
         <div class="page">
             <div class="col-12  page-content ">
@@ -92,7 +98,7 @@
                                             <polyline
                                                 style="fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;"
                                                 points="
-	38,15 22,33 12,25 " />
+	 38,15 22,33 12,25 " />
                                         </svg>
                                     </td>
                                     <td width="36"
@@ -157,13 +163,13 @@
                                             style="color: #464646; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; line-height: 22px; margin: 0; ">
                                             <strong>Payment Details:</strong><br />
 
-                                            Amount: {{$application->stickerCategory->price }} TK <br />
+                                            Amount: {{ $application->stickerCategory->price }} TK <br />
 
                                         </p>
                                         <br>
 
 
-                                        <a href="{{url('/applied-applications')}}">View Applied Application</a>
+                                        <a href="{{ url('/applied-applications') }}">View Applied Application</a>
 
 
                                     </td>
@@ -220,5 +226,5 @@
 
         </div>
 
-    </div>
+    
 @endsection

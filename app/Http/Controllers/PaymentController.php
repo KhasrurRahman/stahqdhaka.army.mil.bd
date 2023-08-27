@@ -20,7 +20,27 @@ class PaymentController extends Controller
 {
     public function paymentView($id)
     {
-        $application = Application::find(decrypt($id));
+
+                $mapping_id_special=[
+                    'Ya'=>0,
+                    'Is'=>1,
+                    'Pa'=>2,
+                    'Nq'=>3,
+                    'MV'=>4,
+                    'rD'=>5,
+                    'QH'=>6,
+                    'Lm'=>7,
+                    'Nb'=>8,
+                    'Ei'=>9
+        ];
+        $splited=str_split($id,2);
+        //dd($id);
+        $decryptedId='';
+        foreach($splited as $key=>$value)
+        {
+            $decryptedId =$decryptedId.$mapping_id_special[$value];
+        }
+        $application = Application::find($decryptedId);
 
         return view('payment_gateway.payment_view', compact('application'));
     }
@@ -308,5 +328,10 @@ class PaymentController extends Controller
             
             ->rawColumns(['name', 'type', 'sticker_category', 'create_at', 'created_by', 'credit','vehicle_name','glass_type','phone','rank_name','applicant_BA_no','sticker_reg_number','address'])
             ->toJson();
+    }
+
+    public function allPaidRecollect()
+    {
+        return view('payment_gateway.payment_paid_recollect');
     }
 }

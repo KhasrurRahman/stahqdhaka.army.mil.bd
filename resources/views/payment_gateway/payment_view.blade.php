@@ -6,8 +6,13 @@
             margin: 0;
             box-sizing: border-box;
         }
+        .payment_gateway{
+            width: 75%;
+            margin: 0 auto;
+        }
 
         .page {
+            
             border: 1px solid rgb(215, 215, 215);
             box-shadow: 0 0 10px 1px rgba(0, 0, 0, .1);
         }
@@ -111,6 +116,7 @@
             width: 100%;
             margin: 0 auto;
             height: 50px;
+            border-bottom: 1px solid white;
         }
 
         .button {
@@ -119,15 +125,19 @@
 
         }
 
-        @media (max-width: 767.99px) {
+        @media (max-width: 768px) {
             .content {
                 flex-direction: column;
             }
+            .payment_gateway{
+            width: 90%;
+            margin: 0 auto;
+        }
         }
     </style>
 
 
-    <div class="container mt-5 payment_gateway">
+    <div class="payment_gateway">
         <div class="page">
             <div class="col-12  page-title">
                 <h3>Payment Page</h3>
@@ -147,7 +157,7 @@
 
             <form action="{{ route('make_payment') }}" method="post">
                 <div class=" content">
-                    <div class="col-12 col-sm-12 col-md-6 col-lg-7 contain-l">
+                    <div class="col-12 col-sm-12 col-md-7 col-lg-7 contain-l">
                         <div class="plan-1">
                             <h4>Personal Details</h4>
                         </div>
@@ -216,14 +226,14 @@
                         </div>
 
                     </div>
-                    <div class="col-12 col-sm-12 col-md-6  col-lg-5 contain-r">
+                    <div class="col-12 col-sm-12 col-md-5  col-lg-5 contain-r">
                         <div class="m-5 info-r">
                             <div class="plan">
-                                <h4>Price</h4>
+                                <h4 >Price</h4>
                             </div>
 
                             <div>
-                                <table class="table">
+                                <table class="mt-3">
                                     <tr>
                                         <td>
                                             <h5>Price</h5>
@@ -231,7 +241,7 @@
 
                                         </td>
                                         <td>
-                                            {{ $application->stickerCategory->price }}
+                                            {{ $application->stickerCategory->price }} tk
                                         </td>
                                     </tr>
 

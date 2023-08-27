@@ -56,13 +56,13 @@
                                                             {{ $app->app_status }}
                                                         @endif
                                                     @endif
-                                                 
+
                                                 </td>
                                                 <td>
                                                     @if ($app->payment_status == '0')
                                                         <button class="btn btn-danger btn-sm">Unpaid</button>
                                                     @else
-                                                    <button class="btn btn-success btn-sm">Paid</button>
+                                                        <button class="btn btn-success btn-sm">Paid</button>
                                                     @endif
                                                 </td>
                                                 <td>
@@ -74,8 +74,29 @@
                                                         View </a>
 
                                                     @if ($app->payment_status == '0' && $app->app_status == 'approved')
+                                                        <?php
+                                                        $ids = str_split($app->id);
+                                                        //dd($ids);
+                                                        $mapping_id_special = [
+                                                            0 => 'Ya',
+                                                            1 => 'Is',
+                                                            2 => 'Pa',
+                                                            3 => 'Nq',
+                                                            4 => 'MV',
+                                                            5 => 'rD',
+                                                            6 => 'QH',
+                                                            7 => 'Lm',
+                                                            8 => 'Nb',
+                                                            9 => 'Ei',
+                                                        ];
+                                                        $encryptedId = '';
+                                                        foreach ($ids as $key => $value) {
+                                                            $encryptedId = $encryptedId . $mapping_id_special[$value];
+                                                        }
+                                                        ?>
                                                         <a class="btn btn-warning"
-                                                            href="{{ route('payment.view', encrypt($app->id)) }}">Pay now</a>
+                                                            href="{{ route('payment.view', $encryptedId) }}">Pay
+                                                            now</a>
                                                     @endif
                                                 </td>
                                             </tr>

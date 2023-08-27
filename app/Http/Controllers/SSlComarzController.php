@@ -228,7 +228,6 @@ class SSlComarzController extends Controller
     {
         $application = Application::find($application_id);
         $application->payment_status = 1;
-        $application->app_status = 'paid';
         $application->update();
 
         $now = date('Y-m-d H:i:s');
