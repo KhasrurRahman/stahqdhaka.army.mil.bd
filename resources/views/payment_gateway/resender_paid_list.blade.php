@@ -28,7 +28,7 @@
                         <table class="col-12">
                             <tr>
                                 <td>
-                                    <input type="text" name="applicant_name"  class="form-control" placeholder="Name" value="">
+                                    <input type="text" name="applicant_name"  class="form-control" placeholder="Name" value="{{ $applicant_name }}">
                                 </td>
                                 <td>
                                     <select name="applicant_type" id="" class="form-control">
@@ -37,25 +37,24 @@
                                         <option value="non-def"> Non Defence</option>
                                     </select>
                                     <!-- <input type="text" name="applicant_type"  class="form-control" placeholder="Applicant Type"> -->
-                                </td>
-                                
+                                </td>                             
                                 <td>
-                                    <input type="text" name="ba" value="" class="form-control" placeholder="BA">
-                                </td>
-                                <td>
-                                    <input type="text" name="rank" value="" class="form-control" placeholder="Rank">
+                                    <input type="text" name="ba" value="{{$ba}}" class="form-control" placeholder="BA">
                                 </td>
                                 <td>
-                                    <input type="text" name="reg_no" value="" class="form-control" placeholder="Reg. No.">
+                                    <input type="text" name="rank" value="{{$rank}}" class="form-control" placeholder="Rank">
                                 </td>
                                 <td>
-                                    <input type="text" name="phone" value="" class="form-control" placeholder="Phone">
+                                    <input type="text" name="reg_no" value="{{$reg_no}}" class="form-control" placeholder="Reg. No.">
                                 </td>
                                 <td>
-                                    <input type="text" name="vehicle_type" value="" class="form-control" placeholder="Vehicle Type">
+                                    <input type="text" name="phone" value="{{$phone}}" class="form-control" placeholder="Phone">
                                 </td>
                                 <td>
-                                    <input type="text" name="present_address" value="" class="form-control" placeholder="Address">
+                                    <input type="text" name="vehicle_type" value="{{$vehicle_type}}" class="form-control" placeholder="Vehicle Type">
+                                </td>
+                                <td>
+                                    <input type="text" name="present_address" value="{{$present_address}}" class="form-control" placeholder="Address">
                                 </td>
                                 
                             </tr>
@@ -64,7 +63,12 @@
                         <label style="font-weight:bold;">Sticker Type: </label>
                         <select name="sticker_category" id="sticker_category" class="form-control-sm" >
                             
-                            
+                            @if(!empty($sticker_categories))
+                            <option value="">Select One</option>
+                            @endif
+                            @foreach($sticker_categories as $s)
+                            <option value="{{$s->value}}">{{$s->name}}</option>
+                            @endforeach
                             
                            
                         </select> &nbsp;&nbsp;
@@ -101,10 +105,28 @@
                             <th scope="col">Amount</th>
                             <th scope="col">Address</th>
                         </tr>
-                        </thead>               
+                        </thead>   
+                        <tfoot>
+                            <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                                <td ></td>
+                                <td> </td>
+                                <td> </td>
+                                <td ></td>
+                                <td> </td>
+                                <td> </td>
+                            </tr>
+                        </tfoot>         
                     </table>
                     
                 </div>
+                
               
             </div>
         </div>
@@ -120,6 +142,7 @@
 @section('admin-script')
     <script type="text/javascript" src="{{asset('/assets/admins/js/approved-sticker-list.blade.js')}}"></script>
     <script src="{{ asset('assets/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{asset('/assets/admins/js/datatablesum.js')}}"></script>
     <script>
         $(function () {
             //Date picker
@@ -132,36 +155,67 @@
     </script>
     <script>
 
-// $(function() {
-//     $('#table').DataTable({
-        
-//         processing: true,
-//         serverSide: true,
-//         aLengthMenu: [
-//             [10,25, 50, 100, 200, -1],
-//             [10,25, 50, 100, 200, "All"]
-//         ],
-//         iDisplayLength: 10,
-//         ajax: {
-//             url: '{{ route('approved_payment_report.datatable')}}',
-//             // success: function(res) {
-//             //     console.log(res);
-//             //     alert(res);
-//             // },
-//             data: function (d) {
-//                 
-//             }
-//         },
-//         columns: [
-//             
+$(function() {
+    $('#table').DataTable({
+        "footerCallback": function (row, data, start, end, display) {
+                    var api = this.api(), data;
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+                    total = this.api().ajax.json().sum_balance
+                
+                    $(api.column(11).footer()).html(
+                        'Tk ' + total + ' total'
+                    );
+                },
+        processing: true,
+        serverSide: true,
+        aLengthMenu: [
+            [10,25, 50, 100, 200, -1],
+            [10,25, 50, 100, 200, "All"]
+        ],
+        iDisplayLength: 10,
+        ajax: {
+            url: '{{ route('resender-paid-massage.datatable')}}',
+            data: function (d) {
+                d.inspec_from_date = '{{ $inspec_from_date }}';
+                d.inspec_to_date = '{{ $inspec_to_date }}';
+                d.applicant_name = '{{ $applicant_name }}';
+                d.applicant_type = '{{ $applicant_type }}';
+                d.sticker_type = '{{ $sticker_type }}';
+                d.ba = '{{ $ba }}';
+                d.phone = '{{ $phone }}';
+                d.vehicle_type = '{{ $vehicle_type }}';
+                d.rank = '{{ $rank }}';
+                d.present_address = '{{ $present_address }}';
+                d.reg_no = '{{ $reg_no }}';
+            }
+        },
+        columns: [
+            {data: 'DT_RowIndex', name: 'id', searchable: false},
+            {data: 'name'},
+            {data: 'type'},
+            {data: 'applicant_BA_no'},           
+            {data: 'rank_name'},
+            {data: 'sticker_reg_number'},          
+            {data: 'phone'},         
+            {data: 'vehicle_name'},
+            {data: 'glass_type'},
+            {data: 'sticker_category'},
+            {data: 'created_at'},
+            {data: 'credit'},
+            {data: 'address'},
            
             
            
-//         ],
-//         order:[[0,"desc"]]
-//     });
+        ],
+        order:[[0,"desc"]]
+    });
 
-// });
+});
 
 </script>
     

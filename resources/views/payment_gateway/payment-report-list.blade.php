@@ -28,7 +28,7 @@
                         <table class="col-12">
                             <tr>
                                 <td>
-                                    <input type="text" name="applicant_name"  class="form-control" placeholder="Name" value="{{ $applicant_name }}">
+                                    <input type="text"  name="applicant_name"  class="form-control" placeholder="Name" value="{{ $applicant_name }}">
                                 </td>
                                 <td>
                                     <select name="applicant_type" id="" class="form-control">
@@ -54,7 +54,7 @@
                                     <input type="text" name="vehicle_type" value="{{$vehicle_type}}" class="form-control" placeholder="Vehicle Type">
                                 </td>
                                 <td>
-                                    <input type="text" name="present_address" value="" class="form-control" placeholder="Address">
+                                    <input type="text" name="present_address" value="{{$present_address}}" class="form-control" placeholder="Address">
                                 </td>
                                 
                             </tr>
@@ -104,14 +104,34 @@
                             <th scope="col">Created_at</th>                          
                             <th scope="col">Amount</th>
                             <th scope="col">Address</th>
+                            
                         </tr>
-                        </thead>               
+                        </thead>  
+                        
+                        <tfoot>
+                            <tr>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                            <td> </td>
+                                <td ></td>
+                                <td> </td>
+                                <td> </td>
+                                <td ></td>
+                                <td> </td>
+                                <td> </td>
+                            </tr>
+                        </tfoot>
+
                     </table>
                     
                 </div>
-                <div style="width: 100%; height:60px;background-color:#33880A; display: flex;
+                <!-- <div style="width: 100%; height:60px;background-color:#33880A; display: flex;
         justify-content: center;
-        align-items: center; margin-top:10px; border-radius:3px;"> <h3 style="color: white; padding:0; margin:0;">Total Amount: {{$total_amount}}</h3></div>
+        align-items: center; margin-top:10px; border-radius:3px;"> <h3 style="color: white; padding:0; margin:0;">Total Amount: </h3></div> -->
               
             </div>
         </div>
@@ -127,6 +147,7 @@
 @section('admin-script')
     <script type="text/javascript" src="{{asset('/assets/admins/js/approved-sticker-list.blade.js')}}"></script>
     <script src="{{ asset('assets/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js') }}"></script>
+    <script src="{{asset('/assets/admins/js/datatablesum.js')}}"></script>
     <script>
         $(function () {
             //Date picker
@@ -140,8 +161,23 @@
     <script>
 
 $(function() {
-    $('#table').DataTable({
-        
+  
+    var dataTable=$('#table').DataTable({
+
+        "footerCallback": function (row, data, start, end, display) {
+                    var api = this.api(), data;
+                    var intVal = function (i) {
+                        return typeof i === 'string' ?
+                            i.replace(/[\$,]/g, '') * 1 :
+                            typeof i === 'number' ?
+                                i : 0;
+                    };
+                    total = this.api().ajax.json().sum_balance
+                
+                    $(api.column(11).footer()).html(
+                        'Tk ' + total + ' total'
+                    );
+                },
         processing: true,
         serverSide: true,
         aLengthMenu: [
@@ -161,7 +197,10 @@ $(function() {
                 d.phone = '{{ $phone }}';
                 d.vehicle_type = '{{ $vehicle_type }}';
                 d.rank = '{{ $rank }}';
-            }
+                d.present_address = '{{ $present_address }}';
+                d.reg_no = '{{ $reg_no }}';
+            },
+           
         },
         columns: [
             {data: 'DT_RowIndex', name: 'id', searchable: false},
@@ -169,7 +208,7 @@ $(function() {
             {data: 'type'},
             {data: 'applicant_BA_no'},           
             {data: 'rank_name'},
-            {data: 'reg_number'},          
+            {data: 'sticker_reg_number'},          
             {data: 'phone'},         
             {data: 'vehicle_name'},
             {data: 'glass_type'},
@@ -177,12 +216,10 @@ $(function() {
             {data: 'created_at'},
             {data: 'credit'},
             {data: 'address'},
-           
-            
-           
         ],
         order:[[0,"desc"]]
     });
+
 
 });
 
