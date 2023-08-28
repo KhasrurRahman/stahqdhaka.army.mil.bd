@@ -228,13 +228,17 @@ Route::group(['middleware' => 'prevent_back_history'],function(){
 	Route::get('slogan/add', 'SloganController@add')->name('slogan.add')->middleware('super-admin');
 	Route::post('slogan/add', 'SloganController@store')->name('slogan.store')->middleware('super-admin');
 
+	// payment report list route
+	Route::get('payment_report/list', 'PaymentController@paymentReportData')->name('payment-report.list')->middleware('super-admin');
+	Route::get('approved_payment_report/datatable', 'PaymentController@paymentReportDatatable')->name('approved_payment_report.datatable');
+	// resender massage paid list route
+	Route::get('resender_paid_massage/list', 'PaymentController@resenderMassageList')->name('resender-paid-massage.list')->middleware('super-admin');
+	Route::get('resender_paid_massage/datatable', 'PaymentController@resenderMassageDatatable')->name('resender-paid-massage.datatable');
 
 
 	//paymentgateways report
 	Route::get('/all-paid-recollect/application','PaymentController@allPaidRecollect');
 	// Route::post('/search/sticker/report','HomeController@searchStickerReport');
-
-	
 });
 
 Auth::routes();
