@@ -59,11 +59,17 @@
 
                                                 </td>
                                                 <td>
+                                                      {{-- new changes replace old --}}
                                                     @if ($app->payment_status == '0')
+                                                        @if($app->issue_type == "free")
+                                                        <button class="btn btn-success btn-sm">Free</button>
+                                                        @else
                                                         <button class="btn btn-danger btn-sm">Unpaid</button>
+                                                        @endif
                                                     @else
                                                         <button class="btn btn-success btn-sm">Paid</button>
                                                     @endif
+                                                      {{-- new changes replace old --}}
                                                 </td>
                                                 <td>
                                                     <a class="btn btn-info"

@@ -121,7 +121,7 @@ Route::group(['middleware' => 'prevent_back_history'],function(){
 	Route::get('/sticker/expired/{def}', 'HomeController@expiredSticker')->name('expiredSticker');
 
 	Route::get('/application-review/{app_number}', 'HomeController@applicationReview')->name('application.review');
-	Route::get('/application/approve', 'HomeController@applicationApprove');
+	Route::post('/application/approve', 'HomeController@applicationApprove');
 	Route::get('/application/reject', 'HomeController@applicationReject');
 	Route::get('/application/edit/{appNumber}', 'HomeController@applicationEdit');
 	Route::get('/application/delete', 'HomeController@applicationDelete');
