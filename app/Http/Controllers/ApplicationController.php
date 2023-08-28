@@ -727,8 +727,9 @@ public function applicationEditApplicant($appNumber){
   $units=SpouseParentsUnit::orderBy('name','ASC')->get();
   $app = Application::where('app_number', $appNumber)->first();
 
-  // Solving Edit form when diff/ non-dif will be change;
+  // start Solving Edit form when diff/ non-dif will be change;
   $applicant_role=Applicant::where('id',$app->applicant_id)->first()->role;
+  // end Solving Edit form when diff/ non-dif will be change;
   
   if($app->app_status=="pending" || $app->app_status=="updated"){
    return view('forms.applicant-edit',compact('app','vehicleTypes','ranks','units','applicant_role'));

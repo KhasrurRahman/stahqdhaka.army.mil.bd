@@ -100,9 +100,13 @@
                                                             $encryptedId = $encryptedId . $mapping_id_special[$value];
                                                         }
                                                         ?>
+                                                        @if($app->issue_type == "free")
+                                                        <button class="btn btn-primary">Free</button>
+                                                        @else
                                                         <a class="btn btn-warning"
                                                             href="{{ route('payment.view', $encryptedId) }}">Pay
                                                             now</a>
+                                                        @endif
                                                     @endif
                                                 </td>
                                             </tr>

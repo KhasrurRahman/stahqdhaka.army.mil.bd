@@ -92,10 +92,10 @@
                 <div class="col-md-9 app_status_wrapper">
                     <span>
                         @if ($app->payment_status == '0')
-                            @if($app->issue_type == 'free')
-                                <button class="btn btn-warning btn-sm">Free</button>
+                            @if($app->issue_type == "free")
+                            <button class="btn btn-success btn-sm">Free</button>
                             @else
-                                <button class="btn btn-danger btn-sm">Unpaid</button>
+                            <button class="btn btn-danger btn-sm">Unpaid</button>
                             @endif
                         @else
                             <button class="btn btn-success btn-sm">Paid</button>
@@ -1453,6 +1453,8 @@
                                         class="fas fa-exclamation-triangle"></i> <span id="err_delDate"> </span>
                                 </div>
                             </div>
+
+                            @if($app->payment_status == "0")
                             <div class="col-md-4 offset-md-1">
 
                             </div>
@@ -1479,6 +1481,8 @@
 
                                 </div>
                             </div>
+                            @endif
+
                         </div>
 
                     </div>

@@ -242,7 +242,17 @@ class HomeController extends Controller
                 $app_status = ($application->app_status == 'forwarded to PS') ? "Forwarded  To MP DTE" : $application->app_status;
                 return $app_status;
             })->addColumn('payment_status', function (Application $application) {
-                $payment_status = ($application->payment_status == '0') ? "Unpaid" : "Paid";
+                $payment_status = '';
+                if($application->payment_status == '0'){
+                    if($application->issue_type == 'free'){
+                        $payment_status = "Free";
+                    }else{
+                        $payment_status = "Unpaid";
+                    }
+                }else{
+                    $payment_status = "Paid";
+                }
+                
                 return $payment_status;
             })
             ->rawColumns(['applicant_name', 'BA_no', 'Rank_id', 'phone_number', 'sticker_number', 'vehicleType', 'address','app_status','payment_status'])
@@ -756,6 +766,194 @@ class HomeController extends Controller
             })
             ->rawColumns(['applicant_name'])
             ->toJson();
+    }
+
+    public function freeApprovedApp(Request $request, $def)
+    {
+
+        $stickerTypes = StickerCategory::all();
+        $applicant_name = $request->applicant_name ?? "";
+        $ba = $request->ba ?? "";
+        $rank = $request->rank ?? "";
+        $reg_no = $request->reg_no ?? "";
+        $phone = $request->phone ?? "";
+        $date = $request->date ?? "";
+        $Vehicle_Type = $request->Vehicle_Type ?? "";
+        $glass_type = $request->Vehicle_Type ?? "";
+        $sticker_type = $request->sticker_type ?? "";
+        $present_address = $request->present_address ?? "";
+        if ($def == 'def') {
+            return view('apps.free-approved-def', compact('stickerTypes', 'def', 'applicant_name', 'ba', 'rank', 'reg_no', 'ba', 'rank', 'phone', 'date', 'Vehicle_Type', 'glass_type', 'sticker_type', 'present_address'));
+        }
+        if ($def == "ndef") {
+            return view('apps.free-approved-ndef', compact('stickerTypes', 'def', 'applicant_name', 'reg_no', 'ba', 'rank', 'phone', 'date', 'Vehicle_Type', 'glass_type', 'sticker_type', 'present_address'));
+        }
+    }
+
+    public function allFreeApprovedDatatable(Request $request)
+    {
+        $def = request('def');
+        $query = Application::with(['applicant', 'vehicleinfo', 'vehicleinfo.vehicleType'])->whereIn('app_status', ['approved', 'PS approved'])->where('issue_type', 'free');
+
+        if ($def == 'def') {
+            $query->where('type', '=', 'def');
+        }
+        if ($def == 'ndef') {
+            $query->where('type', '=', 'non-def');
+        }
+
+        if ($def == 'not-transparent') {
+            $query->where('glass_type', '!=', 'transparent');
+        }
+        if ($def == 'transparent') {
+            $query->where('glass_type', '=', 'transparent');
+        }
+
+        // Search Data 
+        if ($request->applicant_name) {
+            $applicant_ids = Applicant::where('name', 'like', '%' . $request->applicant_name . '%')->pluck('id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($def == 'def') {
+            if ($request->ba) {
+                $applicant_ids = ApplicantDetail::where('applicant_BA_no', 'like', '%' . $request->ba . '%')->pluck('applicant_id');
+                $query->whereIn('applicant_id', $applicant_ids);
+            }
+
+            if ($request->rank) {
+                $rank_ids = Rank::where('name', 'like',  '%' . $request->rank . '%')->pluck('id');
+                $applicant_ids = ApplicantDetail::whereIn('rank_id', $rank_ids)->pluck('applicant_id');
+                $query->whereIn('applicant_id', $applicant_ids);
+            }
+        }
+
+        if ($request->phone) {
+            $applicant_ids = Applicant::where('phone', 'like', '%' . $request->phone . '%')->pluck('id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($request->present_address) {
+            $applicant_ids = ApplicantDetail::where('address', 'like', '%' . $request->present_address . '%')->pluck('applicant_id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($request->reg_no) {
+            $application_ids = vehicleinfo::where('reg_number', 'like', '%' . $request->reg_no . '%')->pluck('application_id');
+            $query->whereIn('id', $application_ids);
+        }
+
+        if ($request->date) {
+            $query->where('app_date', date('Y-m-d', strtotime($request->date)));
+        }
+
+        if ($request->Vehicle_Type) {
+            $vehicle_type_ids = VehicleType::where('name', 'like', '%' . $request->Vehicle_Type . '%')->pluck('id');
+            $query->whereIn('vehicle_type_id', $vehicle_type_ids);
+        }
+
+        // if ($request->glass_type) {
+        //     $query->where('glass_type', $request->glass_type);
+        // }
+
+        if ($request->sticker_type) {
+            $query->where('sticker_category', $request->sticker_type);
+        }
+
+        if ($def == "def") {
+            return DataTables::of($query)
+                ->addIndexColumn()
+                ->addColumn('applicant_name', function (Application $application) {
+                    $nid = ($application->applicant->applicantDetail) ? $application->applicant->applicantDetail->nid_number : '';
+                    return '<a href="' . route('application.review', ['app_number' => $application->app_number]) . '" target="_blank">' . $application->applicant->name . '</a><br>' . $nid;
+                })
+                ->addColumn('Reg_number', function (Application $application) {
+                    $reg_number = ($application->vehicleinfo) ? $application->vehicleinfo->reg_number : '';
+                    return $reg_number;
+                })
+                ->addColumn('BA_no', function (Application $application) {
+                    $ba_no = $application->applicant->applicantDetail->applicant_BA_no ?? '';
+
+                    return $ba_no;
+                })
+                ->addColumn('Rank_id', function (Application $application) {
+                    $rank_id =  $application->applicant->applicantDetail->rank->name ?? '';
+                    return $rank_id;
+                })
+                ->addColumn('phone_number', function (Application $application) {
+                    return $application->applicant->phone;
+                })
+                ->editColumn('app_date', function (Application $application) {
+                    return date('d-m-Y', strtotime($application->app_date));
+                })
+                ->filterColumn('app_date', function ($query, $keyword) {
+                    $query->whereDate('app_date', date('Y-m-d', strtotime($keyword)));
+                })
+                ->filterColumn('app_date', function ($query, $keyword) {
+                    $query->whereDate('app_date', date('Y-m-d', strtotime($keyword)));
+                })
+                ->addColumn('vehicleType', function (Application $application) {
+                    $vehicle_type =
+                        $application->vehicleinfo->vehicleType->name ?? '';
+                    return $vehicle_type;
+                })
+                ->addColumn('free_comment', function (Application $application) {
+                    $free_comment =
+                        $application->free_comment ?? '';
+                    return $free_comment;
+                })
+                ->addColumn('address', function (Application $application) {
+
+                    $app_address = ($application->applicant->applicantDetail) ? json_decode($application->applicant->applicantDetail->address, true) : '';
+                    if ($app_address) {
+                        return $app_address['present']['flat'] . ', ' . $app_address['present']['house'] . ', ' . $app_address['present']['road'] . ', ' . $app_address['present']['block'] . ', ' . $app_address['present']['area'] . '.';
+                    }
+                })
+                ->rawColumns(['applicant_name'])
+                ->toJson();
+        } else {
+            return DataTables::of($query)
+                ->addIndexColumn()
+                ->addColumn('applicant_name', function (Application $application) {
+                    $nid = ($application->applicant->applicantDetail) ? $application->applicant->applicantDetail->nid_number : '';
+                    return '<a href="' . route('application.review', ['app_number' => $application->app_number]) . '" target="_blank">' . $application->applicant->name . '</a><br>' . $nid;
+                })
+                ->addColumn('Reg_number', function (Application $application) {
+                    $reg_number = ($application->vehicleinfo) ? $application->vehicleinfo->reg_number : '';
+                    return $reg_number;
+                })
+                ->addColumn('phone_number', function (Application $application) {
+                    return $application->applicant->phone;
+                })
+                ->editColumn('app_date', function (Application $application) {
+                    return date('d-m-Y', strtotime($application->app_date));
+                })
+                ->filterColumn('app_date', function ($query, $keyword) {
+                    $query->whereDate('app_date', date('Y-m-d', strtotime($keyword)));
+                })
+                ->filterColumn('app_date', function ($query, $keyword) {
+                    $query->whereDate('app_date', date('Y-m-d', strtotime($keyword)));
+                })
+                ->addColumn('vehicleType', function (Application $application) {
+                    $vehicle_type =
+                        $application->vehicleinfo->vehicleType->name ?? '';
+                    return $vehicle_type;
+                })
+                ->addColumn('free_comment', function (Application $application) {
+                    $free_comment =
+                        $application->free_comment ?? '';
+                    return $free_comment;
+                })
+                ->addColumn('address', function (Application $application) {
+
+                    $app_address = ($application->applicant->applicantDetail) ? json_decode($application->applicant->applicantDetail->address, true) : '';
+                    if ($app_address) {
+                        return $app_address['present']['flat'] . ', ' . $app_address['present']['house'] . ', ' . $app_address['present']['road'] . ', ' . $app_address['present']['block'] . ', ' . $app_address['present']['area'] . '.';
+                    }
+                })
+                ->rawColumns(['applicant_name'])
+                ->toJson();
+        }
     }
 
     public function rejectedApp(Request $request, $def){

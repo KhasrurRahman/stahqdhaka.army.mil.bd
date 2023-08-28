@@ -98,6 +98,7 @@ Route::group(['middleware' => 'prevent_back_history'],function(){
     // all approved datatable
 	Route::get('all-approved/datatable', 'HomeController@allApprovedDatatable')->name('all_approved.datatable');
 	// all delevered datatable
+	Route::get('all-free_approved/datatable', 'HomeController@allFreeApprovedDatatable')->name('all_free_approved.datatable');
 	Route::get('all-delevered/datatable', 'HomeController@allDeleveredDatatable')->name('all_delevered.datatable');
 	// all rejected datatable
 	Route::get('all-rejected/datatable', 'HomeController@allRejectedDatatable')->name('all_rejected.datatable');
@@ -116,6 +117,7 @@ Route::group(['middleware' => 'prevent_back_history'],function(){
 	Route::get('invoice/datatable', 'InvoiceController@invoiceDatatable')->name('invoice.datatable');
 
 	Route::get('/application/approved/{def}', 'HomeController@approvedApp')->name('approvedApp');
+	Route::get('/application/free_approved/{def}', 'HomeController@freeApprovedApp')->name('freeApprovedApp');
 	Route::get('/application/delivered/{def}', 'HomeController@deliveredApp')->name('deliveredApp');
 	Route::get('/application/rejected/{def}', 'HomeController@rejectedApp')->name('rejectedApp');
 	Route::get('/sticker/expired/{def}', 'HomeController@expiredSticker')->name('expiredSticker');
