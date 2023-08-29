@@ -75,8 +75,8 @@
                         <span style="color: red;" id="app_status">
                             @if ($app->retake == 2 && $app->app_status == 'updated')
                                 Re-take
-                            @elseif( $app->app_status == 'forwarded to PS')
-                                Forwarded  To MP DTE
+                            @elseif($app->app_status == 'forwarded to PS')
+                                Forwarded To MP DTE
                             @else
                                 {{ $app->app_status != 'updated' ? $app->app_status : 'updated' }}
                             @endif
@@ -88,15 +88,21 @@
                 <div class="col-md-3">
                     <span>Payment Status</span>
                 </div>
+                {{-- new changes replace old --}}
                 <div class="col-md-9 app_status_wrapper">
                     <span>
                         @if ($app->payment_status == '0')
-                        <button class="btn btn-danger btn-sm">Unpaid</button>
-                    @else
-                        <button class="btn btn-success btn-sm">Paid</button>
-                    @endif
+                            @if($app->issue_type == "free")
+                            <button class="btn btn-success btn-sm">Free</button>
+                            @else
+                            <button class="btn btn-danger btn-sm">Unpaid</button>
+                            @endif
+                        @else
+                            <button class="btn btn-success btn-sm">Paid</button>
+                        @endif
                     </span>
                 </div>
+                  {{-- new changes replace old --}}
                 @if (!empty($app->sticker_category))
                     <div class="col-md-3">
                         <span>Sticker Type</span>
@@ -1322,8 +1328,8 @@
                                     <td>{{ \Carbon\Carbon::parse($follow_up->created_at)->toDayDateTimeString() }}</td>
                                     <td>
                                         {{ $follow_up->status }}
-                                        
-                                        {{ $follow_up->app_status == "forwarded to PS" ? "Application forwarded  To MP DTE" : $follow_up->status }}
+
+                                        {{ $follow_up->app_status == 'forwarded to PS' ? 'Application forwarded  To MP DTE' : $follow_up->status }}
                                     </td>
                                     <td>{{ !empty($follow_up->comment) ? $follow_up->comment : '' }}</td>
                                     <td>
@@ -1399,7 +1405,7 @@
     </div>
     <!-- Hold Modal End-->
 
-
+    {{-- start free approval --}}
     <!-- Approve Modal -->
 
     <div class="modal fade" id="myApproveModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
@@ -1411,51 +1417,88 @@
                         <span aria-hidden="true" style="padding:10px 10px 0 0;">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body" style="padding:0;">
-                    <div class="row">
-                        <div class="col-md-4 offset-md-1">
-                            <label for="" class="label-form"> Sticker Type </label> <span>*</span> <br>
-                            <small></small>
-                        </div>
-                        <div class="col-md-7">
-                            <select name="sticker_type" id="sticker_type" class="form-control in-form mandatory"
-                                required>
-                                <option selected disabled value=""> --Select One--</option>
-                                <?php
-                                $stickers = App\StickerCategory::all();
-                                ?>
-                                @foreach ($stickers as $sticker)
-                                    <option value="{{ $sticker->value }}">{{ $sticker->name }}</option>
-                                @endforeach
+                <form id="approve_App_frm">
+                    {{ csrf_field() }}
+                    <div class="modal-body" style="padding:0;">
 
-                            </select>
-                            <div id="err_msg_sticker_type" class="" style="color:#bd2130;" hidden> <i
-                                    class="fas fa-exclamation-triangle"></i> <span id="err_sticker_type"> </span>
+                        <div class="row">
+                            <div class="col-md-4 offset-md-1">
+                                <label for="" class="label-form"> Sticker Type </label> <span>*</span> <br>
+                                <small></small>
                             </div>
-                        </div>
-                        <div class="col-md-4 offset-md-1">
-                            <label for="" class="label-form"> Delivery Date </label> <span>*</span> <br>
-                            <small></small>
-                        </div>
-                        <div class="col-md-7">
-                            <input type="date" id="sticker_delivery_date" value="" name="sticker_delivery_date"
-                                class="form-control in-form" placeholder="" required>
-                            <div id="err_msg_delDate" class="" style="color:#bd2130;" hidden> <i
-                                    class="fas fa-exclamation-triangle"></i> <span id="err_delDate"> </span>
+                            <div class="col-md-7">
+                                <select name="sticker_type" id="sticker_type" class="form-control in-form mandatory"
+                                    required>
+                                    <option selected disabled value=""> --Select One--</option>
+                                    <?php
+                                    $stickers = App\StickerCategory::all();
+                                    ?>
+                                    @foreach ($stickers as $sticker)
+                                        <option value="{{ $sticker->value }}">{{ $sticker->name }}</option>
+                                    @endforeach
+
+                                </select>
+                                <div id="err_msg_sticker_type" class="" style="color:#bd2130;" hidden> <i
+                                        class="fas fa-exclamation-triangle"></i> <span id="err_sticker_type"> </span>
+                                </div>
                             </div>
+                            <div class="col-md-4 offset-md-1">
+                                <label for="" class="label-form"> Delivery Date </label> <span>*</span> <br>
+                                <small></small>
+                            </div>
+                            <div class="col-md-7">
+                                <input type="date" id="sticker_delivery_date" value=""
+                                    name="sticker_delivery_date" class="form-control in-form" placeholder="" required>
+                                <div id="err_msg_delDate" class="" style="color:#bd2130;" hidden> <i
+                                        class="fas fa-exclamation-triangle"></i> <span id="err_delDate"> </span>
+                                </div>
+                            </div>
+
+                            @if($app->payment_status == "0")
+                            <div class="col-md-4 offset-md-1">
+
+                            </div>
+                            <div class="col-md-7">
+                                <input type="checkbox" class="free_sticker_ckbox" id="free_sticker_ckbox"
+                                    name="free_sticker_ckbox" value="free" />
+                                <label for="free_sticker_ckbox">Free Sticker</label>
+                            </div>
+                            <div class="row free_sticker_expand" style="display: none">
+                                <div class="col-md-4 offset-md-1">
+                                    <label for="free_comment" class="label-form"> Comment </label> <span>*</span> <br>
+                                    <small></small>
+                                </div>
+                                <div class="col-md-7">
+                                    <textarea class="" id="free_comment" name="free_comment" value=""></textarea>
+
+                                </div>
+                                <div class="col-md-4 offset-md-1">
+                                    <label for="misc_doc" class="label-form"> MISC Document </label> <span></span> <br>
+                                    <small></small>
+                                </div>
+                                <div class="col-md-7">
+                                    <input type="file" class="" id="misc_doc" name="misc_doc" />
+
+                                </div>
+                            </div>
+                            @endif
+
                         </div>
+
                     </div>
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                    <button type="submit" data-number="{{ $app->app_number }}" class="btn btn-primary custm-btn"
-                        id="approve_App">Confirm Approve</button>
-                </div>
+                    <input type="hidden" name="app_num" value="{{ $app->app_number }}">
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                        <button type="submit" data-number="{{ $app->app_number }}" class="btn btn-primary custm-btn"
+                            id="approve_App">Confirm Approve</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
     <!-- The Modal -->
+
+    {{-- end free approval --}}
     <!-- Reject Modal -->
 
     <div class="modal fade" id="myRejectModal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
@@ -1499,9 +1542,9 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingApplicantPhoto">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                                data-target="#ApplicantPhoto" aria-expanded="false"
-                                                                aria-controls="ApplicantPhoto">
+                                                            <button class="btn btn-link collapsed" type="button"
+                                                                data-toggle="collapse" data-target="#ApplicantPhoto"
+                                                                aria-expanded="false" aria-controls="ApplicantPhoto">
                                                                 Applicant Photo
                                                             </button>
                                                         </h5>
@@ -1534,9 +1577,9 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingApplicantNID">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                                data-target="#ApplicantNID" aria-expanded="false"
-                                                                aria-controls="ApplicantNID">
+                                                            <button class="btn btn-link collapsed" type="button"
+                                                                data-toggle="collapse" data-target="#ApplicantNID"
+                                                                aria-expanded="false" aria-controls="ApplicantNID">
                                                                 Applicant NID
                                                             </button>
                                                         </h5>
@@ -1568,9 +1611,9 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingApplicantDefID">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                                data-target="#ApplicantDefID" aria-expanded="false"
-                                                                aria-controls="ApplicantDefID">
+                                                            <button class="btn btn-link collapsed" type="button"
+                                                                data-toggle="collapse" data-target="#ApplicantDefID"
+                                                                aria-expanded="false" aria-controls="ApplicantDefID">
                                                                 Applicant Def ID
                                                             </button>
                                                         </h5>
@@ -1605,9 +1648,9 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingDriverPhoto">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                                data-target="#DriverPhoto" aria-expanded="false"
-                                                                aria-controls="DriverPhoto">
+                                                            <button class="btn btn-link collapsed" type="button"
+                                                                data-toggle="collapse" data-target="#DriverPhoto"
+                                                                aria-expanded="false" aria-controls="DriverPhoto">
                                                                 Driver Photo
                                                             </button>
                                                         </h5>
@@ -1639,9 +1682,9 @@
                                                 <div class="card">
                                                     <div class="card-header" id="headingDriverNID">
                                                         <h5 class="mb-0">
-                                                            <button class="btn btn-link collapsed" type="button" data-toggle="collapse"
-                                                                data-target="#DriverNID" aria-expanded="false"
-                                                                aria-controls="DriverNID">
+                                                            <button class="btn btn-link collapsed" type="button"
+                                                                data-toggle="collapse" data-target="#DriverNID"
+                                                                aria-expanded="false" aria-controls="DriverNID">
                                                                 Driver NID
                                                             </button>
                                                         </h5>
@@ -1688,21 +1731,25 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Driver_License_Copy_one" name="Driver_License_Copy_one"
+                                                                    id="Driver_License_Copy_one"
+                                                                    name="Driver_License_Copy_one"
                                                                     value="ড্রাইভিং লাইসেন্স আপলোড করতে হবে" />
                                                                 <label for="Driver_License_Copy_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Driver_License_Copy_two" name="Driver_License_Copy_two"
+                                                                    id="Driver_License_Copy_two"
+                                                                    name="Driver_License_Copy_two"
                                                                     value="ড্রাইভিং লাইসেন্স অস্পষ্ট" />
                                                                 <label for="Driver_License_Copy_two">অস্পষ্টতা</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Driver_License_Copy_three" name="Driver_License_Copy_three"
+                                                                    id="Driver_License_Copy_three"
+                                                                    name="Driver_License_Copy_three"
                                                                     value="ড্রাইভিং লাইসেন্স এর মেয়াদউত্তীর্ণ" />
-                                                                <label for="Driver_License_Copy_three">মেয়াদউত্তীর্ণ</label>
+                                                                <label
+                                                                    for="Driver_License_Copy_three">মেয়াদউত্তীর্ণ</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1728,14 +1775,16 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Father_Testimonial_one" name="Father_Testimonial_one"
+                                                                    id="Father_Testimonial_one"
+                                                                    name="Father_Testimonial_one"
                                                                     value="আবেদনকারীর পিতার প্রত্যয়নপত্র আপলোড
                                                                     করতে হবে" />
                                                                 <label for="Father_Testimonial_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Father_Testimonial_two" name="Father_Testimonial_two"
+                                                                    id="Father_Testimonial_two"
+                                                                    name="Father_Testimonial_two"
                                                                     value="আবেদনকারীর পিতার প্রত্যয়নপত্র অস্পষ্ট" />
                                                                 <label for="Father_Testimonial_two">অস্পষ্টতা</label>
                                                             </div>
@@ -1764,14 +1813,16 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Mother_Testimonial_one" name="Mother_Testimonial_one"
+                                                                    id="Mother_Testimonial_one"
+                                                                    name="Mother_Testimonial_one"
                                                                     value="আবেদনকারীর মাতার প্রত্যয়নপত্র আপলোড
                                                                     করতে হবে" />
                                                                 <label for="Mother_Testimonial_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Mother_Testimonial_two" name="Mother_Testimonial_two"
+                                                                    id="Mother_Testimonial_two"
+                                                                    name="Mother_Testimonial_two"
                                                                     value="আবেদনকারীর মাতার প্রত্যয়নপত্র অস্পষ্ট" />
                                                                 <label for="Mother_Testimonial_two">অস্পষ্টতা</label>
                                                             </div>
@@ -1801,23 +1852,27 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Autorised_Certificate_one" name="Autorised_Certificate_one"
+                                                                    id="Autorised_Certificate_one"
+                                                                    name="Autorised_Certificate_one"
                                                                     value="কোম্পানীর অনুমোদিত প্রত্যয়নপত্র
                                                                     আপলোড করতে হবে" />
                                                                 <label for="Autorised_Certificate_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Autorised_Certificate_two" name="Autorised_Certificate_two"
+                                                                    id="Autorised_Certificate_two"
+                                                                    name="Autorised_Certificate_two"
                                                                     value="কোম্পানীর অনুমোদিত প্রত্যয়নপত্র অস্পষ্ট" />
                                                                 <label for="Autorised_Certificate_two">অস্পষ্টতা</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Autorised_Certificate_three" name="Autorised_Certificate_three"
+                                                                    id="Autorised_Certificate_three"
+                                                                    name="Autorised_Certificate_three"
                                                                     value="প্রতি বছরের কোম্পানীর অনুমোদিত
                                                                     প্রত্যয়নপত্রের কপি দিতে হবে" />
-                                                                <label for="Autorised_Certificate_three">মেয়াদউত্তীর্ণ</label>
+                                                                <label
+                                                                    for="Autorised_Certificate_three">মেয়াদউত্তীর্ণ</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1844,17 +1899,20 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Marriage_Certificate_Copy_one" name="Marriage_Certificate_Copy_one"
+                                                                    id="Marriage_Certificate_Copy_one"
+                                                                    name="Marriage_Certificate_Copy_one"
                                                                     value="বিবাহিত সনদপত্র/সন্তানের জন্ম সনদ/কোরো
                                                                     সনদ আপলোড করতে হবে" />
                                                                 <label for="Marriage_Certificate_Copy_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Marriage_Certificate_Copy_two" name="Marriage_Certificate_Copy_two"
+                                                                    id="Marriage_Certificate_Copy_two"
+                                                                    name="Marriage_Certificate_Copy_two"
                                                                     value="বিবাহিত সনদপত্র/সন্তানের জন্ম সনদ/কোরো
                                                                     সনদ অস্পষ্ট" />
-                                                                <label for="Marriage_Certificate_Copy_two">অস্পষ্টতা</label>
+                                                                <label
+                                                                    for="Marriage_Certificate_Copy_two">অস্পষ্টতা</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1915,14 +1973,16 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Vehicle_Reg_Copy_one" name="Vehicle_Reg_Copy_one"
+                                                                    id="Vehicle_Reg_Copy_one"
+                                                                    name="Vehicle_Reg_Copy_one"
                                                                     value=" আবেদনকারীর গাড়ির রেজিষ্ট্রেশন আপলোড
                                                                     করতে হবে" />
                                                                 <label for="Vehicle_Reg_Copy_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Vehicle_Reg_Copy_two" name="Vehicle_Reg_Copy_two"
+                                                                    id="Vehicle_Reg_Copy_two"
+                                                                    name="Vehicle_Reg_Copy_two"
                                                                     value="আবেদনকারীর গাড়ির রেজিস্ট্রেশন অস্পষ্ট" />
                                                                 <label for="Vehicle_Reg_Copy_two">অস্পষ্টতা</label>
                                                             </div>
@@ -1962,7 +2022,8 @@
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Tax_Token_Copy_three" name="Tax_Token_Copy_three"
+                                                                    id="Tax_Token_Copy_three"
+                                                                    name="Tax_Token_Copy_three"
                                                                     value="গাড়ির ট্যাক্স টোকেন এর মেয়াদউত্তীর্ণ" />
                                                                 <label for="Tax_Token_Copy_three">মেয়াদউত্তীর্ণ</label>
                                                             </div>
@@ -1992,22 +2053,27 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Fitness_Certificate_Copy_one" name="Fitness_Certificate_Copy_one"
+                                                                    id="Fitness_Certificate_Copy_one"
+                                                                    name="Fitness_Certificate_Copy_one"
                                                                     value=" গাড়ির ফিটনেস সনদপত্র আপলোড করতে
                                                                     হবে" />
                                                                 <label for="Fitness_Certificate_Copy_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Fitness_Certificate_Copy_two" name="Fitness_Certificate_Copy_two"
+                                                                    id="Fitness_Certificate_Copy_two"
+                                                                    name="Fitness_Certificate_Copy_two"
                                                                     value=" গাড়ির ফিটনেস সনদপত্র অস্পষ্ট" />
-                                                                <label for="Fitness_Certificate_Copy_two">অস্পষ্টতা</label>
+                                                                <label
+                                                                    for="Fitness_Certificate_Copy_two">অস্পষ্টতা</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Fitness_Certificate_Copy_three" name="Fitness_Certificate_Copy_three"
+                                                                    id="Fitness_Certificate_Copy_three"
+                                                                    name="Fitness_Certificate_Copy_three"
                                                                     value="গাড়ির ফিটনেস সনদপত্র এর মেয়াদউত্তীর্ণ" />
-                                                                <label for="Fitness_Certificate_Copy_three">মেয়াদউত্তীর্ণ</label>
+                                                                <label
+                                                                    for="Fitness_Certificate_Copy_three">মেয়াদউত্তীর্ণ</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2042,23 +2108,29 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Ward_Commissioner_Certificate_one" name="Ward_Commissioner_Certificate_one"
+                                                                    id="Ward_Commissioner_Certificate_one"
+                                                                    name="Ward_Commissioner_Certificate_one"
                                                                     value="ওয়ার্ড কমিশনারের সনদপত্র আপলোড করতে
                                                                     হবে" />
-                                                                <label for="Ward_Commissioner_Certificate_one">আপলোড</label>
+                                                                <label
+                                                                    for="Ward_Commissioner_Certificate_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Ward_Commissioner_Certificate_two" name="Ward_Commissioner_Certificate_two"
+                                                                    id="Ward_Commissioner_Certificate_two"
+                                                                    name="Ward_Commissioner_Certificate_two"
                                                                     value="ওয়ার্ড কমিশনারের সনদপত্র অস্পষ্ট" />
-                                                                <label for="Ward_Commissioner_Certificate_two">অস্পষ্টতা</label>
+                                                                <label
+                                                                    for="Ward_Commissioner_Certificate_two">অস্পষ্টতা</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Ward_Commissioner_Certificate_three" name="Ward_Commissioner_Certificate_three"
+                                                                    id="Ward_Commissioner_Certificate_three"
+                                                                    name="Ward_Commissioner_Certificate_three"
                                                                     value="প্রতি বছরের ওয়ার্ড কমিশনারের সনদপত্রের
                                                                     কপি দিতে হবে" />
-                                                                <label for="Ward_Commissioner_Certificate_three">মেয়াদউত্তীর্ণ</label>
+                                                                <label
+                                                                    for="Ward_Commissioner_Certificate_three">মেয়াদউত্তীর্ণ</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2085,21 +2157,26 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="House_Owner_CEO_Certificate_one" name="House_Owner_CEO_Certificate_one"
-                                                        value="বাড়ির মালিক/ক্যান্টনমেন্ট বোর্ড এর সনদপত্র আপলোড করতে হবে" />
+                                                                    id="House_Owner_CEO_Certificate_one"
+                                                                    name="House_Owner_CEO_Certificate_one"
+                                                                    value="বাড়ির মালিক/ক্যান্টনমেন্ট বোর্ড এর সনদপত্র আপলোড করতে হবে" />
                                                                 <label for="House_Owner_CEO_Certificate_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="House_Owner_CEO_Certificate_two" name="House_Owner_CEO_Certificate_two"
-                                            value=" বাড়ির মালিক/ক্যান্টনমেন্ট বোর্ড এর সনদপত্র অস্পষ্ট" />
-                                                                <label for="House_Owner_CEO_Certificate_two">অস্পষ্টতা</label>
+                                                                    id="House_Owner_CEO_Certificate_two"
+                                                                    name="House_Owner_CEO_Certificate_two"
+                                                                    value=" বাড়ির মালিক/ক্যান্টনমেন্ট বোর্ড এর সনদপত্র অস্পষ্ট" />
+                                                                <label
+                                                                    for="House_Owner_CEO_Certificate_two">অস্পষ্টতা</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="House_Owner_CEO_Certificate_three" name="House_Owner_CEO_Certificate_three"
-                                                    value="প্রতি বছরের ক্যান্টনমেন্ট বোর্ড এর সনদপত্রের কপি দিতে হবে" />
-                                                                <label for="House_Owner_CEO_Certificate_three">মেয়াদউত্তীর্ণ</label>
+                                                                    id="House_Owner_CEO_Certificate_three"
+                                                                    name="House_Owner_CEO_Certificate_three"
+                                                                    value="প্রতি বছরের ক্যান্টনমেন্ট বোর্ড এর সনদপত্রের কপি দিতে হবে" />
+                                                                <label
+                                                                    for="House_Owner_CEO_Certificate_three">মেয়াদউত্তীর্ণ</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2137,7 +2214,8 @@
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Job_Certificate_three" name="Job_Certificate_three"
+                                                                    id="Job_Certificate_three"
+                                                                    name="Job_Certificate_three"
                                                                     value="প্রতি বছরের চাকুরী সনদপত্রের কপি দিতে
                                                                     হবে" />
                                                                 <label for="Job_Certificate_three">মেয়াদউত্তীর্ণ</label>
@@ -2166,13 +2244,15 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Civil_Service_ID_one" name="Civil_Service_ID_one"
+                                                                    id="Civil_Service_ID_one"
+                                                                    name="Civil_Service_ID_one"
                                                                     value="বেসামরিক সার্ভিস আইডি কার্ডের উভয় পাশের ছবি একত্রে আপলোড করতে হবে" />
                                                                 <label for="Civil_Service_ID_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="Civil_Service_ID_two" name="Civil_Service_ID_two"
+                                                                    id="Civil_Service_ID_two"
+                                                                    name="Civil_Service_ID_two"
                                                                     value="বেসামরিক সার্ভিস আইডি কার্ডের কপি অস্পষ্ট" />
                                                                 <label for="Civil_Service_ID_two">অস্পষ্টতা</label>
                                                             </div>
@@ -2200,23 +2280,27 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="School_Certificate_one" name="School_Certificate_one"
+                                                                    id="School_Certificate_one"
+                                                                    name="School_Certificate_one"
                                                                     value=" স্কুল সার্টিফিকেটের কপি
                                                                     আপলোড করতে হবে" />
                                                                 <label for="School_Certificate_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="School_Certificate_two" name="School_Certificate_two"
+                                                                    id="School_Certificate_two"
+                                                                    name="School_Certificate_two"
                                                                     value="স্কুল সার্টিফিকেটের কপি অস্পষ্ট" />
                                                                 <label for="School_Certificate_two">অস্পষ্টতা</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="School_Certificate_three" name="School_Certificate_three"
+                                                                    id="School_Certificate_three"
+                                                                    name="School_Certificate_three"
                                                                     value="প্রতি বছরের স্কুল সার্টিফিকেটের কপি দিতে
                                                                     হবে" />
-                                                                <label for="School_Certificate_three">মেয়াদউত্তীর্ণ</label>
+                                                                <label
+                                                                    for="School_Certificate_three">মেয়াদউত্তীর্ণ</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2283,22 +2367,26 @@
                                                         <div class="card-body">
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="police-verification_one" name="police-verification_one"
+                                                                    id="police-verification_one"
+                                                                    name="police-verification_one"
                                                                     value="পুলিশ ভেরিভিকেশন আপলোড করতে হবে" />
                                                                 <label for="police-verification_one">আপলোড</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="police-verification_two" name="police-verification_two"
+                                                                    id="police-verification_two"
+                                                                    name="police-verification_two"
                                                                     value="পুলিশ ভেরিভিকেশন অস্পষ্ট" />
                                                                 <label for="police-verification_two">অস্পষ্টতা</label>
                                                             </div>
                                                             <div class="reject-update-dropdown-options">
                                                                 <input type="checkbox" class="attach_file"
-                                                                    id="police-verification_three" name="police-verification_three"
+                                                                    id="police-verification_three"
+                                                                    name="police-verification_three"
                                                                     value="প্রতি বছরের পুলিশ ভেরিভিকেশন এর কপি
                                                                     দিতে হবে" />
-                                                                <label for="police-verification_three">মেয়াদউত্তীর্ণ</label>
+                                                                <label
+                                                                    for="police-verification_three">মেয়াদউত্তীর্ণ</label>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -2474,52 +2562,32 @@
                                     class="form-control in-form" placeholder="" required readonly
                                     style=" cursor:no-drop;">
                             </div>
-                            <div class="col-md-4 offset-md-1">
-                                <label class="label-form">Issue Case </label> <span
-                                    style="color: red;">*</span><small></small>
-                            </div>
-                            <div class="col-md-7">
-                                <div class="row funkyradio">
-                                    <div class="funkyradio-primary col-md-4">
-                                        <input type="radio" name="issue_type" id="normal_case" checked
-                                            value="normal" />
-                                        <label for="normal_case">Normal</label>
-                                    </div>
-                                    <div class="funkyradio-warning col-md-4">
-                                        <input type="radio" name="issue_type" id="special_case" value="special" />
-                                        <label for="special_case">Special</label>
-                                    </div>
-                                </div>
-                                <!--       <input type="checkbox"  class="form-group chb issue_type" name="issue_type" value="normal"> &nbsp; <label> Normal </label> &nbsp;
-          <input type="checkbox"  class="form-group chb issue_type" id="special" name="issue_type" value="special">&nbsp; <label> Special </label> -->
-                            </div>
+                          
+                            @if($app->issue_type == "free")
+                            @php 
+                                $stickerPrice = 0;
+                            @endphp
+                            
                             <div class="col-md-4 offset-md-1 special_case" hidden>
-                                <label for="" class="label-form">Discount Amount</label> <span
-                                    style="color:red;">*</span> <br>
+                                <label for="" class="label-form">Discount Type</label> <br>
                                 <small></small>
                             </div>
                             <div class="col-md-7 special_case" hidden>
-                                <input type="number" id='discount_amount' value="" name="discount_amount"
-                                    class="form-control in-form special_data" placeholder="" required>
+                                <button class="btn btn-warning">Free</button>
                             </div>
+                            @endif
                             <div class="col-md-4 offset-md-1">
                                 <label for="" class="label-form">Total Amount</label> <span
                                     style="color:red;">*</span> <br>
                                 <small></small>
                             </div>
+                           
                             <div class="col-md-7">
                                 <input type="number" value="{{ $stickerPrice }}" name="total_amount"
                                     class="form-control in-form" id="total_amount" placeholder="" required readonly
                                     style=" cursor:no-drop;">
                             </div>
-                            <div class="col-md-4 offset-md-1 special_case" hidden>
-                                <label for="" class="label-form">Comment</label> <span
-                                    style="color:red;">*</span> <br>
-                                <small></small>
-                            </div>
-                            <div class="col-md-7 special_case" hidden>
-                                <textarea value="" name="comment" class="form-control in-form special_data" placeholder="" required></textarea>
-                            </div>
+                           
                         </div>
                     </div>
 

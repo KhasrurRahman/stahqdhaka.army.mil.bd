@@ -113,6 +113,8 @@
                                 <th scope="col">Transparent</th>
                                 <th scope="col">Not Transparent</th>
                                 <th scope="col">MP DTE Approved</th>
+                                {{-- new add --}}
+                                <th scope="col">Free Discount</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -186,6 +188,8 @@
                                     $total_not_transparent = 0;
                                     $total_ps_issued = 0;
                                     $total = 0;
+                                    // new add
+                                    $total_free_approved = 0;
                                 @endphp
                                 @foreach ($stickerTypes as $key => $sticker)
 
@@ -230,6 +234,9 @@
 													->where(['ps_approved'=>1])
 													->whereRaw("id IN ( SELECT application_id FROM vehicle_stickers WHERE issue_date BETWEEN '$frmDt' AND '$toDt')")
 													->where('sticker_category', $sticker_category)->count();
+                                                    // new add
+                                                    $free_approved = App\application::whereIn('app_status', ['issued'])->where(['sticker_category'=>$sticker->name])->where(['sticker_category'=>$sticker_category])->where('issue_type', 'free')->whereRaw("id IN (SELECT application_id FROM application_notifies WHERE sticker_delivery_date BETWEEN '$frmDt' AND '$toDt')")->count();
+													
 													
                                                 }else {
                                                     $def = App\application::whereIn('app_status', ['issued','warning','expired'])->where('sticker_category',$sticker->name)->where(['type'=>'def'])->where(['type'=>'def'])->whereRaw("id IN ( SELECT application_id FROM vehicle_stickers WHERE issue_date BETWEEN '$frmDt' AND '$toDt')")->count();
@@ -237,6 +244,8 @@
                                                     $transparent = App\application::whereIn('app_status', ['issued','warning','expired'])->where(['sticker_category'=>$sticker->name])->where(['glass_type'=>'transparent'])->whereRaw("id IN ( SELECT application_id FROM vehicle_stickers WHERE issue_date BETWEEN '$frmDt' AND '$toDt')")->count();
                                                     $not_transparent = App\application::whereIn('app_status', ['issued','warning','expired'])->where(['sticker_category'=>$sticker->name])->where('glass_type','!=','transparent')->whereRaw("id IN ( SELECT application_id FROM vehicle_stickers WHERE issue_date BETWEEN '$frmDt' AND '$toDt')")->count();
                                                     $ps_issued = App\application::whereIn('app_status', ['issued','warning','expired'])->where(['sticker_category'=>$sticker->name])->where(['ps_approved'=>1])->whereRaw("id IN ( SELECT application_id FROM vehicle_stickers WHERE issue_date BETWEEN '$frmDt' AND '$toDt')")->count();
+                                                    // new add
+                                                    $free_approved = App\application::whereIn('app_status', ['issued'])->where(['sticker_category'=>$sticker->name])->where('issue_type', 'free')->whereRaw("id IN (SELECT application_id FROM application_notifies WHERE sticker_delivery_date BETWEEN '$frmDt' AND '$toDt')")->count();
                                                 }
                                                 
                                                 
@@ -246,6 +255,8 @@
                                                 $transparent = App\application::whereIn('app_status', ['issued','warning','expired'])->where(['sticker_category'=>$sticker->name])->where(['glass_type'=>'transparent','sticker_category'=>$sticker->name])->count();
                                                 $not_transparent = App\application::whereIn('app_status', ['issued','warning','expired'])->where(['sticker_category'=>$sticker->name])->where(['sticker_category'=>$sticker->name])->where('glass_type','!=','transparent')->count();
                                                 $ps_issued = App\application::whereIn('app_status', ['issued','warning','expired'])->where(['sticker_category'=>$sticker->name])->where(['ps_approved'=>1,'sticker_category'=>$sticker->name])->count();
+                                                // new add
+                                                $free_approved = App\application::whereIn('app_status', ['issued'])->where(['sticker_category'=>$sticker->name])->where(['sticker_category'=>$sticker->name])->where('issue_type', 'free')->count();
                                             }
                                             
                                             $total_def += $def;
@@ -253,6 +264,7 @@
                                             $total_transparent += $transparent;
                                             $total_not_transparent += $not_transparent;
                                             $total_ps_issued += $ps_issued;
+                                            $total_free_approved += $free_approved;
                                         @endphp
                                         <tr>
                                             <td class="text-center">{{ ++$key }}</td>
@@ -271,6 +283,10 @@
                                             </td>
                                             <td>
                                                 {{ $ps_issued }}
+                                            </td>
+                                            {{-- new add --}}
+                                            <td>
+                                                {{ $free_approved }}
                                             </td>
                                         </tr>
                                 @endforeach
@@ -293,6 +309,10 @@
                                         </td>
                                         <td>
                                             <b>{{ $total_ps_issued }}</b>
+                                        </td>
+                                        {{-- new add --}}
+                                        <td>
+                                            <b>{{ $total_free_approved }}</b>
                                         </td>
                                     </tr>
                             @endif

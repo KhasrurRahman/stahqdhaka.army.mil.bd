@@ -12,7 +12,11 @@
                                     <li><a href="{{url('/application/delivered')}}/def">Delivered</a></li>
                                     <li><a href="{{url('/application/rejected')}}/def">Updated</a></li>
                                     <li><a href="{{url('/sticker/expired')}}/def">Expired</a></li>
+
                                     <li><a href="{{url('/def_payment_report/list')}}">Payment</a></li>
+
+                                    <li><a href="{{url('/application/free_approved')}}/def">Free Approved</a></li>
+
                                 </ul>
                             </li>
                             <li>
@@ -25,7 +29,11 @@
                                     <li><a href="{{url('/application/delivered')}}/non-def">Delivered</a></li>
                                     <li><a href="{{url('/application/rejected')}}/non-def">Updated</a></li>
                                     <li><a href="{{url('/sticker/expired')}}/non-def">Expired</a></li>
+
                                     <li><a href="{{url('/non_def_payment_report/list')}}">Payment</a></li>
+
+                                    <li><a href="{{url('/application/free_approved')}}/ndef">Free Approved</a></li>
+
                                 </ul>
                             </li>
                             
@@ -82,7 +90,7 @@
                             <li>
                                 <a href="#" class="mtitle">Sticker Report</a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{url('/delivery-report')}}"> Reports sent to PS Directorate</a></li>
+                                    <li><a href="{{url('/delivery-report')}}"> Reports sent to MP DTE Directorate</a></li>
                                 </ul>
                             </li>
                             <li>
