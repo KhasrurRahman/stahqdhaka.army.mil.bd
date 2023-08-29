@@ -136,7 +136,7 @@ class PaymentController extends Controller
         $query = $query->select('applicants.name as applicant_name','applications.app_number','applicants.phone', 'applicants.role as applicant_role'
         , 'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*', DB::raw('(SELECT SUM(credit) FROM payments) as total_credit'))
         ->where('applications.payment_status', 1)
-        ->where('applications.approval', 1)
+        ->where('applications.approval_count', 1)
         ->get();
         
 
@@ -272,7 +272,7 @@ class PaymentController extends Controller
         $query = $query->select('applicants.name as applicant_name','applications.app_number','applicants.phone', 'applicants.role as applicant_role'
         , 'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*')
         ->where('applications.payment_status', 1)
-        ->where('applications.approval','>', 1)
+        ->where('applications.approval_count','>', 1)
         ->get();
 
        $total_credit = $query->sum('credit');
@@ -353,7 +353,7 @@ class PaymentController extends Controller
     }
     public function defpaymentReportDatatable(Request $request)
     {
-        // $query = Payment::with(['application', 'application.applicant']);
+      
         $query = Payment::join('applications', 'applications.id', 'payments.application_id')
             ->leftJoin('applicants', 'applicants.id', 'applications.applicant_id') 
             ->leftJoin('vehicle_types', 'vehicle_types.id', 'applications.vehicle_type_id')
@@ -409,14 +409,13 @@ class PaymentController extends Controller
             $applicant_ids = ApplicantDetail::where('address', 'like', '%' . $request->present_address . '%')->pluck('applicant_id');
             $application_id=Application::whereIn('applicant_id', $applicant_ids)->pluck('id');
             $query=$query->whereIn('payments.application_id', $application_id);
-            // $query->whereIn('applicant_id', $applicant_ids);
+          
         }
 
         
         $query = $query->select('applicants.name as applicant_name','applications.app_number','applicants.phone', 'applicants.role as applicant_role'
         , 'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*', DB::raw('(SELECT SUM(credit) FROM payments) as total_credit'))
-        // ->where('applications.payment_status', 1)
-        // ->where('applications.approval', 1)
+        
         ->where('applicants.role', 'def')
         ->get();
         
@@ -554,8 +553,7 @@ class PaymentController extends Controller
         
         $query = $query->select('applicants.name as applicant_name','applications.app_number','applicants.phone', 'applicants.role as applicant_role'
         , 'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*', DB::raw('(SELECT SUM(credit) FROM payments) as total_credit'))
-        // ->where('applications.payment_status', 1)
-        // ->where('applications.approval', 1)
+        
         ->where('applicants.role', 'non-def')
         ->get();
         
