@@ -246,10 +246,17 @@
                                     </tr>
 
                                 </table>
+                                @if($application->payment_status == "1")
+
+                                <div style="margin: 0 auto;">
+                                    <button type="button" class="btn btn-success btn-block" id="">Paid</button>
+                                </div>
+                                @else
                                 <div style="margin: 0 auto;">
                                     <button type="submit" class="btn btn-primary btn-block" id="pay_now_button">Pay
                                         now</button>
                                 </div>
+                                @endif
                             </div>
                         </div>
                     </div>
