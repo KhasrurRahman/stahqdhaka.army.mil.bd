@@ -242,7 +242,17 @@ class HomeController extends Controller
                 $app_status = ($application->app_status == 'forwarded to PS') ? "Forwarded  To MP DTE" : $application->app_status;
                 return $app_status;
             })->addColumn('payment_status', function (Application $application) {
-                $payment_status = ($application->payment_status == '0') ? "Unpaid" : "Paid";
+                $payment_status = '';
+                if($application->payment_status == '0'){
+                    if($application->issue_type == 'free'){
+                        $payment_status = "Free";
+                    }else{
+                        $payment_status = "Unpaid";
+                    }
+                }else{
+                    $payment_status = "Paid";
+                }
+                
                 return $payment_status;
             })
             ->rawColumns(['applicant_name', 'BA_no', 'Rank_id', 'phone_number', 'sticker_number', 'vehicleType', 'address','app_status','payment_status'])
@@ -756,6 +766,194 @@ class HomeController extends Controller
             })
             ->rawColumns(['applicant_name'])
             ->toJson();
+    }
+
+    public function freeApprovedApp(Request $request, $def)
+    {
+
+        $stickerTypes = StickerCategory::all();
+        $applicant_name = $request->applicant_name ?? "";
+        $ba = $request->ba ?? "";
+        $rank = $request->rank ?? "";
+        $reg_no = $request->reg_no ?? "";
+        $phone = $request->phone ?? "";
+        $date = $request->date ?? "";
+        $Vehicle_Type = $request->Vehicle_Type ?? "";
+        $glass_type = $request->Vehicle_Type ?? "";
+        $sticker_type = $request->sticker_type ?? "";
+        $present_address = $request->present_address ?? "";
+        if ($def == 'def') {
+            return view('apps.free-approved-def', compact('stickerTypes', 'def', 'applicant_name', 'ba', 'rank', 'reg_no', 'ba', 'rank', 'phone', 'date', 'Vehicle_Type', 'glass_type', 'sticker_type', 'present_address'));
+        }
+        if ($def == "ndef") {
+            return view('apps.free-approved-ndef', compact('stickerTypes', 'def', 'applicant_name', 'reg_no', 'ba', 'rank', 'phone', 'date', 'Vehicle_Type', 'glass_type', 'sticker_type', 'present_address'));
+        }
+    }
+
+    public function allFreeApprovedDatatable(Request $request)
+    {
+        $def = request('def');
+        $query = Application::with(['applicant', 'vehicleinfo', 'vehicleinfo.vehicleType'])->whereIn('app_status', ['approved', 'PS approved'])->where('issue_type', 'free');
+
+        if ($def == 'def') {
+            $query->where('type', '=', 'def');
+        }
+        if ($def == 'ndef') {
+            $query->where('type', '=', 'non-def');
+        }
+
+        if ($def == 'not-transparent') {
+            $query->where('glass_type', '!=', 'transparent');
+        }
+        if ($def == 'transparent') {
+            $query->where('glass_type', '=', 'transparent');
+        }
+
+        // Search Data 
+        if ($request->applicant_name) {
+            $applicant_ids = Applicant::where('name', 'like', '%' . $request->applicant_name . '%')->pluck('id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($def == 'def') {
+            if ($request->ba) {
+                $applicant_ids = ApplicantDetail::where('applicant_BA_no', 'like', '%' . $request->ba . '%')->pluck('applicant_id');
+                $query->whereIn('applicant_id', $applicant_ids);
+            }
+
+            if ($request->rank) {
+                $rank_ids = Rank::where('name', 'like',  '%' . $request->rank . '%')->pluck('id');
+                $applicant_ids = ApplicantDetail::whereIn('rank_id', $rank_ids)->pluck('applicant_id');
+                $query->whereIn('applicant_id', $applicant_ids);
+            }
+        }
+
+        if ($request->phone) {
+            $applicant_ids = Applicant::where('phone', 'like', '%' . $request->phone . '%')->pluck('id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($request->present_address) {
+            $applicant_ids = ApplicantDetail::where('address', 'like', '%' . $request->present_address . '%')->pluck('applicant_id');
+            $query->whereIn('applicant_id', $applicant_ids);
+        }
+
+        if ($request->reg_no) {
+            $application_ids = vehicleinfo::where('reg_number', 'like', '%' . $request->reg_no . '%')->pluck('application_id');
+            $query->whereIn('id', $application_ids);
+        }
+
+        if ($request->date) {
+            $query->where('app_date', date('Y-m-d', strtotime($request->date)));
+        }
+
+        if ($request->Vehicle_Type) {
+            $vehicle_type_ids = VehicleType::where('name', 'like', '%' . $request->Vehicle_Type . '%')->pluck('id');
+            $query->whereIn('vehicle_type_id', $vehicle_type_ids);
+        }
+
+        // if ($request->glass_type) {
+        //     $query->where('glass_type', $request->glass_type);
+        // }
+
+        if ($request->sticker_type) {
+            $query->where('sticker_category', $request->sticker_type);
+        }
+
+        if ($def == "def") {
+            return DataTables::of($query)
+                ->addIndexColumn()
+                ->addColumn('applicant_name', function (Application $application) {
+                    $nid = ($application->applicant->applicantDetail) ? $application->applicant->applicantDetail->nid_number : '';
+                    return '<a href="' . route('application.review', ['app_number' => $application->app_number]) . '" target="_blank">' . $application->applicant->name . '</a><br>' . $nid;
+                })
+                ->addColumn('Reg_number', function (Application $application) {
+                    $reg_number = ($application->vehicleinfo) ? $application->vehicleinfo->reg_number : '';
+                    return $reg_number;
+                })
+                ->addColumn('BA_no', function (Application $application) {
+                    $ba_no = $application->applicant->applicantDetail->applicant_BA_no ?? '';
+
+                    return $ba_no;
+                })
+                ->addColumn('Rank_id', function (Application $application) {
+                    $rank_id =  $application->applicant->applicantDetail->rank->name ?? '';
+                    return $rank_id;
+                })
+                ->addColumn('phone_number', function (Application $application) {
+                    return $application->applicant->phone;
+                })
+                ->editColumn('app_date', function (Application $application) {
+                    return date('d-m-Y', strtotime($application->app_date));
+                })
+                ->filterColumn('app_date', function ($query, $keyword) {
+                    $query->whereDate('app_date', date('Y-m-d', strtotime($keyword)));
+                })
+                ->filterColumn('app_date', function ($query, $keyword) {
+                    $query->whereDate('app_date', date('Y-m-d', strtotime($keyword)));
+                })
+                ->addColumn('vehicleType', function (Application $application) {
+                    $vehicle_type =
+                        $application->vehicleinfo->vehicleType->name ?? '';
+                    return $vehicle_type;
+                })
+                ->addColumn('free_comment', function (Application $application) {
+                    $free_comment =
+                        $application->free_comment ?? '';
+                    return $free_comment;
+                })
+                ->addColumn('address', function (Application $application) {
+
+                    $app_address = ($application->applicant->applicantDetail) ? json_decode($application->applicant->applicantDetail->address, true) : '';
+                    if ($app_address) {
+                        return $app_address['present']['flat'] . ', ' . $app_address['present']['house'] . ', ' . $app_address['present']['road'] . ', ' . $app_address['present']['block'] . ', ' . $app_address['present']['area'] . '.';
+                    }
+                })
+                ->rawColumns(['applicant_name'])
+                ->toJson();
+        } else {
+            return DataTables::of($query)
+                ->addIndexColumn()
+                ->addColumn('applicant_name', function (Application $application) {
+                    $nid = ($application->applicant->applicantDetail) ? $application->applicant->applicantDetail->nid_number : '';
+                    return '<a href="' . route('application.review', ['app_number' => $application->app_number]) . '" target="_blank">' . $application->applicant->name . '</a><br>' . $nid;
+                })
+                ->addColumn('Reg_number', function (Application $application) {
+                    $reg_number = ($application->vehicleinfo) ? $application->vehicleinfo->reg_number : '';
+                    return $reg_number;
+                })
+                ->addColumn('phone_number', function (Application $application) {
+                    return $application->applicant->phone;
+                })
+                ->editColumn('app_date', function (Application $application) {
+                    return date('d-m-Y', strtotime($application->app_date));
+                })
+                ->filterColumn('app_date', function ($query, $keyword) {
+                    $query->whereDate('app_date', date('Y-m-d', strtotime($keyword)));
+                })
+                ->filterColumn('app_date', function ($query, $keyword) {
+                    $query->whereDate('app_date', date('Y-m-d', strtotime($keyword)));
+                })
+                ->addColumn('vehicleType', function (Application $application) {
+                    $vehicle_type =
+                        $application->vehicleinfo->vehicleType->name ?? '';
+                    return $vehicle_type;
+                })
+                ->addColumn('free_comment', function (Application $application) {
+                    $free_comment =
+                        $application->free_comment ?? '';
+                    return $free_comment;
+                })
+                ->addColumn('address', function (Application $application) {
+
+                    $app_address = ($application->applicant->applicantDetail) ? json_decode($application->applicant->applicantDetail->address, true) : '';
+                    if ($app_address) {
+                        return $app_address['present']['flat'] . ', ' . $app_address['present']['house'] . ', ' . $app_address['present']['road'] . ', ' . $app_address['present']['block'] . ', ' . $app_address['present']['area'] . '.';
+                    }
+                })
+                ->rawColumns(['applicant_name'])
+                ->toJson();
+        }
     }
 
     public function rejectedApp(Request $request, $def){
@@ -1348,7 +1546,18 @@ class HomeController extends Controller
             $app->app_status = $app->app_status == "forwarded to PS" ? "PS approved" : "approved";
             $app->sticker_category = $request->sticker_type;
             $app->retake = 1;
-            $app->approval = $app->approval == 0 ? 1 : $app->approval + 1;
+            $app->approval_count = $app->approval_count == 0 ? 1 : $app->approval_count + 1;
+            if ($request->free_sticker_ckbox) {
+                $app->free_comment = $request->free_comment;
+                $app->issue_type = "free";
+            }
+
+            if ($request->hasFile('misc_doc')) {
+                $misc_doc_filename = time() . '.' . $request->misc_doc->getClientOriginalExtension();
+                $misc_doc_name = '/images/misc_doc/' . $misc_doc_filename;
+                $request->misc_doc->move(public_path('images/freeSticker_doc'), $misc_doc_name);
+                $app->misc_doc = $misc_doc_name;
+            }
             $app->save();
 
             if (!$appnotifyexist) {
@@ -1365,28 +1574,33 @@ class HomeController extends Controller
                 $appnotifyexist->custom_reject_sms = Null;
                 $appnotifyexist->save();
             }
-            
-            $sms = Sms::where('type', '=', 'approved')->first();
-            $ids=str_split($app->id);
-            //dd($ids);
-            $mapping_id_special=[
-                    0=>'Ya',
-                    1=>'Is',
-                    2=>'Pa',
-                    3=>'Nq',
-                    4=>'MV',
-                    5=>'rD',
-                    6=>'QH',
-                    7=>'Lm',
-                    8=>'Nb',
-                    9=>'Ei'
-            ]; 
-            $encryptedId='';
-            foreach($ids as $key=>$value)
-            {
-                $encryptedId =$encryptedId.$mapping_id_special[$value];
+            $sms = '';
+            if ($request->free_sticker_ckbox) {
+                $sms = Sms::where('type', '=', 'FreeApproved')->first();
+            } else {
+                $sms = Sms::where('type', '=', 'approved')->first();
             }
-            
+
+
+            $ids = str_split($app->id);
+            //dd($ids);
+            $mapping_id_special = [
+                0 => 'Ya',
+                1 => 'Is',
+                2 => 'Pa',
+                3 => 'Nq',
+                4 => 'MV',
+                5 => 'rD',
+                6 => 'QH',
+                7 => 'Lm',
+                8 => 'Nb',
+                9 => 'Ei'
+            ];
+            $encryptedId = '';
+            foreach ($ids as $key => $value) {
+                $encryptedId = $encryptedId . $mapping_id_special[$value];
+            }
+
             $url_link = route('payment.view', $encryptedId);
             $bn = array("১", "২", "৩", "৪", "৫", "৬", "৭", "৮", "৯", "০");
             $en = array("1", "2", "3", "4", "5", "6", "7", "8", "9", "0");
@@ -1394,20 +1608,32 @@ class HomeController extends Controller
             $banglaTime = str_replace($en, $bn, $time);
             $banglaRegNumber = str_replace($en, $bn, $app->vehicleinfo->reg_number);
             $dateApplicationNotify = date('d-m-Y', strtotime($request->sticker_delivery_date));
-            $approveSms = str_replace('/date/', $dateApplicationNotify, $sms->sms_text);
-            $approveSms1 = str_replace('/time/', $time, $approveSms);
-
-            if ($app->payment_status == "0") {
-                $first_approve_add =  $additional_message = "স্টিকারের নির্দিষ্ট মূল্য " . $sticker_category->price . " টাকা অনলাইনে লিংকঃ (" . $url_link . ") পরিশোধের পর ";
-                $approveSms2 = str_replace('/add_msg/', $first_approve_add, $approveSms1);
-                $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
+            if ($request->free_sticker_ckbox) {
+                //If Application has free discount
+                $sms = Sms::where('type', '=', 'FreeApproved')->first();
+                $approveSms = str_replace('/date/', $dateApplicationNotify, $sms->sms_text);
+                $approveSms1 = str_replace('/time/', $time, $approveSms);
+                $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms1);
             } else {
-                $first_approve_add = "";
-                $approveSms2 = str_replace('/add_msg/', $first_approve_add, $approveSms1);
-                $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
+                // If application approved normally
+                $sms = Sms::where('type', '=', 'approved')->first();
+                $approveSms = str_replace('/date/', $dateApplicationNotify, $sms->sms_text);
+                $approveSms1 = str_replace('/time/', $time, $approveSms);
+
+                if ($app->payment_status == "0") {
+                    //If Application approved First time
+                    $first_approve_add =  "স্টিকারের নির্দিষ্ট মূল্য " . $sticker_category->price . " টাকা অনলাইনে লিংকঃ (" . $url_link . ") পরিশোধের পর";
+                    $approveSms2 = str_replace('/add_msg/', $first_approve_add, $approveSms1);
+                    $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
+                } else {
+                    //If Application already paid but approved again
+                    $first_approve_add = "";
+                    $approveSms2 = str_replace('/add_msg/', $first_approve_add, $approveSms1);
+                    $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms2);
+                }
             }
-            // $approveSms3 = str_replace('/link/', $url_link, $approveSms2);
-            // $final_approveSms = str_replace('/reg/', $app->vehicleinfo->reg_number, $approveSms3);
+
+
 
 
             $follow_up = new FollowUp;
@@ -1446,7 +1672,6 @@ class HomeController extends Controller
             /*$job = (new SendSMSandMail($ApplicationNotify->applicant_phone,$final_approveSms,$app->applicant->email,$follow_up->id,$sms))
             ->onQueue($queue_status)->delay(Carbon::now()->addSeconds(0));
             dispatch($job); */
-
             $successOrFail = "success";
             $data = "Application approved successfully!!";
             $changleDate = date('d-m-Y', strtotime($request->sticker_delivery_date));
@@ -1462,33 +1687,32 @@ class HomeController extends Controller
         }
     }
 
-
-    public function issueSticker(Request $request){
-        $final_issueSms="";
-        $mail_status="";
-        $app = Application::where('app_number',$request->app_number)->first();
-        if($app->app_status == "approved" || $app->app_status == "PS approved"){
-            if( $request->sticker_number!='' &&  $request->issue_type!='' && $request->sticker_exp_date!='' && $request->issue_sticker_date!='')
-            {
+    public function issueSticker(Request $request)
+    {
+        $final_issueSms = "";
+        $mail_status = "";
+        $app = Application::where('app_number', $request->app_number)->first();
+        if ($app->app_status == "approved" || $app->app_status == "PS approved") {
+            if ($request->sticker_number != '' && $request->sticker_exp_date != '' && $request->issue_sticker_date != '') {
                 $sticker = new VehicleSticker;
-                $sticker->application_id=$app->id;
-                $sticker->sticker_value=$app->sticker_category;
-                $sticker->reg_number=$app->vehicleinfo->reg_number;
-                $sticker->issue_date=$request->issue_sticker_date;
-                $sticker->exp_date=$request->sticker_exp_date;
-                $sticker->sticker_number=$request->sticker_number;
-                $sticker->applicant_id=$app->applicant->id;
+                $sticker->application_id = $app->id;
+                $sticker->sticker_value = $app->sticker_category;
+                $sticker->reg_number = $app->vehicleinfo->reg_number;
+                $sticker->issue_date = $request->issue_sticker_date;
+                $sticker->exp_date = $request->sticker_exp_date;
+                $sticker->sticker_number = $request->sticker_number;
+                $sticker->applicant_id = $app->applicant->id;
                 $sticker->save();
-                $app= Application::findOrFail($app->id);
-                if($app->app_status == "PS approved"){
+                $app = Application::findOrFail($app->id);
+                if ($app->app_status == "PS approved") {
                     $app->ps_approved = true;
                 }
-                $app->app_status ="issued";
+                $app->app_status = "issued";
                 $app->save();
-                $sms=Sms::where('type','=','issued')->first();
+                $sms = Sms::where('type', '=', 'issued')->first();
                 $dummy_data = ["/reg/", "/issued-date/", "/expired-date/"];
                 $real_data   = [$sticker->reg_number, $sticker->issue_date, $sticker->exp_date];
-                $final_issueSms= str_replace($dummy_data, $real_data, $sms->sms_text);
+                $final_issueSms = str_replace($dummy_data, $real_data, $sms->sms_text);
 
                 /*Mail::to($app->applicant->email)->send(new IssuedMail($final_issueSms));
                 if (Mail::failures()){
@@ -1496,44 +1720,47 @@ class HomeController extends Controller
                 }else{
                   $mail_status="success";
                 }*/
-                $follow_up=new FollowUp;
-                $follow_up->updater_role=auth()->user()->role;
-                $follow_up->application_id=$app->id;
-                $follow_up->app_status=$app->app_status;
-                $follow_up->mail_sent=$mail_status;
-                $follow_up->comment=$final_issueSms;
-                $follow_up->status="Application Issued";
-                $follow_up->created_date=Carbon::now();
-                $follow_up->updated_by=auth()->user()->name;
+                $follow_up = new FollowUp;
+                $follow_up->updater_role = auth()->user()->role;
+                $follow_up->application_id = $app->id;
+                $follow_up->app_status = $app->app_status;
+                $follow_up->mail_sent = $mail_status;
+                $follow_up->comment = $final_issueSms;
+                $follow_up->status = "Application Issued";
+                $follow_up->created_date = Carbon::now();
+                $follow_up->updated_by = auth()->user()->name;
                 $follow_up->save();
                 $invoice = new Invoice;
-                $invoice->application_id=$app->id;
-                $invoice->vehicle_sticker_id=$sticker->id;
-                $invoice->number="StaHQD-".$app->app_number;
-                $invoice->sticker_category_id=$app->stickerCategory->id;
-                $invoice->vehicle_type_id=$app->vehicleinfo->vehicleType->id;
-                $invoice->amount=$request->amount;
-                $invoice->discount=$request->discount_amount;
-                $invoice->net_amount=$request->total_amount;
-                $invoice->case_type=$request->issue_type;
-                $invoice->collector=auth()->user()->name;
-                $invoice->invoice_date=Carbon::now();
-                $invoice->comments=$request->comment;
+                $invoice->application_id = $app->id;
+                $invoice->vehicle_sticker_id = $sticker->id;
+                $invoice->number = "StaHQD-" . $app->app_number;
+                $invoice->sticker_category_id = $app->stickerCategory->id;
+                $invoice->vehicle_type_id = $app->vehicleinfo->vehicleType->id;
+                $invoice->amount = $request->amount;
+                if ($app->issue_type == "free") {
+                    $invoice->discount = $request->amount;
+                    $invoice->case_type = "Free";
+                } else {
+                    $invoice->case_type = "normal";
+                }
+                $invoice->net_amount = $request->total_amount;
+
+                $invoice->collector = auth()->user()->name;
+                $invoice->invoice_date = Carbon::now();
+                $invoice->comments = $request->comment;
                 $invoice->save();
             }
-            $data ="Sticker issued successfully!!";
-            $flag=11;
-            return array($flag,$data,$app->app_status,$invoice->id);
-        }
-        elseif($app->app_status == "issued"){
-            $data ="This Application already issued";
-            $flag=10;
-            return array($flag,$data);
-        }
-        else {
-            $flag=12;
-            $data ="Not Approved application can not be Issued. Thank You.";
-            return array($flag,$data);
+            $data = "Sticker issued successfully!!";
+            $flag = 11;
+            return array($flag, $data, $app->app_status, $invoice->id);
+        } elseif ($app->app_status == "issued") {
+            $data = "This Application already issued";
+            $flag = 10;
+            return array($flag, $data);
+        } else {
+            $flag = 12;
+            $data = "Not Approved application can not be Issued. Thank You.";
+            return array($flag, $data);
         }
     }
     public function applicationForward(Request $request){
@@ -1930,6 +2157,12 @@ class HomeController extends Controller
                 }
                 $app->app_status="pending";
                 $app->sticker_category="";
+                // new add
+                $app->free_comment = null;
+                \File::delete('images/misc_doc/' . basename($app->misc_doc));
+                $app->misc_doc = null;
+                $app->issue_type = null;
+                // /newadd
                 $app->save();
                 $follow_up=new FollowUp;
                 $follow_up->updater_role=auth()->user()->role;
