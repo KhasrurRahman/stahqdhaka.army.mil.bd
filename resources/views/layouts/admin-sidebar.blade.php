@@ -65,10 +65,10 @@
                                 <a href="{{url('all-approved/application')}}" class="mtitle">Sticker Approved List</a>
                                 
                             </li> 
-                            <li>
+                            {{-- <li>
                                 <a href="{{url('all-paid-recollect/application')}}" class="mtitle">Paid Recollected</a>
                                 
-                            </li> 
+                            </li>  --}}
                             <li>
                                 <a href="{{url('all-issued/application')}}" class="mtitle">Sticker Issued List</a>
                                 
