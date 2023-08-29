@@ -12,6 +12,7 @@
                                     <li><a href="{{url('/application/delivered')}}/def">Delivered</a></li>
                                     <li><a href="{{url('/application/rejected')}}/def">Updated</a></li>
                                     <li><a href="{{url('/sticker/expired')}}/def">Expired</a></li>
+                                    <li><a href="{{url('/def_payment_report/list')}}">Payment</a></li>
                                 </ul>
                             </li>
                             <li>
@@ -24,6 +25,7 @@
                                     <li><a href="{{url('/application/delivered')}}/non-def">Delivered</a></li>
                                     <li><a href="{{url('/application/rejected')}}/non-def">Updated</a></li>
                                     <li><a href="{{url('/sticker/expired')}}/non-def">Expired</a></li>
+                                    <li><a href="{{url('/non_def_payment_report/list')}}">Payment</a></li>
                                 </ul>
                             </li>
                             
