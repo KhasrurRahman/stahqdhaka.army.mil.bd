@@ -33,8 +33,8 @@
                         <th scope="col">Sticker Type</th>
                         <th scope="col">Army</th>
                         <th scope="col">Non-Army</th>
-                        <th scope="col">Army(PS Approved)</th>
-                        <th scope="col">Non-Army(PS Approved)</th>
+                        <th scope="col">Army( MP DTE Directorate Approved)</th>
+                        <th scope="col">Non-Army( MP DTE Directorate Approved)</th>
                     </tr>
                     </thead>
                     <tbody>

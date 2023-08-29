@@ -82,7 +82,7 @@
                             <li>
                                 <a href="#" class="mtitle">Sticker Report</a>
                                 <ul class="sub-menu">
-                                    <li><a href="{{url('/delivery-report')}}"> Reports sent to PS Directorate</a></li>
+                                    <li><a href="{{url('/delivery-report')}}"> Reports sent to MP DTE Directorate</a></li>
                                 </ul>
                             </li>
                             <li>
