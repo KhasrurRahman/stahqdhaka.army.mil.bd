@@ -37,9 +37,7 @@ class Payment extends Authenticatable
 
     }
 
-//    public function applicantDetail(){
-//     	return $this->hasOne( ApplicantDetail::class);
-//     }
+
     public function application(){
         return $this->belongsTo( Application::class);
     } 

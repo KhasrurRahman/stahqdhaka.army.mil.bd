@@ -66,9 +66,10 @@ class PaymentController extends Controller
         $phone = $request->phone ?? "";
         $vehicle_type = $request->vehicle_type ?? "";
         $present_address = $request->present_address ?? "";
-        $present_address = $request->present_address ?? "";
+        $approval_count = $request->approval_count ?? "";
+        
  
-      return view('payment_gateway.payment-report-list', compact('sticker_categories','applicant_name','applicant_type','sticker_type','inspec_from_date','inspec_to_date','ba','rank','reg_no','phone','vehicle_type','present_address'));
+      return view('payment_gateway.payment-report-list', compact('sticker_categories','applicant_name','applicant_type','sticker_type','inspec_from_date','inspec_to_date','ba','rank','reg_no','phone','vehicle_type','present_address','approval_count'));
         
     }
     public function paymentReportDatatable(Request $request)
@@ -96,6 +97,7 @@ class PaymentController extends Controller
             $application_ids = Application::where('sticker_category', 'like', '%' . $request->sticker_type. '%')->pluck('id');
             $query = $query->whereIn('application_id', $application_ids);
         }
+        
         if ($request->ba) {
             $applicant_ids = ApplicantDetail::where('applicant_BA_no', 'like', '%' . $request->ba. '%')->pluck('applicant_id');
             $application_id=Application::whereIn('applicant_id', $applicant_ids)->pluck('id');
@@ -131,12 +133,24 @@ class PaymentController extends Controller
             $query=$query->whereIn('payments.application_id', $application_id);
             // $query->whereIn('applicant_id', $applicant_ids);
         }
+        if ($request->approval_count) {
+            if ($request->approval_count == '1st') {
+                $application_ids = Application::where('approval', '=', 1)->pluck('id');
+                $query = $query->whereIn('applications.id', $application_ids);
+            } elseif ($request->approval_count == '2nd') {
+                $application_ids = Application::where('approval', '>', 1)->pluck('id');
+                $query = $query->whereIn('applications.id', $application_ids);
+            } else {
+                $application_ids = Application::where('approval', 'like', '%' . $request->approval_count. '%')->pluck('id');
+                $query = $query->whereIn('applications.id', $application_ids);
+            }
+        }
+        
 
         
         $query = $query->select('applicants.name as applicant_name','applications.app_number','applicants.phone', 'applicants.role as applicant_role'
-        , 'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*', DB::raw('(SELECT SUM(credit) FROM payments) as total_credit'))
-        ->where('applications.payment_status', 1)
-        ->where('applications.approval_count', 1)
+        ,'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*', 'applications.approval')
+
         ->get();
         
 
@@ -185,9 +199,20 @@ class PaymentController extends Controller
                 return $address['present']['flat'] . ', ' . $address['present']['house'] . ', ' . $address['present']['road'] . ', ' . $address['present']['block'] . ', ' . $address['present']['area'] . '.';
                 
             })
+            ->addColumn('approval_count', function ($query) {
+                $approval_count = ($query->approval) ? $query->approval : '';
+                if($approval_count==1){
+                    return '1st';
+                }elseif($approval_count>=2){
+                    return '2nd';
+                }else{
+                    return 'Critaria Not Match'; 
+                }
+                
+            })
             ->with('sum_balance', $query->sum('credit'))
             
-            ->rawColumns(['name', 'type', 'sticker_category', 'create_at', 'created_by', 'credit','vehicle_name','glass_type','phone','rank_name','applicant_BA_no','sticker_reg_number','address'])
+            ->rawColumns(['name', 'type', 'sticker_category', 'create_at', 'created_by', 'credit','vehicle_name','glass_type','phone','rank_name','applicant_BA_no','sticker_reg_number','address','approval_count'])
             ->toJson();
     }
     public function resenderMassageList(Request $request){
@@ -346,9 +371,9 @@ class PaymentController extends Controller
         $phone = $request->phone ?? "";
         $vehicle_type = $request->vehicle_type ?? "";
         $present_address = $request->present_address ?? "";
-        $present_address = $request->present_address ?? "";
+        $approval_count = $request->approval_count ?? "";
  
-      return view('payment_gateway.def-payment-report-list', compact('sticker_categories','applicant_name','applicant_type','sticker_type','inspec_from_date','inspec_to_date','ba','rank','reg_no','phone','vehicle_type','present_address'));
+      return view('payment_gateway.def-payment-report-list', compact('sticker_categories','applicant_name','applicant_type','sticker_type','inspec_from_date','inspec_to_date','ba','rank','reg_no','phone','vehicle_type','present_address','approval_count'));
         
     }
     public function defpaymentReportDatatable(Request $request)
@@ -411,10 +436,23 @@ class PaymentController extends Controller
             $query=$query->whereIn('payments.application_id', $application_id);
           
         }
+        if ($request->approval_count) {
+            if ($request->approval_count == '1st') {
+                $application_ids = Application::where('approval', '=', 1)->pluck('id');
+                $query = $query->whereIn('applications.id', $application_ids);
+            } elseif ($request->approval_count == '2nd') {
+                $application_ids = Application::where('approval', '>', 1)->pluck('id');
+                $query = $query->whereIn('applications.id', $application_ids);
+            } else {
+                $application_ids = Application::where('approval', 'like', '%' . $request->approval_count. '%')->pluck('id');
+                $query = $query->whereIn('applications.id', $application_ids);
+            }
+        }
+        
 
         
         $query = $query->select('applicants.name as applicant_name','applications.app_number','applicants.phone', 'applicants.role as applicant_role'
-        , 'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*', DB::raw('(SELECT SUM(credit) FROM payments) as total_credit'))
+        , 'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*', 'applications.approval')
         
         ->where('applicants.role', 'def')
         ->get();
@@ -484,9 +522,9 @@ class PaymentController extends Controller
         $phone = $request->phone ?? "";
         $vehicle_type = $request->vehicle_type ?? "";
         $present_address = $request->present_address ?? "";
-        $present_address = $request->present_address ?? "";
+        $approval_count = $request->approval_count ?? "";
  
-      return view('payment_gateway.nondef-payment-report-list', compact('sticker_categories','applicant_name','applicant_type','sticker_type','inspec_from_date','inspec_to_date','ba','rank','reg_no','phone','vehicle_type','present_address'));
+      return view('payment_gateway.nondef-payment-report-list', compact('sticker_categories','applicant_name','applicant_type','sticker_type','inspec_from_date','inspec_to_date','ba','rank','reg_no','phone','vehicle_type','present_address','approval_count'));
         
     }
     public function NondefPaymentReportDatatable(Request $request)
@@ -549,10 +587,23 @@ class PaymentController extends Controller
             $query=$query->whereIn('payments.application_id', $application_id);
             // $query->whereIn('applicant_id', $applicant_ids);
         }
+        if ($request->approval_count) {
+            if ($request->approval_count == '1st') {
+                $application_ids = Application::where('approval', '=', 1)->pluck('id');
+                $query = $query->whereIn('applications.id', $application_ids);
+            } elseif ($request->approval_count == '2nd') {
+                $application_ids = Application::where('approval', '>', 1)->pluck('id');
+                $query = $query->whereIn('applications.id', $application_ids);
+            } else {
+                $application_ids = Application::where('approval', 'like', '%' . $request->approval_count. '%')->pluck('id');
+                $query = $query->whereIn('applications.id', $application_ids);
+            }
+        }
+        
 
         
         $query = $query->select('applicants.name as applicant_name','applications.app_number','applicants.phone', 'applicants.role as applicant_role'
-        , 'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*', DB::raw('(SELECT SUM(credit) FROM payments) as total_credit'))
+        , 'applications.sticker_category','applications.glass_type', 'vehicle_types.name as vehicle_name','applicant_details.applicant_BA_no','applicant_details.address','ranks.name as rank_name','vehicle_stickers.reg_number as sticker_reg_number','payments.*','applications.approval')
         
         ->where('applicants.role', 'non-def')
         ->get();

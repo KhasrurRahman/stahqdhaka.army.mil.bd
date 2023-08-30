@@ -65,6 +65,14 @@
                             
                            
                         </select> &nbsp;&nbsp;
+                        <label style="font-weight:bold;">Approval Count </label>
+                        <select name="approval_count" id="approval_count" class="form-control-sm" >
+                                                     
+                            <option value="">Select One</option>                         
+                            <option value="1st">1st</option>
+                            <option value="2nd">2nd</option>
+
+                        </select> &nbsp;&nbsp;
                         <label style="font-weight:bold;">From Date: </label>
                         <input class="form-control-sm from_date" placeholder="dd-mm-yy" type="text" style="border: none; padding: 2px 5px;" name="inspec_from_date"  autocomplete="off">
                         &nbsp;&nbsp;
@@ -97,12 +105,14 @@
                             <th scope="col">Created_at</th>                          
                             <th scope="col">Amount</th>
                             <th scope="col">Address</th>
+                            <th scope="col">Paid Status</th>
                             
                         </tr>
                         </thead>  
                         
                         <tfoot>
                             <tr>
+                            <td> </td>
                             <td> </td>
                             <td> </td>
                             <td> </td>
@@ -190,6 +200,7 @@ $(function() {
                 d.rank = '{{ $rank }}';
                 d.present_address = '{{ $present_address }}';
                 d.reg_no = '{{ $reg_no }}';
+                d.approval_count = '{{ $approval_count }}';
             },
            
         },
@@ -206,6 +217,7 @@ $(function() {
             {data: 'created_at'},
             {data: 'credit'},
             {data: 'address'},
+            {data: 'approval_count'},
         ],
         order:[[0,"desc"]]
     });
