@@ -19,7 +19,7 @@
     <div class="container-fluid  pl-0 pr-0" >
         <div class="box">
             <div class="box-body">
-                <h3 class="pptitle">Forwarded Applications To PS</h3>
+                <h3 class="pptitle">Forwarded Applications To MP DTE Directorate</h3>
             </div>
         </div>
         <div class="panel panel-default">
