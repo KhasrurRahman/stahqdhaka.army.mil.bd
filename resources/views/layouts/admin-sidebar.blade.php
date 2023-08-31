@@ -77,10 +77,6 @@
                                 <a href="{{url('payment_report/list')}}" class="mtitle">Payment Report List</a>
                                 
                             </li> 
-                            <li>
-                                <a href="{{url('resender_paid_massage/list')}}" class="mtitle">Resender Massage Paid List</a>
-                                
-                            </li> 
                              <li>
                                 <a href="#" class="mtitle">MP DTE Directorate</a>
                                 <ul class="sub-menu">
