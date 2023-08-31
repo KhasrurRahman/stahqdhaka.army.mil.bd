@@ -72,12 +72,12 @@
                             
                            
                         </select> &nbsp;&nbsp;
-                        <label style="font-weight:bold;">Approval Count </label>
+                        <label style="font-weight:bold;">SMS Status </label>
                         <select name="approval_count" id="approval_count" class="form-control-sm" >
                                                      
                             <option value="">Select One</option>                         
-                            <option value="1st">1st</option>
-                            <option value="2nd">2nd</option>
+                            <option value="1st">1st time</option>
+                            <option value="2nd">2nd time</option>
 
                         </select> &nbsp;&nbsp;
                         <label style="font-weight:bold;">From Date: </label>
@@ -112,7 +112,7 @@
                             <th scope="col">Created_at</th>                          
                             <th scope="col">Amount</th>
                             <th scope="col">Address</th>
-                            <th scope="col">Paid In</th>
+                            <th scope="col">SMS Status</th>
                             
                         </tr>
                         </thead>  

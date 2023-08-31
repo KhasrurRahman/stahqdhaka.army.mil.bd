@@ -23,7 +23,7 @@
             </div>
             <div class="panel-heading">
                 <div class="invoice_date_filter" style="">
-                    <form action="{{url('/def_payment_report/list')}}" method="GET">
+                    <form action="{{url('/non_def_payment_report/list')}}" method="GET">
                         {{csrf_field()}}
                         <table class="col-12">
                             <tr>
@@ -65,12 +65,12 @@
                             
                            
                         </select> &nbsp;&nbsp;
-                        <label style="font-weight:bold;">Approval Count </label>
+                        <label style="font-weight:bold;">SMS Status </label>
                         <select name="approval_count" id="approval_count" class="form-control-sm" >
                                                      
                             <option value="">Select One</option>                         
-                            <option value="1st">1st</option>
-                            <option value="2nd">2nd</option>
+                            <option value="1st">1st time</option>
+                            <option value="2nd">2nd time</option>
 
                         </select> &nbsp;&nbsp;
                         <label style="font-weight:bold;">From Date: </label>
@@ -105,12 +105,14 @@
                             <th scope="col">Created_at</th>                          
                             <th scope="col">Amount</th>
                             <th scope="col">Address</th>
+                            <th scope="col">SMS Status</th>
                             
                         </tr>
                         </thead>  
                         
                         <tfoot>
                             <tr>
+                            <td> </td>
                             <td> </td>
                             <td> </td>
                             <td> </td>
@@ -199,7 +201,6 @@ $(function() {
                 d.present_address = '{{ $present_address }}';
                 d.reg_no = '{{ $reg_no }}';
                 d.approval_count = '{{ $approval_count }}';
-                
             },
            
         },

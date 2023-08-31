@@ -233,12 +233,11 @@ Route::group(['middleware' => 'prevent_back_history'],function(){
 	// payment report list route
 	Route::get('payment_report/list', 'PaymentController@paymentReportData')->name('payment-report.list')->middleware('super-admin');
 	Route::get('approved_payment_report/datatable', 'PaymentController@paymentReportDatatable')->name('approved_payment_report.datatable');
-	// resender massage paid list route
-	Route::get('resender_paid_massage/list', 'PaymentController@resenderMassageList')->name('resender-paid-massage.list')->middleware('super-admin');
-	Route::get('resender_paid_massage/datatable', 'PaymentController@resenderMassageDatatable')->name('resender-paid-massage.datatable');
+	
 	//def payment report list route
 	Route::get('def_payment_report/list', 'PaymentController@defpaymentReportData')->name('def-payment-report.list')->middleware('super-admin');
 	Route::get('def_approved_payment_report/datatable', 'PaymentController@defpaymentReportDatatable')->name('def_payment_report.datatable');
+	
 	//def payment report list route
 	Route::get('non_def_payment_report/list', 'PaymentController@NondefPaymentReportData')->name('nondef-payment-report.list')->middleware('super-admin');
 	Route::get('non_def_approved_payment_report/datatable', 'PaymentController@NondefPaymentReportDatatable')->name('nondef_payment_report.datatable');
