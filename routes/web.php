@@ -309,3 +309,8 @@ Route::post('subscriber/sslcommerz/cancel', 'SSlComarzController@cancel')->name(
 Route::post('subscriber/sslcommerz/ipn', 'SSlComarzController@ipn')->name('ipn');
 
 
+//footer importent link route start here
+Route::get('footer/about_us', 'ImportentLinkController@about_us')->name('footer.about_us'); 
+Route::get('footer/privacy_policy', 'ImportentLinkController@privacy_policy')->name('footer.privacy_policy'); 
+Route::get('footer/terms_condition', 'ImportentLinkController@terms_condition')->name('footer.terms_condition'); 
+Route::get('footer/return_refund', 'ImportentLinkController@return_refund')->name('footer.return_refund'); 
