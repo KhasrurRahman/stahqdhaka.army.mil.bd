@@ -246,6 +246,7 @@
                                     </tr>
 
                                 </table>
+
                                 @if($application->payment_status == "1")
 
                                 <div style="margin: 0 auto;">
@@ -258,6 +259,20 @@
                                 </div>
                                 @endif
                             </div>
+                            <div>
+                                <input type="checkbox" id="checkbox" name="subscribe" value="newsletter" required />
+                                I read and agree to the
+                                  <a href="" style="color: blue">
+                                    Terms&Condition
+                                  </a>&nbsp;&nbsp;
+                                  <a href="" style="color: blue">
+                                    PrivacyPolicy
+                                  </a>&nbsp;&nbsp;
+                                  <a href="" style="color: blue">
+                                    ReturnRefund Policy
+                                  </a>
+                                
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -265,3 +280,4 @@
         </div>
     </div>
 @endsection
+

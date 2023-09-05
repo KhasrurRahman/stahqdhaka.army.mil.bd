@@ -150,8 +150,25 @@
                 $("#scrollToTop").fadeOut();
             }
         });
+        
+
+        // pay button check box
+        $('#pay_now_button').attr("disabled", "true");
+        $('#checkbox').click(function() { 
+            if ($(this).is(':checked')) {
+                 $('#pay_now_button').removeAttr("disabled");
+            } else {
+                $('#pay_now_button').attr("disabled", "true");
+            }
+
+        });
+
 
     })
+
+
+
+
 
 </script>
 @yield('script')
