@@ -22,7 +22,7 @@ class PdfFileController extends Controller
             "file" => "required|mimes:pdf",
         ]);
         $data = $request->all();
-        $path = 'public/assets/pdf_files';
+        $path = public_path('/assets/pdf_files');
         if ($request->hasFile('file')) {
             $file = $request->file('file');
             $data['file'] = md5($file->getClientOriginalName() . time()) . "." .  $file->getClientOriginalExtension();
@@ -42,7 +42,7 @@ class PdfFileController extends Controller
         ]);
         $pdf_file = PdfFile::where('id', $id)->first();
         $data = $request->all();
-        $path = 'public/assets/pdf_files';
+        $path = public_path('/assets/pdf_files');;
         if ($request->hasFile('file')) {
             if ($pdf_file->file) {
                 $file = $path . '/' . $pdf_file->file;

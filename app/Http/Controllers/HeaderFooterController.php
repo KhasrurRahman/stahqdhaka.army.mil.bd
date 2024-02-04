@@ -16,6 +16,7 @@ class HeaderFooterController extends Controller
     public function headerFooterStore(Request $request)
     {
         $data = $request->all();
+        // dd( $data);
         $header_footer = HeaderFooter::first();
         if ($header_footer) {
             $header_footer->update($data);

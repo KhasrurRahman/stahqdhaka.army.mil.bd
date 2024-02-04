@@ -1,14 +1,14 @@
 <div class="newtricker-section">
 	<div class="container-fluid">
 		<div class="row">
-			@if ($highLightNotice)
+			{{-- @if ($highLightNotice)
 				<div class="col-md-2 text-center" style="padding-right: 0">
 					<div class="notice-area">
 						<a target="_blank" href="{{ route('notice_details',['slug'=>$highLightNotice->slug]) }}" class="notice-alert blink_me">Notice <i class="text-warning fas fa-bullhorn"></i><br><span class="notice-text">{{ $highLightNotice->title }}</span></a>
 
 					</div>
 				</div>
-			@endif
+			@endif --}}
 
 			<div class="col-md-10 {{ $highLightNotice ? 'col-md-10' : '' }}">
 				<marquee behavior="scroll" direction="left"

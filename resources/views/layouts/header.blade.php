@@ -115,12 +115,14 @@
         </div>
         <div class="contact-info-1">
           <div class="contact-content">
+            <span><i class="fa fa-mobile"></i> Duty Clark: {{ $header_footer->duty_clark }}</span><br>
+            <span><i class="fa fa-mobile"></i> IT: {{ $header_footer->it_phone }}</span><br>
             <span><i class="fa fa-phone"></i> Tel: {{ $header_footer->telephone }}</span><br>
-            <span><i class="fa fa-mobile"></i> Mob: {{ $header_footer->mobile }}</span> <br>
-            <span><i class="fa fa-fax" aria-hidden="true"></i> FAX : {{ $header_footer->fax }}</span>
+            {{-- <span><i class="fa fa-mobile"></i> Mob: {{ $header_footer->mobile }}</span> <br>          --}}
           </div>
           <div class="contact-content map-content">
             <span><i class="fa fa-mobile"></i> Sticker Query: {{ $header_footer->sticker_query }}</span>
+            <span><i class="fa fa-fax" aria-hidden="true"></i> FAX : {{ $header_footer->fax }}</span>
             <span><i class="fa fa-map-marker"></i> Location: {{ $header_footer->location }}</span>
           </div>
           

@@ -45,7 +45,22 @@
                                     <div class="col-md-9">
                                         <input type="text" name="rank" id="rank" class="form-control in-form" value="{{ old('rank', $major->rank) }}" required>
                                     </div>
-
+                                    {{-- ---new ba and sso add-- --}}
+                                    <div class="col-md-3">
+                                        <label for="" class="label-form"> BA <span class="text-danger">*</span> </label> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="ba" id="ba" class="form-control in-form" value="{{ old('ba', $major->ba) }}" required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="" class="label-form"> SSO <span class="text-danger">*</span> </label> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="sso" id="sso" class="form-control in-form" value="{{ old('sso', $major->sso) }}" required>
+                                    </div>
+                                    {{-- ---new ba and sso add-- --}}
                                     <div class="col-md-3">
                                         <label for="" class="label-form"> Mobile <span class="text-danger">*</span> </label> <br>
                                         <small></small>

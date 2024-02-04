@@ -36,6 +36,10 @@
         align-items: center;
         padding: 30px;
     }
+    .welcome-video .pcommander p, .welcome-video .pcommander h3 {
+    padding-left: 20px;
+    text-align: left;
+}
 </style>
 
 <div class="welcome-section section-padding">
@@ -49,13 +53,14 @@
                 <p>{!! substr($present_commander->description, 0, 585) !!}...<a href="{{ url('/') }}/about-station-headquarters">Read More</a></p>
             </div>
             <div class="col-md-6 welcome-video">
-                <div class="pcommander text-center">
+                <div class="pcommander">
                     <img src="{{asset('assets/images/commander/'.$present_commander->image)}}" alt="Present Commander" style="width: 265; height:320px;">
                     <h3> {{ $present_commander->title }} </h3>
+                    <p><b>BA:</b> {{ $present_commander->ba }} </p>
                     <p><b>Rank:</b> {{ $present_commander->rank }} </p>
                     <p><b>Name:</b> {{ $present_commander->name }} </p>
-                    <p><b>BA:</b> {{ $present_commander->ba }} </p>
-                    <p><b>Tel:</b> {{ $present_commander->telephone }}</p>
+                    
+                    {{-- <p><b>Tel:</b> {{ $present_commander->telephone }}</p> --}}
                 </div>
             </div>
         </div>
@@ -71,8 +76,13 @@
                         <img src="{{asset('assets/images/majors/'.$major->image)}}" alt="">
                     </div>
                     <div class="col-md-8">
-                        <h4>{{ $major->name }}, {{ $major->rank }}</h4>
-                        <p>Mob: {{ $major->mobile }}, Tel: {{ $major->telephone }} </p>
+                        <h4>{{$major->sso}} ({{$major->rank}})</h4>
+                        {{-- <p>Mob: {{ $major->mobile }}, Tel: {{ $major->telephone }} </p> --}}
+                        <p>
+                            BA: {{ $major->ba }}<br>
+                            Rank: {{ $major->rank }}<br>
+                            Name: {{ $major->name }}<br> 
+                        </p>
                         <p><b>Major Responsibility</b><br>
                             {{ $major->short_description }}
                         </p>

@@ -53,6 +53,7 @@
                 <div class="col-lg-4 col-md-4 sigle-widget pb-2">
                     <div class="contact-info">
                         <h3>CONTACT INFORMATION</h3>
+                        <p><span>Duty Clark </span><span>:</span> {{ $header_footer->duty_clark }} </p>
                         <p><span>Sticker Query </span><span>:</span> {{ $header_footer->sticker_query }} </p>
                         <p><span>Army Exch </span><span>:</span> {{ $header_footer->army_exch }} </p>
                         <p><span>FAX </span><span>:</span> {{ $header_footer->fax }} </p>

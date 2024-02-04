@@ -36,6 +36,20 @@
                                     <div class="col-md-9">
                                         <input type="text" name="telephone" id="telephone" class="form-control in-form" value="@isset($header_footer) {{ $header_footer->telephone }} @endisset">
                                     </div>
+                                    <div class="col-md-3">
+                                        <label for="" class="label-form">Duty Clark</label> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="duty_clark" id="duty_clark" class="form-control in-form" value="@isset($header_footer) {{ $header_footer->duty_clark}} @endisset">
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label for="" class="label-form">IT</label> <br>
+                                        <small></small>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <input type="text" name="it_phone" id="it_phone" class="form-control in-form" value="@isset($header_footer) {{ $header_footer->it_phone }} @endisset">
+                                    </div>
                                     
                                     <div class="col-md-3">
                                         <label for="" class="label-form"> Mobile Number</label> <br>
